@@ -1,9 +1,6 @@
 import React from 'react';
 import styles from './styles.css'
-
-const style4Jocker = {
-    backgroundImage: "url('./../static/card-jocker.png)"
-}
+import Cell from '../Cell'
 
 export default class Field extends React.Component {
     render() {
@@ -11,154 +8,34 @@ export default class Field extends React.Component {
             <table className={styles.field}>
                 <tbody>
                     <tr className={styles.row}>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
+                        <Cell isFlipped />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
                     </tr>
                     <tr className={styles.row}>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
                     </tr>
                     <tr className={styles.row}>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
-                        <td className={styles.cell}>
-                            <div className={styles.card}>
-                                <div className={styles.cardSide +' ' + styles.cardBack}></div>
-                                <div className={styles.cardSide + ' ' + styles.cardFace} style={style4Jocker}></div>
-                            </div>
-                        </td>
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
+                        <Cell />
                     </tr>
                 </tbody>
             </table>
