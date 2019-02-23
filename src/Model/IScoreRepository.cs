@@ -8,5 +8,6 @@ namespace thegame.Model
         ScoreEntry FindById(Guid id);
         ScoreEntry GetOrCreateByLogin(string login);
         void Delete(Guid id);
+        ScoreEntry[] GetBest(int count);
     }
 }

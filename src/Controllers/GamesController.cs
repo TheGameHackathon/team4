@@ -9,16 +9,18 @@ namespace thegame.Controllers
     public class GamesController : Controller
     {
         private IGameRepository  games;
+        private readonly IScoreRepository scores;
 
-        public GamesController(IGameRepository games)
+        public GamesController(IGameRepository games,IScoreRepository scores)
         {
             this.games = games;
+            this.scores = scores;
         }
         
         [HttpGet("leaderboard")]
         public IActionResult LeaderBoard()
         {
-            return Ok(50);
+            return Ok(scores.GetBest(10));
         }
 
         [HttpPost]
@@ -38,5 +40,14 @@ namespace thegame.Controllers
             var state = games.FindById(gameID).RevertTile(tileID);
             return Ok(state);
         }
+
+        [HttpPost("{gameID}/finish/{login}")]
+        public IActionResult FinishGame([FromRoute] Guid gameID, [FromRoute] string login)
+        {
+            var state = games.FindById(gameID).State;
+            scores.Insert(new ScoreEntry {UserLogin = login, Fails = state.Fails, Score = state.Score});
+            return Ok();
+        }
     }
 }
+    

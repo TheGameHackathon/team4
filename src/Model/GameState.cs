@@ -4,6 +4,6 @@ namespace thegame.Model
     {
         public int Score { get; set; }
         public int Fails { get; set; }
-        public int[] State { get; set; }
+        public int[] State { get; set;     }
     }
 }

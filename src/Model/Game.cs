@@ -21,7 +21,7 @@ namespace thegame.Model
             tiles = Enumerable.Range(1, 16).Concat(Enumerable.Range(1, 16)).OrderBy(a => Guid.NewGuid()).ToArray();
         }
 
-        public int[] GameState => tiles.ToArray(); 
+        public GameState State => new GameState{Fails = fails,Score = currentScore,State = state}; 
 
         public GameState RevertTile(int tileIndex)
         {
@@ -43,12 +43,13 @@ namespace thegame.Model
             if (tiles[currentReverted] != tiles[tileIndex])
             {
                 state[tileIndex] = state[currentReverted] = 0;
-                currentReverted = -1;
                 currentScore -= 10;
                 fails++;
             }
             else
                 currentScore += 100;
+            
+            currentReverted = -1;
             return new GameState{Fails = fails,Score = currentScore,State = tmpState};
         }
     }
