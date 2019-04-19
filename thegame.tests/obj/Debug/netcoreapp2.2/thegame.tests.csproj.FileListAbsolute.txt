@@ -1,0 +1,14 @@
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.dll
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.pdb
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\nunit.engine.netstandard.dll
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\thegame.tests.deps.json
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\thegame.tests.runtimeconfig.json
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\thegame.tests.runtimeconfig.dev.json
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\thegame.tests.dll
+C:\Users\Vakym\source\repos\team4\thegame.tests\bin\Debug\netcoreapp2.2\thegame.tests.pdb
+C:\Users\Vakym\source\repos\team4\thegame.tests\obj\Debug\netcoreapp2.2\thegame.tests.csprojAssemblyReference.cache
+C:\Users\Vakym\source\repos\team4\thegame.tests\obj\Debug\netcoreapp2.2\thegame.tests.csproj.CoreCompileInputs.cache
+C:\Users\Vakym\source\repos\team4\thegame.tests\obj\Debug\netcoreapp2.2\thegame.tests.AssemblyInfoInputs.cache
+C:\Users\Vakym\source\repos\team4\thegame.tests\obj\Debug\netcoreapp2.2\thegame.tests.AssemblyInfo.cs
+C:\Users\Vakym\source\repos\team4\thegame.tests\obj\Debug\netcoreapp2.2\thegame.tests.dll
+C:\Users\Vakym\source\repos\team4\thegame.tests\obj\Debug\netcoreapp2.2\thegame.tests.pdb
