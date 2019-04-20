@@ -19,9 +19,16 @@ namespace thegame.Controllers
         public IActionResult Moves(Guid gameId, [FromBody]UserInputForMovesPost userInput)
         {
             var game = games.GetGameById(gameId);
-            var color = game.Cells.FirstOrDefault(c => c.Pos.Equals(userInput.ClickedPos)).Type;
-            //game.Cells[0].Type = color;
-            game.MakeMove(color);
+            if (userInput.ClickedPos != null)
+            {
+                var color = game.Cells.FirstOrDefault(c => c.Pos.Equals(userInput.ClickedPos)).Type;
+                game.MakeMove(color);
+            }
+            else
+            {
+                game.MakeBestMove();
+            }
+            
             return new ObjectResult(game);
         }
     }

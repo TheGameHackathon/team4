@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace thegame.Models
 {
@@ -29,6 +30,36 @@ namespace thegame.Models
             }
         }
 
+        public void MakeBestMove()
+        {
+            var colors = new Dictionary<string, int>()
+            {
+                ["color1"] = 0,
+                ["color2"] = 0,
+                ["color3"] = 0,
+                ["color4"] = 0
+            };
+            var currentColor = currentField[0].Type;
+            foreach (var cell in currentField)
+            {
+                foreach (var neighbour in GetAllNeighbours(cell))
+                {
+                    if (neighbour.Type != currentColor)
+                    {
+                        colors[neighbour.Type]++;
+                    }
+                }
+            }
+
+            var bestColor = colors.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+            MakeMove(bestColor);
+        }
+
+        private CellDto[] GetAllNeighbours(CellDto cell)
+            => Cells.Where(c => Math.Abs(cell.Pos.X - c.Pos.X) <= 1 && Math.Abs(cell.Pos.Y - c.Pos.Y) <= 1
+                                                                    && Math.Abs(cell.Pos.X - c.Pos.X) !=
+                                                                    Math.Abs(cell.Pos.Y - c.Pos.Y)).ToArray();
+
         private void FillCurrentField(string color)
         {
             foreach (var c in currentField)
@@ -37,13 +68,9 @@ namespace thegame.Models
             }
         }
 
-        private CellDto[] FindSameColorNeb(CellDto cell)
-        {
-           return Cells.Where(c => Math.Abs(cell.Pos.X - c.Pos.X) <= 1 && Math.Abs(cell.Pos.Y - c.Pos.Y) <= 1
-                                                                       && Math.Abs(cell.Pos.X - c.Pos.X) != Math.Abs(cell.Pos.Y - c.Pos.Y)
-                                                                       && c.Type == cell.Type)
+        private CellDto[] GetAllSameColorNeighbours(CellDto cell)
+            => GetAllNeighbours(cell).Where(c => c.Type == cell.Type)
                 .ToArray();
-        }
 
         private void ExtendCurrentField()
         {
@@ -52,7 +79,7 @@ namespace thegame.Models
             while (currentCells.Length != prevCells.Length)
             {
                 prevCells = currentCells;
-                currentCells = currentCells.SelectMany(FindSameColorNeb).Union(currentCells).ToArray();
+                currentCells = currentCells.SelectMany(GetAllSameColorNeighbours).Union(currentCells).ToArray();
             }
             currentField = currentCells.ToList();
         }
