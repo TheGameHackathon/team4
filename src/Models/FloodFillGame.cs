@@ -12,12 +12,14 @@ namespace thegame.Models
                             : base(cells, monitorKeyboard, monitorMouseClicks, width, height, id, isFinished, score)
         {
             currentField.Add(Cells[0]);
+            ExtendCurrentField();
         }
 
         public void MakeMove(string color)
         {
             FillCurrentField(color);
             ExtendCurrentField();
+            Score++;
         }
 
         private void FillCurrentField(string color)
