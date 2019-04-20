@@ -56,10 +56,12 @@ namespace thegame.Models
             MakeMove(bestColor);
         }
 
-        private CellDto[] GetAllNeighbours(CellDto cell)
-            => Cells.Where(c => Math.Abs(cell.Pos.X - c.Pos.X) <= 1 && Math.Abs(cell.Pos.Y - c.Pos.Y) <= 1
-                                                                    && Math.Abs(cell.Pos.X - c.Pos.X) !=
-                                                                    Math.Abs(cell.Pos.Y - c.Pos.Y)).ToArray();
+        private CellDto[] GetAllNeighbours(CellDto cell) =>
+            Cells.Where(c =>
+                Math.Abs(cell.Pos.X - c.Pos.X) <= 1
+                && Math.Abs(cell.Pos.Y - c.Pos.Y) <= 1
+                && Math.Abs(cell.Pos.X - c.Pos.X) !=
+                Math.Abs(cell.Pos.Y - c.Pos.Y)).ToArray();
 
         private void FillCurrentField(string color)
         {
