@@ -14,7 +14,7 @@ namespace thegame.Services
         public Guid AddGame( int level)
         {
             var key = Guid.NewGuid();
-            games.Add(key, new  FloodFillGame(TestData.GetCells(level), false,false, 5 * level, 3 * level, key,false,0));
+            games.Add(key, new  FloodFillGame(TestData.GetCells(level), false,true, 5 * level, 3 * level, key,false,0));
             return key;
         }
 
