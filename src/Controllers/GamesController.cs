@@ -8,9 +8,9 @@ namespace thegame.Controllers
     public class GamesController : Controller
     {
         [HttpPost]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] int level)
         {
-            return new ObjectResult(TestData.AGameDto(new Vec(1, 1)));
+            return new ObjectResult(TestData.AGameDto(level, new Vec(1, 1)));
         }
     }
 }

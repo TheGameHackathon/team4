@@ -12,9 +12,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputForMovesPost userInput)
         {
-            var game = TestData.AGameDto(userInput.ClickedPos ?? new Vec(1, 1));
-            if (userInput.ClickedPos != null)
-                game.Cells.First(c => c.Type == "color4").Pos = userInput.ClickedPos;
+            var game = TestData.AGameDto(1, userInput.ClickedPos ?? new Vec(1, 1));
             return new ObjectResult(game);
         }
     }

@@ -74,7 +74,19 @@
     margin: 20px auto;
     width: 200px;
 }
-.startButton {
+.startLevel1 {
+    height: 50px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.startLevel2 {
+    height: 50px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.startLevel3 {
     height: 50px;
     width: 100%;
     margin: 20px auto;
