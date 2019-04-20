@@ -14,7 +14,7 @@ namespace thegame.Services
         public Guid AddGame( int level)
         {
             var key = Guid.NewGuid();
-            games.Add(key, new  FloodFillGame(TestData.GetCells(level), false,true, 5 * level, 3 * level, key,false,0));
+            games.Add(key, new  FloodFillGame(TestData.GetCells(level), true,true, 5 * level, 3 * level, key,false,0));
             return key;
         }
 
@@ -26,6 +26,16 @@ namespace thegame.Services
                 return games[id];
             }
             return null;
+        }
+
+        public FloodFillGame[] GetAllGames()
+        {
+            return games.Values.ToArray();
+        }
+
+        public FloodFillGame[] GetAllFinishedGames()
+        {
+            return games.Values.Where(g=>g.IsFinished==true).ToArray();
         }
 
     }
