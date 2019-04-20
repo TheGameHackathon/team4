@@ -20,7 +20,8 @@ namespace thegame.Controllers
         {
             var game = games.GetGameById(gameId);
             var color = game.Cells.FirstOrDefault(c => c.Pos.Equals(userInput.ClickedPos)).Type;
-            game.Cells[0].Type = color;
+            //game.Cells[0].Type = color;
+            game.MakeMove(color);
             return new ObjectResult(game);
         }
     }
