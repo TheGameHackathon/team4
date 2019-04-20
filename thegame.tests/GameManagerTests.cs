@@ -6,7 +6,7 @@ using thegame.Services;
 namespace Tests
 {
     [TestFixture]
-    public class Tests
+    public class GameManagerTests
     {
         private GameManager games;
         private Guid newGuidGame;
