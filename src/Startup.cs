@@ -1,13 +1,17 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using thegame.Models;
+using thegame.Services;
 
 namespace thegame
 {
     public class Startup
     {
+       // private FloodFillGame game =new FloodFillGame();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -18,6 +22,7 @@ namespace thegame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<GameManager>();
             services.AddMvc();
         }
 
