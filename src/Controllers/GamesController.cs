@@ -7,10 +7,17 @@ namespace thegame.Controllers
     [Route("api/games")]
     public class GamesController : Controller
     {
+        private readonly GameManager games;
+
+        public GamesController(GameManager games)
+        {
+            this.games = games;
+        }
         [HttpPost]
         public IActionResult Index([FromQuery] int level)
         {
-            return new ObjectResult(TestData.AGameDto(level, new Vec(1, 1)));
+            var newGuidGame = games.AddGame(level);
+            return new ObjectResult(games.GetGameById(newGuidGame));
         }
     }
 }
