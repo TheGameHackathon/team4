@@ -4,23 +4,13 @@ using thegame.Models;
 
 namespace thegame.Services
 {
-    public class TestData
+    public class GameService
     {
-        public static GameDto AGameDto(int level, Vec movingObjectPosition)
-        {
-            return GetGame(level, movingObjectPosition);
-        }
-
         private static CellDto GetRandomCell(int id, int x, int y, int colorsCount)
         {
             var colors = new[] {"color0", "color1", "color2", "color3", "color4"}.Take(colorsCount).ToArray();
             var color = colors[new Random().Next(colors.Length)];
             return new CellDto(id.ToString(), new Vec(x, y), color, "", 0);
-        }
-
-        private static GameDto GetGame(int level, Vec movingObjectPosition)
-        {
-            return new GameDto(GetCells(level), true, true, 5 * level, 3 * level, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
         }
 
         public static CellDto[] GetCells(int level)
@@ -38,7 +28,6 @@ namespace thegame.Services
                     id++;
                 }
             }
-
             return testCells;
         }
     }
