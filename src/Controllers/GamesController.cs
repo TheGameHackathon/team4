@@ -19,5 +19,10 @@ namespace thegame.Controllers
             var newGuidGame = games.AddGame(level);
             return new ObjectResult(games.GetGameById(newGuidGame));
         }
+        [HttpGet("{onlyFinished:bool}")]
+        public IActionResult GetLeaderBoard([FromQuery] bool onlyFinished)
+        {
+            return onlyFinished ? new ObjectResult(games.GetAllFinishedGames()) : new ObjectResult(games.GetAllGames());
+        }
     }
 }
