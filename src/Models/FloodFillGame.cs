@@ -30,7 +30,7 @@ namespace thegame.Models
 
         private CellDto[] FindSameColorNeb(CellDto cell)
         {
-           return Cells.Where(c => Math.Abs(cell.Pos.X - c.Pos.X) <= 1 && Math.Abs(cell.Pos.X - c.Pos.X) <= 1
+           return Cells.Where(c => Math.Abs(cell.Pos.X - c.Pos.X) <= 1 && Math.Abs(cell.Pos.Y - c.Pos.Y) <= 1
                                                                        && Math.Abs(cell.Pos.X - c.Pos.X) != Math.Abs(cell.Pos.Y - c.Pos.Y)
                                                                        && c.Type == cell.Type)
                 .ToArray();
