@@ -9,16 +9,24 @@ namespace thegame.Services
         {
             var width = 10;
             var height = 8;
-            var testCells = new[]
+            var testCells = new CellDto[width * height];
+            var id = 0;
+            for (var i = 0; i < width; ++i)
             {
-                new CellDto("1", new Vec(3, 4), "color1", "", 0),
-                new CellDto("2", new Vec(5, 4), "color1", "", 0),
-                new CellDto("3", new Vec(5, 5), "color2", "", 20),
-                new CellDto("4", new Vec(3, 1), "color2", "", 20),
-                new CellDto("5", new Vec(1, 0), "color2", "", 20),
-                new CellDto("6", movingObjectPosition, "color4", "☺", 10),
-            };
+                for (var j = 0; j < height; ++j)
+                {
+                    testCells[id] = GetRandomCell(id, i, j);
+                    id++;
+                }
+            }
             return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
+        }
+
+        private static CellDto GetRandomCell(int id, int x, int y)
+        {
+            var colors = new[] {"color0", "color1", "color2", "color3", "color4"};
+            var color = colors[new Random().Next(colors.Length)];
+            return new CellDto(id.ToString(), new Vec(x, y), color, "", 0);
         }
     }
 }
