@@ -34,6 +34,7 @@ namespace thegame.Models
         {
             var colors = new Dictionary<string, int>()
             {
+                ["color0"] = 0,
                 ["color1"] = 0,
                 ["color2"] = 0,
                 ["color3"] = 0,
