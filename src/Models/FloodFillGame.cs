@@ -17,9 +17,16 @@ namespace thegame.Models
 
         public void MakeMove(string color)
         {
-            FillCurrentField(color);
-            ExtendCurrentField();
-            Score++;
+            if (!IsFinished)
+            {
+                 FillCurrentField(color);
+                 ExtendCurrentField();
+                 Score++;
+            }
+            if (currentField.Count==(Height*Width))
+            {
+                IsFinished = true;
+            }
         }
 
         private void FillCurrentField(string color)
