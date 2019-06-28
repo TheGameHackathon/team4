@@ -31,11 +31,12 @@ namespace thegame.Controllers
             var gameEntity = new GameEntity();
             gameEntity.Cards = field;
             gameEntity.Id = Guid.NewGuid();
+            gameEntity.Login = startGameDto.UserName;
             _gameDatabase.Insert(gameEntity);
             var answerDto = new GameStateDto();
             answerDto.Field = new FieldStateDto();
             answerDto.GameId = gameEntity.Id;
-            answerDto.UserName = startGameDto.UserName;
+            answerDto.UserName = gameEntity.Login;
             return Ok(answerDto);
         }
 
@@ -43,6 +44,11 @@ namespace thegame.Controllers
         [HttpPost("{gameId}/card/open")]
         public ActionResult<GameStateDto> OpenCard(Guid gameId, [FromBody] PointDto cardPosition)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var gameEntity = _gameDatabase.FindById(gameId);
 
             try
@@ -74,9 +80,28 @@ namespace thegame.Controllers
                 else
                 {
                     openedCardEntities.ForEach(c => c.Status = CardStatus.NotSolved);
+                    gameEntity.Fails++;
                 }
+            }
 
-                openedCardEntities.Clear();
+            var swappedPointsDto = new List<PointDto>();
+
+            if (gameEntity.CurrentTurn == 3)
+            {
+                var coordsToChoose = gameEntity.Cards.Where(x => x.Status == CardStatus.NotSolved).ToList();
+                var point1 = coordsToChoose[new Random().Next(coordsToChoose.Count)];
+                coordsToChoose.Remove(point1);
+                var point2 = coordsToChoose[new Random().Next(coordsToChoose.Count)];
+                coordsToChoose.Remove(point2);
+
+                var buffer = point1.Position;
+                point1.Position = point2.Position;
+                point1.Position = buffer;
+
+                swappedPointsDto.Add(new PointDto() {X = point1.Position.X, Y = point1.Position.Y});
+                swappedPointsDto.Add(new PointDto() {X = point2.Position.X, Y = point2.Position.Y});
+
+                gameEntity.CurrentTurn = 0;
             }
 
             var openedCardsDto = openedCardEntities
@@ -105,16 +130,16 @@ namespace thegame.Controllers
             var gameStateDto = new GameStateDto()
             {
                 GameId = gameEntity.Id,
-                UserName = "",
+                UserName = gameEntity.Login,
                 Field = new FieldStateDto()
                 {
                     Solved = solvedCardEntities,
-                    Swapped = new List<PointDto>()
-                    {
-                    },
+                    Swapped = swappedPointsDto,
                     Opened = openedCardsDto
                 }
             };
+
+            gameEntity.CurrentTurn++;
 
             return Ok(gameStateDto);
         }

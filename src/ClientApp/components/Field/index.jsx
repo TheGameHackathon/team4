@@ -15,8 +15,8 @@ export default class Field extends React.Component {
     for(let x = 0; x < X; x++) {
       let solved = false;
       // console.log(y, x, field[y]);
-      for(const solved of solvedCards) {
-        if(solved.x === x && solved.y === y) {
+      for(const solvedCard of solvedCards) {
+        if(solvedCard.x === x && solvedCard.y === y) {
           solved = true;
         }
       }

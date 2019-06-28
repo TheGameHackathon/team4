@@ -17,13 +17,13 @@ export default class App extends React.Component {
     this.state = {
       userName: "test",
       gameId: null,
-      countOpenCards: 0,
       firstOpenCard: null,
       secondOpenCard: null,
       FIELD_SIZE: [8, 4],
       field: field,
       solvedCards: []
     };
+    this.countOpenCards = 0;
   }
 
   componentDidMount() {
@@ -61,7 +61,8 @@ export default class App extends React.Component {
   }
   onCardClick = (x, y) => {
     // console.log(coords);
-    const { gameId, countOpenCards } = this.state;
+    const { gameId, firstOpenCard, secondOpenCard } = this.state;
+    const { countOpenCards } = this;
     api
       .openCard(gameId, x, y)
       .then(response => {
@@ -81,26 +82,23 @@ export default class App extends React.Component {
             this.setNewField(y, x, card.imageUrl, true);
             switch (countOpenCards) {
               case 0:
+                this.countOpenCards++;
                 this.setState({
-                  firstOpenCard: {x: x, y: y},
-                  countOpenCards: countOpenCards + 1
+                  firstOpenCard: {x: x, y: y}
                 });
                 break;
               case 1:
+                this.countOpenCards = 0;
                 this.setState({
-                  secondOpenCard: {x: x, y: y},
-                  countOpenCards: 0
+                  secondOpenCard: {x: x, y: y}
                 });
-
                 setTimeout(() => {
-                  const { x: x1, y: y1 }  = firstOpenCard;
-                  const { x: x2, y: y2 }  = secondOpenCard;
+                  const { x: x1, y: y1 }  = this.state.firstOpenCard;
+                  const { x: x2, y: y2 }  = this.state.secondOpenCard;
                   this.setNewField(y1, x1, null, false);
                   this.setNewField(y2, x2, null, false);
-                }, 3000);
-                
+                }, 1000);
                 break;
-            
               default:
                 break;
             }

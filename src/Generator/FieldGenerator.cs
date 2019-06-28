@@ -30,20 +30,5 @@ namespace thegame.Generator
             //        ...
             //return field;
         }
-
-        public List<PointDto> ReturnSwappedPoints(CardEntity[,] cards)
-        {
-            var point1 = new PointDto()
-            {
-                X = new Random().Next(cards.GetLength(0) - 1),
-                Y = new Random().Next(cards.GetLength(1) - 1)
-            };
-            var point2 = new PointDto()
-            {
-                X = new Random().Next(cards.GetLength(0) - 1),
-                Y = new Random().Next(cards.GetLength(1) - 1)
-            };
-            return new List<PointDto>() {point1, point2};
-        }
     }
 }
