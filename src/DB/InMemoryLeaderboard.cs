@@ -6,19 +6,24 @@ using thegame.Entity;
 
 namespace thegame.DB
 {
-    public class InMemoryLeaderboard : IGameDatabase
+    public class InMemoryLeaderboard : ILeaderboard
     {
-        public GameEntity Insert(GameEntity game)
+        public UserEntity Insert(UserEntity user)
         {
             throw new NotImplementedException();
         }
 
-        public GameEntity FindById(Guid gameId)
+        public UserEntity FindById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(GameEntity game)
+        public void Update(UserEntity user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserEntity> GetLeaderboard()
         {
             throw new NotImplementedException();
         }
