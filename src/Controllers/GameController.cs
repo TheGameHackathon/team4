@@ -44,6 +44,11 @@ namespace thegame.Controllers
         [HttpPost("{gameId}/card/open")]
         public ActionResult<GameStateDto> OpenCard(Guid gameId, [FromBody] PointDto cardPosition)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var gameEntity = _gameDatabase.FindById(gameId);
 
             try
@@ -73,13 +78,16 @@ namespace thegame.Controllers
                     openedCardEntities.ForEach(c => c.Status = CardStatus.Solved);
                 }
                 else
+                {
+                    openedCardEntities.ForEach(c => c.Status = CardStatus.NotSolved);
                     gameEntity.Fails++;
+                }
 
-                gameEntity.CurrentTurn++;
                 openedCardEntities.Clear();
             }
 
-            var swappedDto = new List<CardDto>();
+            var swappedPointsDto = new List<PointDto>();
+
             if (gameEntity.CurrentTurn == 3)
             {
                 var coordsToChoose = gameEntity.Cards.Where(x => x.Status == CardStatus.NotSolved).ToList();
@@ -87,6 +95,14 @@ namespace thegame.Controllers
                 coordsToChoose.Remove(point1);
                 var point2 = coordsToChoose[new Random().Next(coordsToChoose.Count)];
                 coordsToChoose.Remove(point2);
+
+                var buffer = point1.Position;
+                point1.Position = point2.Position;
+                point1.Position = buffer;
+
+                swappedPointsDto.Add(new PointDto() {X = point1.Position.X, Y = point1.Position.Y});
+                swappedPointsDto.Add(new PointDto() {X = point2.Position.X, Y = point2.Position.Y});
+
                 gameEntity.CurrentTurn = 0;
             }
 
@@ -94,6 +110,7 @@ namespace thegame.Controllers
                 .Select(c =>
                     new CardDto()
                     {
+                        ImageUrl = $"Pictures/{c.Id}.jpg",
                         Position = new PointDto()
                         {
                             X = c.Position.X,
@@ -119,12 +136,12 @@ namespace thegame.Controllers
                 Field = new FieldStateDto()
                 {
                     Solved = solvedCardEntities,
-                    Swapped = new List<PointDto>()
-                    {
-                    },
+                    Swapped = swappedPointsDto,
                     Opened = openedCardsDto
                 }
             };
+
+            gameEntity.CurrentTurn++;
 
             return Ok(gameStateDto);
         }
