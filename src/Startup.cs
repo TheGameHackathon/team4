@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using thegame.DB;
+using thegame.Extensions;
 
 namespace thegame
 {
@@ -35,6 +37,7 @@ namespace thegame
             {
                 setup.SwaggerDoc("v1", new OpenApiInfo() {Title = "My API", Version = "v1"});
             });
+            services.RegisterDIContainer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

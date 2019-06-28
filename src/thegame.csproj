@@ -38,8 +38,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions" />
-    <Folder Include="Pictures\" />
+    <Folder Include="Extensions"/>
+    <Folder Include="Pictures\"/>
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
