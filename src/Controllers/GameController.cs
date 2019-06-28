@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using thegame.DB;
+using thegame.Entity;
 using thegame.Models.Dto;
 
 namespace thegame.Controllers
@@ -18,7 +19,10 @@ namespace thegame.Controllers
         [HttpPost("start")]
         public ActionResult<GameStateDto> Start([FromBody] StartGameDto startGameDto)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+            var gameEntity = new GameEntity();
+            return null;
         }
 
 
