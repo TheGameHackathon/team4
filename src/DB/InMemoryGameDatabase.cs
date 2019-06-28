@@ -34,6 +34,7 @@ namespace thegame.DB
         {
             if (!entities.ContainsKey(game.Id))
                 throw new Exception("Can't delete, game is not exist");
+            entities.Remove(game.Id);
         }
     }
 }
