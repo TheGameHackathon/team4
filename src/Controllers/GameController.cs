@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using thegame.DB;
@@ -40,7 +42,62 @@ namespace thegame.Controllers
         [HttpPost("{gameId}/card/open")]
         public ActionResult<GameStateDto> OpenCard(Guid gameId, [FromBody] PointDto cardPosition)
         {
-            return Ok();
+            var gameEntity = _gameDatabase.FindById(gameId);
+
+            try
+            {
+                var cardEntity =
+                    gameEntity.Cards.First(c => c.Position.X == cardPosition.X &&
+                                                c.Position.Y == cardPosition.Y);
+                if (cardEntity.Status == CardStatus.NotSolved)
+                {
+                    cardEntity.Status = CardStatus.Open;
+                    _gameDatabase.Insert(gameEntity);
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+
+            var solvedCardEntities = gameEntity.Cards
+                .Where(c => c.Status == CardStatus.Solved)
+                .Select(c =>
+                    new PointDto()
+                    {
+                        X = c.Position.X,
+                        Y = c.Position.Y
+                    })
+                .ToList();
+
+            var openedCardEntities = gameEntity.Cards
+                .Where(c => c.Status == CardStatus.Open)
+                .Select(c =>
+                    new CardDto()
+                    {
+                        Position = new PointDto()
+                        {
+                            X = c.Position.X,
+                            Y = c.Position.Y
+                        }
+                    })
+                .ToList();
+
+            var gameStateDto = new GameStateDto()
+            {
+                GameId = gameEntity.Id,
+                UserName = "",
+                Field = new FieldStateDto()
+                {
+                    Solved = solvedCardEntities,
+                    Swapped = new List<PointDto>()
+                    {
+                    },
+                    Opened = openedCardEntities
+                }
+            };
+
+            return Ok(gameStateDto);
         }
 
         [HttpGet("leaderboard")]

@@ -9,7 +9,7 @@ namespace thegame.Entity
     public class GameEntity
     {
         public Guid Id { get; set; }
-        public CardEntity[,] Cards { get; set; }
+        public List<CardEntity> Cards { get; set; }
         public DateTime StarTime { get; set; }
     }
 }
