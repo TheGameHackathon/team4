@@ -11,11 +11,5 @@ namespace thegame.Entity
         public Guid Id { get; set; }
         public CardEntity[,] Cards { get; set; }
         public DateTime StarTime { get; set; }
-
-        public GameEntity(CardEntity[,] cards)
-        {
-            Id = new Guid();
-            Cards = cards;
-        }
     }
 }

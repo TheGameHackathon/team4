@@ -26,10 +26,13 @@ namespace thegame.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
             var field = _generator.GenerateField(8, 4);
-            var gameEntity = new GameEntity(field);
+            var gameEntity = new GameEntity();
+            gameEntity.Id = Guid.NewGuid();
             _gameDatabase.Insert(gameEntity);
             var answerDto = new GameStateDto();
             answerDto.Field = new FieldStateDto();
+            answerDto.GameId = gameEntity.Id;
+            answerDto.UserName = startGameDto.UserName;
             return Ok(answerDto);
         }
 
