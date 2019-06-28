@@ -1,6 +1,9 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using thegame.DB;
+using thegame.Entity;
+using thegame.Generator;
 using thegame.Models.Dto;
 
 namespace thegame.Controllers
@@ -9,16 +12,28 @@ namespace thegame.Controllers
     public class GameController : Controller
     {
         private readonly IGameDatabase _gameDatabase;
+        private readonly FieldGenerator _generator;
 
-        public GameController(IGameDatabase gameDatabase)
+        public GameController(IGameDatabase gameDatabase, FieldGenerator generator)
         {
             _gameDatabase = gameDatabase;
+            _generator = generator;
         }
 
         [HttpPost("start")]
         public ActionResult<GameStateDto> Start([FromBody] StartGameDto startGameDto)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+            var field = _generator.GenerateField(8, 4);
+            var gameEntity = new GameEntity();
+            gameEntity.Id = Guid.NewGuid();
+            _gameDatabase.Insert(gameEntity);
+            var answerDto = new GameStateDto();
+            answerDto.Field = new FieldStateDto();
+            answerDto.GameId = gameEntity.Id;
+            answerDto.UserName = startGameDto.UserName;
+            return Ok(answerDto);
         }
 
 

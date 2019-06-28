@@ -10,13 +10,6 @@ namespace thegame.Entity
     {
         public Guid Id { get; set; }
         public CardEntity[,] Cards { get; set; }
-        public Stopwatch Timer { get; set; }
-
-        public GameEntity(CardEntity[,] cards)
-        {
-            Id = new Guid();
-            Cards = cards;
-            Timer.Start();
-        }
+        public DateTime StarTime { get; set; }
     }
 }

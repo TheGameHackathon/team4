@@ -8,6 +8,7 @@ namespace thegame.Extensions
         public static void RegisterDIContainer(this IServiceCollection services)
         {
             services.AddSingleton<IGameDatabase, InMemoryGameDatabase>();
+            services.AddSingleton<Generator.FieldGenerator>();
         }
     }
 }
