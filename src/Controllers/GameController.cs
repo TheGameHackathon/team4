@@ -71,6 +71,10 @@ namespace thegame.Controllers
                 {
                     openedCardEntities.ForEach(c => c.Status = CardStatus.Solved);
                 }
+                else
+                {
+                    openedCardEntities.ForEach(c => c.Status = CardStatus.NotSolved);
+                }
 
                 openedCardEntities.Clear();
             }
