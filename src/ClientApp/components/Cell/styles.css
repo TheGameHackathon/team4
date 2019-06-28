@@ -1,0 +1,23 @@
+.cell {
+    position: relative;
+    min-width: 120px;
+    perspective: 600px;
+}
+
+.cell:after {
+    content: '';
+    box-sizing: border-box;
+    display: block;
+    margin-top: 140%;
+}
+
+.cell:before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    border-radius: 10px;
+    border: dashed 1px #333;
+}
