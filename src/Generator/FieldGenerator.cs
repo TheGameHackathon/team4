@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using thegame.Entity;
+using thegame.Models.Dto;
 
 namespace thegame.Generator
 {
@@ -25,6 +26,21 @@ namespace thegame.Generator
             //    for(var y = 0; y < height; y++)
             //        ...
             //return field;
+        }
+
+        public List<PointDto> ReturnSwappedPoints(CardEntity[,] cards)
+        {
+            var point1 = new PointDto()
+            {
+                X = new Random().Next(cards.GetLength(0) - 1),
+                Y = new Random().Next(cards.GetLength(1) - 1)
+            };
+            var point2 = new PointDto()
+            {
+                X = new Random().Next(cards.GetLength(0) - 1),
+                Y = new Random().Next(cards.GetLength(1) - 1)
+            };
+            return new List<PointDto>(){point1, point2};
         }
     }
 }
