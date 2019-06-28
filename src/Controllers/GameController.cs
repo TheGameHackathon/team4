@@ -79,6 +79,7 @@ namespace thegame.Controllers
                 .Select(c =>
                     new CardDto()
                     {
+                        ImageUrl = $"Pictures/{c.Id}.jpg",
                         Position = new PointDto()
                         {
                             X = c.Position.X,
