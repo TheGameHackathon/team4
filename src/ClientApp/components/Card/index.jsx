@@ -7,13 +7,13 @@ export default class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardFlipped: false
+      // cardFlipped: false
     };
   }
   render() {
-    const { cardFlipped  } = this.state;
-    const { imageUrl } = this.props;
-    // const { imageUrl, cardFlipped  } = this.props;
+    // const { cardFlipped  } = this.state;
+    // const { imageUrl } = this.props;
+    const { imageUrl, cardFlipped  } = this.props;
     const styleForImage = {
       ...(imageUrl ? { backgroundImage: `url(${imageUrl}` } : {})
     };
@@ -37,9 +37,9 @@ export default class Card extends React.Component {
     );
   }
   handleClick = event => {
-    // this.setState({
-    //   cardFlipped: !this.state.cardFlipped
-    // });
+    if(this.props.cardFlipped) {
+      return;
+    }
     const {x, y} = this.props;
     this.props.onCardClick(x, y);
   };

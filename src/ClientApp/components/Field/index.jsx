@@ -19,6 +19,7 @@ export default class Field extends React.Component {
           key={`Cell_${x}_${y}`}
           x={x} y={y}
           imageUrl={field[y][x].imageUrl}
+          cardFlipped={field[y][x].cardFlipped}
           {...rest}
         ></Cell>
       );

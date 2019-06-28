@@ -8,7 +8,10 @@ export default class App extends React.Component {
     super();
     const field = Array.from(Array(4)).map(y =>
       Array.from(Array(8)).map(x => 
-        ({ imageUrl: null })
+        ({
+          imageUrl: null,
+          cardFlipped: false
+        })
       )
     );
     this.state = {
@@ -59,14 +62,41 @@ export default class App extends React.Component {
       .openCard(gameId, x, y)
       .then(response => {
         if (response.status === 200) {
-          console.log(response);
+          // console.log(response);
           return response.json();
         } else {
           throw new Error(`${response.status} ${response.statusText}`);
         }
       })
       .then(data => {
-        console.log(data);
+        console.log('После клика', data);
+        for(const card of data.field.opened) {
+          console.log(card);
+          if(x === card.position.x && y === card.position.y) {
+            this.setNewField(y, x, card.imageUrl);
+          }
+        }
       });
   };
+  setNewField = (y, x, imageUrl) => {
+    this.setState(prevState => {
+      const newState = {
+        ...prevState,
+        field: [
+          ...prevState.field.slice(0, y),
+          [
+            ...prevState.field[y].slice(0,x),
+            {
+              ...prevState.field[y][x],
+              imageUrl: imageUrl,
+              cardFlipped: true
+            },
+            ...prevState.field[y].slice(x+1)
+          ],
+          ...prevState.field.slice(y+1)
+        ]
+      }
+      return newState;
+    })
+  }
 }
