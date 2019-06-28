@@ -17,8 +17,8 @@ namespace thegame.Generator
             for (var y = 0; y < height; y++)
             for (var x = 0; x < width; x++)
             {
-                var cardEntity = new CardEntity(id);
-                cardEntity.Position = new PointDto() {X = x + 1, Y = y};
+                var cardEntity = new CardEntity(id / 2);
+                cardEntity.Position = new PointDto() {X = x, Y = y};
                 result.Add(cardEntity);
                 id++;
             }
