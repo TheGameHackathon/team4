@@ -167,7 +167,7 @@ namespace thegame.Controllers
         {
             var swappedPointsDto = new List<PointDto>();
 
-            if (gameEntity.CurrentTurn == 3)
+            if (gameEntity.CurrentTurn == 2)
             {
                 var coordsToChoose = gameEntity.Cards.Where(x => x.Status == CardStatus.NotSolved).ToList();
                 var point1 = coordsToChoose[new Random().Next(coordsToChoose.Count)];
