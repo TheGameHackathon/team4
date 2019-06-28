@@ -9,13 +9,7 @@ namespace thegame.Entity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public TimeSpan Time { get; set; }
+        public TimeSpan BestTime { get; set; }
         public int Fails { get; set; }
-
-        public UserEntity(string name)
-        {
-            Id = new Guid();
-            Name = name;
-        }
     }
 }

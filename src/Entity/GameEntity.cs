@@ -9,14 +9,8 @@ namespace thegame.Entity
     public class GameEntity
     {
         public Guid Id { get; set; }
-        public CardEntity[,] Cards { get; set; }
-        public Stopwatch Timer { get; set; }
-
-        public GameEntity(CardEntity[,] cards)
-        {
-            Id = new Guid();
-            Cards = cards;
-            Timer.Start();
-        }
+        public List<CardEntity> Cards { get; set; }
+        public DateTime StarTime { get; set; }
+        public int CurrentTurn { get; set; }
     }
 }
