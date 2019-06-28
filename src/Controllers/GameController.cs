@@ -61,18 +61,21 @@ namespace thegame.Controllers
                 return BadRequest();
             }
 
-            var solvedCardEntities = gameEntity.Cards
-                .Where(c => c.Status == CardStatus.Solved)
-                .Select(c =>
-                    new PointDto()
-                    {
-                        X = c.Position.X,
-                        Y = c.Position.Y
-                    })
-                .ToList();
-
             var openedCardEntities = gameEntity.Cards
                 .Where(c => c.Status == CardStatus.Open)
+                .ToList();
+
+            if (openedCardEntities.Count == 2)
+            {
+                if (openedCardEntities[0].Id == openedCardEntities[1].Id)
+                {
+                    openedCardEntities.ForEach(c => c.Status = CardStatus.Solved);
+                }
+
+                openedCardEntities.Clear();
+            }
+
+            var openedCardsDto = openedCardEntities
                 .Select(c =>
                     new CardDto()
                     {
@@ -81,6 +84,16 @@ namespace thegame.Controllers
                             X = c.Position.X,
                             Y = c.Position.Y
                         }
+                    })
+                .ToList();
+
+            var solvedCardEntities = gameEntity.Cards
+                .Where(c => c.Status == CardStatus.Solved)
+                .Select(c =>
+                    new PointDto()
+                    {
+                        X = c.Position.X,
+                        Y = c.Position.Y
                     })
                 .ToList();
 
@@ -94,7 +107,7 @@ namespace thegame.Controllers
                     Swapped = new List<PointDto>()
                     {
                     },
-                    Opened = openedCardEntities
+                    Opened = openedCardsDto
                 }
             };
 
