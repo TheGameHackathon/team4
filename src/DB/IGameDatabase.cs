@@ -8,8 +8,9 @@ namespace thegame.DB
 {
     interface IGameDatabase
     {
-        GameEntity Insert(GameEntity game);
+        void Insert(GameEntity game);
         GameEntity FindById(Guid gameId);
         void Update(GameEntity game);
+        void Delete(GameEntity game);
     }
 }
