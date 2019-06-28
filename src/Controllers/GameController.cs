@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace thegame.Controllers
@@ -5,10 +6,29 @@ namespace thegame.Controllers
     [Route("api/game")]
     public class GameController : Controller
     {
-        [HttpGet("score")]
-        public IActionResult Score()
+        [HttpPost("start")]
+        public IActionResult Start()
         {
-            return Ok(50);
+            return Ok();
+        }
+
+
+        [HttpPost("{gameId}/card/open")]
+        public IActionResult OpenCard(Guid gameId, [FromBody] object cardPosition)
+        {
+            return Ok();
+        }
+
+        [HttpGet("leaderboard")]
+        public IActionResult LeaderBoard()
+        {
+            return Ok();
+        }
+
+        [HttpGet("watch/{gameId}")]
+        public IActionResult Watch(Guid gameId)
+        {
+            return Ok();
         }
     }
 }
