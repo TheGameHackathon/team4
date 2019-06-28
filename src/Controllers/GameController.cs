@@ -31,11 +31,12 @@ namespace thegame.Controllers
             var gameEntity = new GameEntity();
             gameEntity.Cards = field;
             gameEntity.Id = Guid.NewGuid();
+            gameEntity.Login = startGameDto.UserName;
             _gameDatabase.Insert(gameEntity);
             var answerDto = new GameStateDto();
             answerDto.Field = new FieldStateDto();
             answerDto.GameId = gameEntity.Id;
-            answerDto.UserName = startGameDto.UserName;
+            answerDto.UserName = gameEntity.Login;
             return Ok(answerDto);
         }
 
@@ -71,8 +72,22 @@ namespace thegame.Controllers
                 {
                     openedCardEntities.ForEach(c => c.Status = CardStatus.Solved);
                 }
+                else
+                    gameEntity.Fails++;
 
+                gameEntity.CurrentTurn++;
                 openedCardEntities.Clear();
+            }
+
+            var swappedDto = new List<CardDto>();
+            if (gameEntity.CurrentTurn == 3)
+            {
+                var coordsToChoose = gameEntity.Cards.Where(x => x.Status == CardStatus.NotSolved).ToList();
+                var point1 = coordsToChoose[new Random().Next(coordsToChoose.Count)];
+                coordsToChoose.Remove(point1);
+                var point2 = coordsToChoose[new Random().Next(coordsToChoose.Count)];
+                coordsToChoose.Remove(point2);
+                gameEntity.CurrentTurn = 0;
             }
 
             var openedCardsDto = openedCardEntities
@@ -100,7 +115,7 @@ namespace thegame.Controllers
             var gameStateDto = new GameStateDto()
             {
                 GameId = gameEntity.Id,
-                UserName = "",
+                UserName = gameEntity.Login,
                 Field = new FieldStateDto()
                 {
                     Solved = solvedCardEntities,
