@@ -5,16 +5,15 @@ import Field from '../Field';
 export default class App extends React.Component {
     constructor () {
         super();
-        this.state = {
-            score: 50,
-        };
+        // this.state = {
+        //     score: 50,
+        // };
     }
 
     render () {
         return (
-            <div className={ styles.root }>
-                <div className={ styles.score }>
-                    Ваш счет: { this.state.score }
+            <div className={ styles.field }>
+                <div>
                 </div>
                 <Field />
             </div>
