@@ -10,8 +10,16 @@ namespace thegame.Generator
     {
         public CardEntity[,] GenerateField(int width, int height)
         {
-            var result = new GameEntity[width, height];
+            var result = new CardEntity[width, height];
+            var id = 0;
+            for (var y = 0; y < height; y++)
+            for (var x = 0; x < width; x++)
+            {
+                result[x, y] = new CardEntity(id);
+                id++;
+            }
 
+            return result;
             //var field = new CardEntity[width, height];
             //for(var x = 0; x < width; x++)
             //    for(var y = 0; y < height; y++)

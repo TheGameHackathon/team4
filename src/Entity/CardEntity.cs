@@ -8,16 +8,17 @@ namespace thegame.Entity
     public enum CardStatus
     {
         Open,
-        Closed,
         Solved,
         NotSolved
     }
     public class CardEntity
     {
         public CardStatus Status { get; set; }
-        public CardEntity(CardStatus status)
+        public int Id { get; set; }
+        public CardEntity(int id,CardStatus status = CardStatus.NotSolved)
         {
             Status = status;
+            Id = id;
         }
 
     }
