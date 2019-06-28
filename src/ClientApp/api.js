@@ -5,6 +5,5 @@ const api = {
     openCard: function(x, y) {
         return 'Pictures/Baloons1.jpg';
     }
-
 };
 export default api;
