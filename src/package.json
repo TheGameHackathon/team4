@@ -26,8 +26,8 @@
     "webpack-hot-middleware": "2.18.2"
   },
   "dependencies": {
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "whatwg-fetch": "^2.0.4"
   }
 }

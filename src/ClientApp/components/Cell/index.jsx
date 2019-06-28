@@ -9,9 +9,10 @@ export default class Cell extends React.Component {
     super(props);
   }
   render() {
+      const {solved, ...rest} = this.props;
     return (
       <td className={styles.cell}>
-        {this.props.solved ? null : <Card />}
+          {solved ? null : <Card {...rest}/>}
       </td>
     );
   }

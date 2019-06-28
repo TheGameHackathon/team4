@@ -1,10 +1,5 @@
-/* .root {
-    width: 512px;
-    height: 512px;
-    background-color: #9a937e;
-} */
-
 .field {
-    margin: auto;
+    /* margin: auto; */
+    display: inline-block;
     border-spacing: 5px;
 }
