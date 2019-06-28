@@ -75,7 +75,10 @@ export default class App extends React.Component {
       })
       .then(data => {
         console.log('После клика', data);
-        this.setState({solvedCards: data.field.solved});
+        setTimeout(() => {
+          this.setState({solvedCards: data.field.solved});
+        }, 1500)
+        
         for(const card of data.field.opened) {
           console.log(card);
           if(x === card.position.x && y === card.position.y) {
@@ -97,7 +100,7 @@ export default class App extends React.Component {
                   const { x: x2, y: y2 }  = this.state.secondOpenCard;
                   this.setNewField(y1, x1, null, false);
                   this.setNewField(y2, x2, null, false);
-                }, 1000);
+                }, 2000);
                 break;
               default:
                 break;
