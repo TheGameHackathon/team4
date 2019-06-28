@@ -82,8 +82,6 @@ namespace thegame.Controllers
                     openedCardEntities.ForEach(c => c.Status = CardStatus.NotSolved);
                     gameEntity.Fails++;
                 }
-
-                openedCardEntities.Clear();
             }
 
             var swappedPointsDto = new List<PointDto>();
