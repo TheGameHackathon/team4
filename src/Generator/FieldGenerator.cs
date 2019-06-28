@@ -17,6 +17,7 @@ namespace thegame.Generator
             for (var x = 0; x < width; x++)
             {
                 result[x, y] = new CardEntity(id);
+                result[x + 1, y] = new CardEntity(id);
                 id++;
             }
 
