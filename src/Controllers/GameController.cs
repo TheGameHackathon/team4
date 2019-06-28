@@ -71,6 +71,10 @@ namespace thegame.Controllers
                 {
                     openedCardEntities.ForEach(c => c.Status = CardStatus.Solved);
                 }
+                else
+                {
+                    openedCardEntities.ForEach(c => c.Status = CardStatus.NotSolved);
+                }
 
                 openedCardEntities.Clear();
             }
@@ -79,6 +83,7 @@ namespace thegame.Controllers
                 .Select(c =>
                     new CardDto()
                     {
+                        ImageUrl = $"Pictures/{c.Id}.jpg",
                         Position = new PointDto()
                         {
                             X = c.Position.X,
