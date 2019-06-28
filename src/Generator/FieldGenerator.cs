@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using thegame.Entity;
@@ -19,8 +18,7 @@ namespace thegame.Generator
             for (var x = 0; x < width; x++)
             {
                 var cardEntity = new CardEntity(id);
-                cardEntity.Position = new PointDto() {X = x, Y = y};
-
+                cardEntity.Position = new PointDto() {X = x + 1, Y = y};
                 result.Add(cardEntity);
                 id++;
             }
@@ -31,6 +29,21 @@ namespace thegame.Generator
             //    for(var y = 0; y < height; y++)
             //        ...
             //return field;
+        }
+
+        public List<PointDto> ReturnSwappedPoints(CardEntity[,] cards)
+        {
+            var point1 = new PointDto()
+            {
+                X = new Random().Next(cards.GetLength(0) - 1),
+                Y = new Random().Next(cards.GetLength(1) - 1)
+            };
+            var point2 = new PointDto()
+            {
+                X = new Random().Next(cards.GetLength(0) - 1),
+                Y = new Random().Next(cards.GetLength(1) - 1)
+            };
+            return new List<PointDto>() {point1, point2};
         }
     }
 }
