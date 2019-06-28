@@ -40,7 +40,7 @@ export default class Card extends React.Component {
     // this.setState({
     //   cardFlipped: !this.state.cardFlipped
     // });
-    const coords = {x: this.props.x, y: this.props.y};
-    this.props.onCardClick(coords);
+    const {x, y} = this.props;
+    this.props.onCardClick(x, y);
   };
 }

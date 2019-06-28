@@ -6,15 +6,21 @@ import Cell from '../Cell/index';
 export default class Field extends React.Component {
   constructor(props) {
     super(props);
-    this.FIELD_SIZE = [8,4];
+    // this.FIELD_SIZE = [8,4];
   }
   renderRow = (y) => {
-    const {...rest} = this.props;
-    const X = this.FIELD_SIZE[0];
+    const {FIELD_SIZE, field, ...rest} = this.props;
+    const X = FIELD_SIZE[0];
     let cells = [];
-    for(let i = 0; i < X; i++) {
+    for(let x = 0; x < X; x++) {
+      // console.log(y, x, field[y]);
       cells.push(
-        <Cell key={`Cell_${i}_${y}`} x={i} y={y} {...rest}></Cell>
+        <Cell
+          key={`Cell_${x}_${y}`}
+          x={x} y={y}
+          imageUrl={field[y][x].imageUrl}
+          {...rest}
+        ></Cell>
       );
     }
     return (
@@ -23,7 +29,7 @@ export default class Field extends React.Component {
   }
 
   render () {
-    const Y = this.FIELD_SIZE[1];
+    const Y = this.props.FIELD_SIZE[1];
     let rows = [];
     for(let i = 0; i < Y; i++) {
       rows.push(this.renderRow(i));
