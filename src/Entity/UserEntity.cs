@@ -14,7 +14,7 @@ namespace thegame.Entity
 
         public UserEntity(string name)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Name = name;
         }
     }
