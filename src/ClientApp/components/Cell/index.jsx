@@ -1,10 +1,18 @@
 import React from 'react';
-import styles from './styles.css'
+import styles from './styles.css';
 
-export default function Cell(props) {
+import Card from '../Card/index';
+import api from '../../api';
+
+export default class Cell extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
     return (
       <td className={styles.cell}>
-        {props.children}
+        {this.props.solved ? null : <Card />}
       </td>
     );
+  }
 }

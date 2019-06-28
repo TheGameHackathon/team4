@@ -1,7 +1,7 @@
 .cell {
     position: relative;
-    min-width: 120px;
-    perspective: 600px;
+    min-width: 100px;
+    perspective: 500px;
 }
 
 .cell:after {
