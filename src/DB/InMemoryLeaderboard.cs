@@ -8,7 +8,7 @@ namespace thegame.DB
 {
     public class InMemoryLeaderboard : IGameDatabase
     {
-        public GameEntity Insert(GameEntity game)
+        public void Insert(GameEntity game)
         {
             throw new NotImplementedException();
         }
@@ -19,6 +19,11 @@ namespace thegame.DB
         }
 
         public void Update(GameEntity game)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(GameEntity game)
         {
             throw new NotImplementedException();
         }

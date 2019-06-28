@@ -6,7 +6,7 @@ using thegame.Entity;
 
 namespace thegame.DB
 {
-    interface IGameDatabase
+    public interface IGameDatabase
     {
         void Insert(GameEntity game);
         GameEntity FindById(Guid gameId);

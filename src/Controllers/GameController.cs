@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using thegame.DB;
 using thegame.Models.Dto;
 
 namespace thegame.Controllers
@@ -7,6 +8,13 @@ namespace thegame.Controllers
     [Route("api/game")]
     public class GameController : Controller
     {
+        private readonly IGameDatabase _gameDatabase;
+
+        public GameController(IGameDatabase gameDatabase)
+        {
+            _gameDatabase = gameDatabase;
+        }
+
         [HttpPost("start")]
         public ActionResult<GameStateDto> Start([FromBody] StartGameDto startGameDto)
         {
