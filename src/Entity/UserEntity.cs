@@ -11,11 +11,5 @@ namespace thegame.Entity
         public string Name { get; set; }
         public TimeSpan BestTime { get; set; }
         public int Fails { get; set; }
-
-        public UserEntity(string name)
-        {
-            Id = Guid.NewGuid();
-            Name = name;
-        }
     }
 }
