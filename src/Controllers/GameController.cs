@@ -28,7 +28,9 @@ namespace thegame.Controllers
             var field = _generator.GenerateField(8, 4);
             var gameEntity = new GameEntity(field);
             _gameDatabase.Insert(gameEntity);
-            return null;
+            var answerDto = new GameStateDto();
+            answerDto.Field = new FieldStateDto();
+            return Ok(answerDto);
         }
 
 
