@@ -82,20 +82,22 @@ export default class App extends React.Component {
         for(const card of data.field.opened) {
           console.log(card);
           if(x === card.position.x && y === card.position.y) {
-            this.setNewField(y, x, card.imageUrl, true);
             switch (countOpenCards) {
               case 0:
+                this.setNewField(y, x, card.imageUrl, true);
                 this.countOpenCards++;
                 this.setState({
                   firstOpenCard: {x: x, y: y}
                 });
                 break;
               case 1:
-                this.countOpenCards = 0;
+                this.setNewField(y, x, card.imageUrl, true);
+                this.countOpenCards++;
                 this.setState({
                   secondOpenCard: {x: x, y: y}
                 });
                 setTimeout(() => {
+                  this.countOpenCards = 0;
                   const { x: x1, y: y1 }  = this.state.firstOpenCard;
                   const { x: x2, y: y2 }  = this.state.secondOpenCard;
                   this.setNewField(y1, x1, null, false);
