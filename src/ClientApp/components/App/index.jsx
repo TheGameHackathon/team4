@@ -18,8 +18,11 @@ export default class App extends React.Component {
       userName: "test",
       gameId: null,
       countOpenCards: 0,
+      firstOpenCard: null,
+      secondOpenCard: null,
       FIELD_SIZE: [8, 4],
-      field: field
+      field: field,
+      solvedCards: []
     };
   }
 
@@ -44,20 +47,21 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { field, FIELD_SIZE } = this.state;
+    const {solvedCards, field, FIELD_SIZE } = this.state;
     return (
       <div className={styles.field}>
         <Field
           onCardClick={this.onCardClick}
           FIELD_SIZE={FIELD_SIZE}
           field={field}
+          solvedCards={solvedCards}
         />
       </div>
     );
   }
   onCardClick = (x, y) => {
     // console.log(coords);
-    const { gameId } = this.state;
+    const { gameId, countOpenCards } = this.state;
     api
       .openCard(gameId, x, y)
       .then(response => {
@@ -70,15 +74,41 @@ export default class App extends React.Component {
       })
       .then(data => {
         console.log('После клика', data);
+        this.setState({solvedCards: data.field.solved});
         for(const card of data.field.opened) {
           console.log(card);
           if(x === card.position.x && y === card.position.y) {
-            this.setNewField(y, x, card.imageUrl);
+            this.setNewField(y, x, card.imageUrl, true);
+            switch (countOpenCards) {
+              case 0:
+                this.setState({
+                  firstOpenCard: {x: x, y: y},
+                  countOpenCards: countOpenCards + 1
+                });
+                break;
+              case 1:
+                this.setState({
+                  secondOpenCard: {x: x, y: y},
+                  countOpenCards: 0
+                });
+
+                setTimeout(() => {
+                  const { x: x1, y: y1 }  = firstOpenCard;
+                  const { x: x2, y: y2 }  = secondOpenCard;
+                  this.setNewField(y1, x1, null, false);
+                  this.setNewField(y2, x2, null, false);
+                }, 3000);
+                
+                break;
+            
+              default:
+                break;
+            }
           }
         }
       });
   };
-  setNewField = (y, x, imageUrl) => {
+  setNewField = (y, x, imageUrl, cardFlipped) => {
     this.setState(prevState => {
       const newState = {
         ...prevState,
@@ -89,7 +119,7 @@ export default class App extends React.Component {
             {
               ...prevState.field[y][x],
               imageUrl: imageUrl,
-              cardFlipped: true
+              cardFlipped: cardFlipped
             },
             ...prevState.field[y].slice(x+1)
           ],
