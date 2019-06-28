@@ -27,6 +27,7 @@ namespace thegame.Controllers
                 return UnprocessableEntity(ModelState);
             var field = _generator.GenerateField(8, 4);
             var gameEntity = new GameEntity();
+            gameEntity.Cards = field;
             gameEntity.Id = Guid.NewGuid();
             _gameDatabase.Insert(gameEntity);
             var answerDto = new GameStateDto();

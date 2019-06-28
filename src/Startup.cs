@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using thegame.DB;
 using thegame.Extensions;
+using thegame.Entity;
+using thegame.Models.Dto;
+
 
 namespace thegame
 {
