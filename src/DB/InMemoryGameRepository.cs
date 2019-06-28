@@ -6,9 +6,10 @@ using thegame.Entity;
 
 namespace thegame.DB
 {
-    public class InMemoryGameDatabase : IGameDatabase
+    public class InMemoryGameRepository : IGameRepository
     {
         private Dictionary<Guid, GameEntity> entities = new Dictionary<Guid, GameEntity>();
+
         public void Insert(GameEntity game)
         {
             if (game.Id == Guid.Empty)

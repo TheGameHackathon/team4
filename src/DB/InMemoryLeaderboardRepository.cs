@@ -6,7 +6,7 @@ using thegame.Entity;
 
 namespace thegame.DB
 {
-    public class InMemoryLeaderboard : ILeaderboard
+    public class InMemoryLeaderboardRepository : ILeaderboardRepository
     {
         public UserEntity Insert(UserEntity user)
         {

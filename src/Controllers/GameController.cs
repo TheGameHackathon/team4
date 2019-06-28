@@ -13,12 +13,12 @@ namespace thegame.Controllers
     [Route("api/game")]
     public class GameController : Controller
     {
-        private readonly IGameDatabase _gameDatabase;
+        private readonly IGameRepository _gameRepository;
         private readonly FieldGenerator _generator;
 
-        public GameController(IGameDatabase gameDatabase, FieldGenerator generator)
+        public GameController(IGameRepository gameRepository, FieldGenerator generator)
         {
-            _gameDatabase = gameDatabase;
+            _gameRepository = gameRepository;
             _generator = generator;
         }
 
@@ -32,7 +32,7 @@ namespace thegame.Controllers
             gameEntity.Cards = field;
             gameEntity.Id = Guid.NewGuid();
             gameEntity.Login = startGameDto.UserName;
-            _gameDatabase.Insert(gameEntity);
+            _gameRepository.Insert(gameEntity);
             var answerDto = new GameStateDto();
             answerDto.Field = new FieldStateDto();
             answerDto.GameId = gameEntity.Id;
@@ -49,7 +49,7 @@ namespace thegame.Controllers
                 return BadRequest();
             }
 
-            var gameEntity = _gameDatabase.FindById(gameId);
+            var gameEntity = _gameRepository.FindById(gameId);
 
             if (!TryOpenCard(gameEntity, cardPosition))
             {
@@ -109,7 +109,7 @@ namespace thegame.Controllers
                     return false;
 
                 cardEntity.Status = CardStatus.Open;
-                _gameDatabase.Insert(gameEntity);
+                _gameRepository.Insert(gameEntity);
                 return true;
             }
             catch (Exception e)

@@ -6,7 +6,7 @@ using thegame.Entity;
 
 namespace thegame.DB
 {
-    interface ILeaderboard
+    interface ILeaderboardRepository
     {
         UserEntity Insert(UserEntity user);
         UserEntity FindById(Guid id);
