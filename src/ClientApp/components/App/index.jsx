@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css';
-import Field from '../Field';
+import Field from '../Field/index';
 
 export default class App extends React.Component {
     constructor () {
