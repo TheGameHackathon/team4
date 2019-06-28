@@ -6,7 +6,7 @@ import Cell from '../Cell/index';
 export default class Field extends React.Component {
   constructor(props) {
     super(props);
-    this.FIELD_SIZE = [6,2];
+    this.FIELD_SIZE = [8,4];
   }
   renderRow = (y) => {
     const X = this.FIELD_SIZE[0];
