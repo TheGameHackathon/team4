@@ -24,6 +24,14 @@ namespace thegame.Infrastructure
             File = file;
         }
 
+        public Level Next()
+        {
+            var newLevel = All().SkipWhile(lvl => lvl != File).First(lvl => lvl != File);
+            return newLevel == null ? null : FromFile(newLevel);
+        }
+
+        public bool IsFinished() => Map.All(cell => cell.Type != "box");
+
         public static string[] All() => Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
         public static Level First() => FromFile(All().First());

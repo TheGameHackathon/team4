@@ -10,6 +10,7 @@ namespace thegame.Infrastructure
     {
         public readonly Guid Id = Guid.NewGuid();
         Level level;
+        bool isFinished = false;
         int score = 0;
 
         public Game() => level = Level.First();
@@ -29,6 +30,7 @@ namespace thegame.Infrastructure
 
         public void MovePlayer(Direction direction)
         {
+            isFinished = false;
             var playerPos = level.GetPlayerPosition();
 
             var validMove = CheckValidMove(playerPos, direction);
@@ -99,11 +101,20 @@ namespace thegame.Infrastructure
             level.Map.First(c => c.Type == "player").Pos = newPosition;
         }
 
-        public Game FromRequest() => throw new NotImplementedException();
+        public void CheckForLevelIsFinished()
+        {
+            if (level.IsFinished())
+            {
+                isFinished = true;
+                
+                var nextLevel = level.Next();
+                if (nextLevel != null) level = nextLevel;
+            }
+        }
 
         public ObjectResult ToResponse() =>
             new ObjectResult(
-                new GameDto(level.Map, true, true, level.Width, level.Height, Id, false, score)
+                new GameDto(level.Map, true, false, level.Width, level.Height, Id, isFinished, score)
             );
     }
 }
