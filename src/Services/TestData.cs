@@ -1,11 +1,12 @@
 ﻿using System;
+using thegame.Infrastructure;
 using thegame.Models;
 
 namespace thegame.Services
 {
     public class TestData
     {
-        public static GameDto AGameDto(Vec movingObjectPosition)
+        public static Level FirstLevel(Vec movingObjectPosition)
         {
             var width = 8;
             var height = 9;
@@ -47,8 +48,16 @@ namespace thegame.Services
                 new CellDto("32", new Vec(2, 4), "wall", "", 0),
                 new CellDto("33", new Vec(2, 5), "wall", "", 0),
                 new CellDto("34", new Vec(3, 4), "wall", "", 0),
+                new CellDto("35", new Vec(3, 2), "box", "", 0),
+                new CellDto("36", new Vec(4, 3), "box", "", 0),
+                new CellDto("37", new Vec(4, 4), "box", "", 0),
+                new CellDto("38", new Vec(4, 6), "box", "", 0),
+                new CellDto("39", new Vec(3, 6), "boxOnTarget", "", 0),
+                new CellDto("40", new Vec(5, 6), "box", "", 0),
+                new CellDto("41", new Vec(1, 6), "box", "", 0),
+
             };
-            return new GameDto(testCells, true, true, width, height, Guid.NewGuid(), movingObjectPosition.X == 0, movingObjectPosition.Y);
+            return new Level(testCells, width, height);
         }
     }
 }

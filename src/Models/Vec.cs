@@ -10,7 +10,12 @@ namespace thegame.Models
 
         public readonly int X, Y;
 
-        public bool Equals(Vec secondVec)
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Vec);
+        }
+
+        bool Equals(Vec secondVec)
         {
             return this.X == secondVec.X && this.Y == secondVec.Y;
         }

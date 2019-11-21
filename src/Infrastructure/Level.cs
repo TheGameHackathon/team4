@@ -20,7 +20,7 @@ namespace thegame.Infrastructure
         }
 
         public static Level FromFile(string path) => FromSource(File.ReadAllLines(path));
-        
+
         public static Level FromSource(string[] lines)
         {
             foreach (var singleLine in lines)
@@ -41,7 +41,7 @@ namespace thegame.Infrastructure
 
             map[4].Type = "";
 
-            return new Level(map, 3, 3);
+            return new Level(map, 8,9);
         }
     }
 }

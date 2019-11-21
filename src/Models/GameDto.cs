@@ -16,19 +16,6 @@ namespace thegame.Models
             Score = score;
         }
 
-        public bool CheckPosition(string type, Vec position)
-        {
-            foreach (var cell in Cells)
-            {
-                if (cell.Type == type && cell.Pos.Equals(position))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public CellDto[] Cells;
         public int Width;
         public int Height;
