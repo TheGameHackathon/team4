@@ -26,7 +26,7 @@ namespace thegame.Infrastructure
 
         public Level Next()
         {
-            var newLevel = All().SkipWhile(lvl => lvl != File).First(lvl => lvl != File);
+            var newLevel = All().SkipWhile(lvl => lvl != File).FirstOrDefault(lvl => lvl != File);
             return newLevel == null ? null : FromFile(newLevel);
         }
 
