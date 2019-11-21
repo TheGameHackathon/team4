@@ -131,7 +131,7 @@
     filter: brightness(50%);
 }
 
-#level1, #level2, #level3 {
+.levelMenu {
     display: inline-block;
     color: black;
     font-weight: 700;
@@ -144,8 +144,8 @@
     transition: 0.2s;
 }
 
-#level1:hover, #level2:hover, #level3:hover { background: rgba(255,255,255,.2); }
-#level1:active, #level2:active, #level3:active { background: white; }
+.levelMenu:hover { background: rgba(255,255,255,.2); }
+.levelMenu:active { background: white; }
 
 
 
