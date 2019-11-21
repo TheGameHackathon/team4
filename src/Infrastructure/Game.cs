@@ -13,7 +13,27 @@ namespace thegame.Infrastructure
         Level level;
         int score = 0;
 
-        public Game() => level = TestData.FirstLevel();
+        public Game(int levelId)
+        {
+            string filename = "";
+            switch (levelId)
+            {
+                case 1:
+                    filename = "thegame.Infrastructure.Levels.level-1.txt";
+                    break;
+                case 2:
+                    filename = "thegame.Infrastructure.Levels.level-2.txt";
+                    break;
+                    ;
+                case 3:
+                    filename = "thegame.Infrastructure.Levels.level-3.txt";
+                    break;
+                    ;
+
+            }
+            level = Level.FromFile(filename);
+
+        }
 
         public bool CheckPosition(string type, Vec position)
         {

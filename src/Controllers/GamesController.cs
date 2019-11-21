@@ -4,30 +4,39 @@ using thegame.Infrastructure;
 
 namespace thegame.Controllers
 {
-    [Route("api/games/level{levelId}")]
+    
     public class LevelGetter : Controller
     {
-        [HttpGet]
+        [HttpPost]
         public int GetLevel(int levelId)
         {
             return levelId;
         }
     }
 
-    [Route("api/games")]
+   
     public class GamesController : Controller
     {
         readonly IMemoryCache cache;
+        private static int _levelId;
 
         public GamesController(IMemoryCache cache) => this.cache = cache;
 
+        [Route("api/games")]
         [HttpPost]
         public IActionResult Index()
         {
-            var game = new Game();
+            var game = new Game(_levelId);
             cache.Set(game.Id, game);
 
             return game.ToResponse();
+        }
+        [Route("api/games/level{levelId}")]
+        [HttpPost]
+        public int GetLevel(int levelId)
+        {
+            _levelId = levelId;
+            return levelId;
         }
     }
 }
