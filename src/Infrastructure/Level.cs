@@ -27,6 +27,11 @@ namespace thegame.Infrastructure
             return new Vec(pastVec.X, pastVec.Y);
         }
 
+        public CellDto GetCell(Vec vector)
+        {
+            return Map.FirstOrDefault(x => x.Pos.Equals(vector));
+        }
+
         public static Level FromSource(string[] lines)
         {
             foreach (var singleLine in lines)

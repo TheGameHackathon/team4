@@ -49,6 +49,12 @@ namespace thegame.Infrastructure
                 }
 
                 var newPosOfBox = newPosPlayer.GetNextPosition(direction);
+
+                if(CheckPosition("box", newPosOfBox) || CheckPosition("boxOnTarget", newPosOfBox))
+                {
+                    return;
+                }
+
                 Move(newPosPlayer, newPosOfBox);
                 
             }
@@ -86,13 +92,17 @@ namespace thegame.Infrastructure
 
         public void Move(Vec pastVec, Vec newVec)
         {
-            foreach (var cell in level.Map)
+            var currentCell = level.GetCell(pastVec);
+            var futureCell = level.GetCell(newVec);
+            if (futureCell != null && futureCell.Type == "target" && currentCell.Type == "box")
             {
-                if (cell.Pos.Equals(pastVec))
-                {
-                    cell.Pos = newVec;
-                }
+                currentCell.Type = "boxOnTarget";
             }
+            else if (currentCell.Type == "boxOnTarget")
+            {
+                currentCell.Type = "box";
+            }
+            currentCell.Pos = newVec;
         }
 
         public void MovePlayer(Vec newPosition)
