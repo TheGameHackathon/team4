@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using thegame.Infrastructure;
 using thegame.Models;
 using thegame.Services;
 
@@ -10,7 +11,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            return new ObjectResult(TestData.AGameDto(new Vec(1, 1)));
+            return new Game().ToResponse();
         }
     }
 }
