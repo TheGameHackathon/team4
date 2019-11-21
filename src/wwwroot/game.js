@@ -16,7 +16,8 @@ function handleApiErrors(result) {
 
 
 async function getLevel(levelId) {
-    game = await fetch(`/api/games/level${levelId}`, { method: "GET" })
+    console.log(levelId);
+    game = await fetch(`/api/games/level${levelId}`, { method: "POST" })
         .then(handleApiErrors);
     console.log("Должен вернуться какой-то объект игры", game)
     window.history.replaceState(game.id, "The Game", "/" + game.id);
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     buttonLevel2 .addEventListener("click", () => {
         getLevel(2)
     })
-    buttonLevel2 .addEventListener("click", () => {
+    buttonLevel3 .addEventListener("click", () => {
         getLevel(3)
     })
 
