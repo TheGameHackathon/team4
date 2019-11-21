@@ -24,7 +24,7 @@ namespace thegame.Controllers
                 return new BadRequestResult();
             
             var direction = userInput.GetDirection();
-            game.MovePlayer(direction); // Not implemented
+            game.MovePlayer(direction);
 
             return game.ToResponse();
         }

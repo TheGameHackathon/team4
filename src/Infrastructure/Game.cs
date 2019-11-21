@@ -16,13 +16,12 @@ namespace thegame.Infrastructure
         int score = 0;
 
         public Game() => level = Level.First();
-        // public Game() => level = LevelParser.ParseFromFile("LEVELS.txt"); //TestData.FirstLevel();
 
         public bool CheckPosition(string type, Vec position)
         {
             foreach (var cell in level.Map)
             {
-                if (cell.Type == type && cell.Pos.X == position.X && cell.Pos.Y == position.Y)
+                if (cell.Type == type && cell.Pos.Equals(position))
                 {
                     return true;
                 }
@@ -41,7 +40,7 @@ namespace thegame.Infrastructure
                 return;
             }
 
-            var newPosPlayer = GetNextPosition(playerPos, direction);
+            var newPosPlayer = playerPos.GetNextPosition(direction);
              
             if (CheckPosition("box", newPosPlayer) || CheckPosition("boxOnTarget", newPosPlayer))
             {
@@ -50,7 +49,7 @@ namespace thegame.Infrastructure
                     return;
                 }
 
-                var newPosOfBox = GetNextPosition(newPosPlayer, direction);
+                var newPosOfBox = newPosPlayer.GetNextPosition(direction);
                 Move(newPosPlayer, newPosOfBox);
                 
             }
@@ -59,51 +58,31 @@ namespace thegame.Infrastructure
 
         public bool CheckValidMove(Vec vector, Direction direction)
         {
+            Vec vec = new Vec(vector.X, vector.Y);
             if (direction == Direction.Up)
             {
-                vector.Y -= 1;
-                return vector.Y >= 0 && !CheckPosition("wall", vector);
+                vec.Y -= 1;
+                return vec.Y >= 0 && !CheckPosition("wall", vec);
             }
             else if (direction == Direction.Left)
             {
-                vector.X -= 1;
-                return (vector.X - 1) >= 0 && !CheckPosition("wall", vector);
+                vec.X -= 1;
+                return (vec.X - 1) >= 0 && !CheckPosition("wall", vec);
             }
             else if (direction == Direction.Right)
             {
-                vector.X += 1;
-                return (vector.X + 1) < level.Width && !CheckPosition("wall", vector);
+                vec.X += 1;
+                return (vec.X + 1) < level.Width && !CheckPosition("wall", vec);
             }
             else if (direction == Direction.Down)
             {
-                vector.Y += 1;
-                return (vector.Y + 1) < level.Height && !CheckPosition("wall", vector);
+                vec.Y += 1;
+                return (vec.Y + 1) < level.Height && !CheckPosition("wall", vec);
             }
             else
             {
                 return false;
             }
-        }
-
-        public Vec GetNextPosition(Vec pastVec, Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    pastVec.Y -= 1;
-                    break;
-                case Direction.Left:
-                    pastVec.X -= 1;
-                    break;
-                case Direction.Right:
-                    pastVec.X += 1;
-                    break;
-                case Direction.Down:
-                    pastVec.Y += 1;
-                    break;
-            }
-            Vec vec = new Vec(pastVec.X, pastVec.Y);
-            return vec;
         }
 
         public void Move(Vec pastVec, Vec newVec)
