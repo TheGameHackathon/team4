@@ -130,3 +130,9 @@
     background-image: url(images/package.svg);
     filter: brightness(50%);
 }
+
+.levelMenu a{
+    font-size: 16px;    
+    text-decoration: none;
+}
+
