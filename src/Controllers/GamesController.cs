@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using thegame.Infrastructure;
@@ -31,12 +32,14 @@ namespace thegame.Controllers
 
             return game.ToResponse();
         }
+
         [Route("api/games/level{levelId}")]
         [HttpPost]
         public int GetLevel(int levelId)
         {
             _levelId = levelId;
             return levelId;
+
         }
     }
 }

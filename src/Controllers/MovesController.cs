@@ -23,6 +23,7 @@ namespace thegame.Controllers
 
             var direction = userInput.GetDirection();
             game.MovePlayer(direction);
+            game.CheckForLevelIsFinished();
 
             return game.ToResponse();
         }
