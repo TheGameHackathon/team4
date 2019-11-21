@@ -16,6 +16,8 @@ namespace thegame.Infrastructure
         public Game() => level = Level.First();
 
         public Game(Guid guid) : this() => Id = guid;
+        
+        public Game(int lvl) => level = Level.Load(lvl);
 
         public void OnLevelLoaded() => isFinished = false;
 

@@ -14,20 +14,27 @@ namespace thegame.Controllers
             return levelId;
         }
     }
-
-   
+    
+    [Route("api/games")]
     public class GamesController : Controller
     {
         readonly IMemoryCache cache;
-        private static int _levelId;
 
         public GamesController(IMemoryCache cache) => this.cache = cache;
-
-        [Route("api/games")]
+        
         [HttpPost]
         public IActionResult Index()
         {
             var game = new Game();
+            cache.Set(game.Id, game);
+
+            return game.ToResponse();
+        }
+        
+        [HttpPost("level/{level}")]
+        public IActionResult Index(int level)
+        {
+            var game = new Game(level);
             cache.Set(game.Id, game);
 
             return game.ToResponse();
@@ -40,15 +47,6 @@ namespace thegame.Controllers
             cache.Set(game.Id, game);
 
             return game.ToResponse();
-        }
-
-        [Route("api/games/level{levelId}")]
-        [HttpPost]
-        public int GetLevel(int levelId)
-        {
-            _levelId = levelId;
-            return levelId;
-
         }
     }
 }

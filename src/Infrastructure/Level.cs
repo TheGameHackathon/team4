@@ -35,6 +35,8 @@ namespace thegame.Infrastructure
         public static string[] All() => Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
         public static Level First() => FromFile(All().First());
+        
+        public static Level Load(int level) => FromFile(All().First(name => name.Contains(level.ToString())));
 
         public CellDto GetCell(Vec vector)
         {

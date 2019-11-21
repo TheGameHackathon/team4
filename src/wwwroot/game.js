@@ -1,9 +1,10 @@
-const field = document.getElementById("field");
+﻿const field = document.getElementById("field");
 const startMessage = document.getElementsByClassName("startMessage")[0];
 const startgameOverlay = document.getElementsByClassName("start")[0];
 const scoreElement = document.getElementsByClassName("scoreContainer")[0];
 const startButton = document.getElementsByClassName("startButton")[0];
 let game = null;
+let awaiting = false;
 let currentCells = {};
 
 function handleApiErrors(result) {
@@ -23,34 +24,35 @@ async function getLevel(levelId) {
     window.history.replaceState(game.id, "The Game", "/" + game.id);
 }
 document.addEventListener('DOMContentLoaded', () => {
-    const buttonLevel1 = document.getElementById("level1");
-    const buttonLevel2 = document.getElementById("level2");
-    const buttonLevel3 = document.getElementById("level3");
-    buttonLevel1 .addEventListener("click", () => {
-        getLevel(1)
-    })
-    buttonLevel2 .addEventListener("click", () => {
-        getLevel(2)
-    })
-    buttonLevel3 .addEventListener("click", () => {
-        getLevel(3)
-    })
+    let buttons = document.getElementsByClassName("levelMenu");
+    for (let btn of buttons) {
+        btn.addEventListener("click", () => {
+            startLevel(parseInt(btn.dataset.level))
+        })
+    }
+});
 
-})
-
+async function startLevel(level) {
+    game = await fetch("/api/games/level/" + level, { method: "POST" })
+        .then(handleApiErrors);
+    window.history.replaceState(game.id, "The Game", "/" + game.id);
+    renderField(game);
+}
 
 async function startGame() {
-    let guid = (game !== null ? game.id : (window.location.pathname !== "/" ? window.location.pathname.substr(1) : null)); 
+    let guid = (game !== null ? game.id : null); 
     
-    game = await fetch("/api/games/" + guid || "", { method: "POST" })
+    game = await fetch("/api/games/" + (guid || ""), { method: "POST" })
         .then(handleApiErrors);
     window.history.replaceState(game.id, "The Game", "/" + game.id);
     renderField(game);
 }
 
 function makeMove(userInput) {
-    if (!game || game.isFinished) return;
+    if (!game || game.isFinished || awaiting) return;
     console.log("send userInput: %o", userInput);
+    
+    // awaiting = true;
     fetch(`/api/games/${game.id}/moves`,
             {
                 method: "POST",
@@ -63,7 +65,8 @@ function makeMove(userInput) {
         .then(newGame => {
             game = newGame;
             updateField(game);
-        });
+        })
+        .then(_ => awaiting = false);
 }
 
 function renderField(game) {
