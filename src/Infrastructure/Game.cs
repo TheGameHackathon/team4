@@ -84,6 +84,7 @@ namespace thegame.Infrastructure
             else if (currentCell.Type == "boxOnTarget")
             {
                 currentCell.Type = "box";
+                score--;
             }
             
             currentCell.Pos = newVec.Clone();
