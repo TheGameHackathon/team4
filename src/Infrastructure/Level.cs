@@ -36,6 +36,11 @@ namespace thegame.Infrastructure
 
         public static Level First() => FromFile(All().First());
 
+        public CellDto GetCell(Vec vector)
+        {
+            return Map.FirstOrDefault(x => x.Pos.Equals(vector));
+        }
+
         public static Level FromFile(string name) =>
             FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream(name), name);
 
