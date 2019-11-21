@@ -33,7 +33,6 @@ namespace thegame.Infrastructure
             return Map.FirstOrDefault(x => x.Pos.Equals(vector));
         }
 
-        public static Level FromSource(string[] lines)
         public static Level FromFile(string name) =>
             FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream(name), name);
 

@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Infrastructure.Common;
 using thegame.Models;
+using thegame.Services;
 
 namespace thegame.Infrastructure
 {
@@ -12,7 +13,7 @@ namespace thegame.Infrastructure
         Level level;
         int score = 0;
 
-        public Game() => level = Level.First();
+        public Game() => level = TestData.FirstLevel();
 
         public bool CheckPosition(string type, Vec position)
         {
@@ -63,29 +64,22 @@ namespace thegame.Infrastructure
         public bool CheckValidMove(Vec vector, Direction direction)
         {
             Vec vec = new Vec(vector.X, vector.Y);
-            if (direction == Direction.Up)
+            switch (direction)
             {
-                vec.Y -= 1;
-                return vec.Y >= 0 && !CheckPosition("wall", vec);
-            }
-            else if (direction == Direction.Left)
-            {
-                vec.X -= 1;
-                return (vec.X - 1) >= 0 && !CheckPosition("wall", vec);
-            }
-            else if (direction == Direction.Right)
-            {
-                vec.X += 1;
-                return (vec.X + 1) < level.Width && !CheckPosition("wall", vec);
-            }
-            else if (direction == Direction.Down)
-            {
-                vec.Y += 1;
-                return (vec.Y + 1) < level.Height && !CheckPosition("wall", vec);
-            }
-            else
-            {
-                return false;
+                case Direction.Up:
+                    vec.Y -= 1;
+                    return vec.Y >= 0 && !CheckPosition("wall", vec);
+                case Direction.Left:
+                    vec.X -= 1;
+                    return (vec.X - 1) >= 0 && !CheckPosition("wall", vec);
+                case Direction.Right:
+                    vec.X += 1;
+                    return (vec.X + 1) < level.Width && !CheckPosition("wall", vec);
+                case Direction.Down:
+                    vec.Y += 1;
+                    return (vec.Y + 1) < level.Height && !CheckPosition("wall", vec);
+                default:
+                    return false;
             }
         }
 
@@ -96,6 +90,7 @@ namespace thegame.Infrastructure
             if (futureCell != null && futureCell.Type == "target" && currentCell.Type == "box")
             {
                 currentCell.Type = "boxOnTarget";
+                score++;
             }
             else if (currentCell.Type == "boxOnTarget")
             {
