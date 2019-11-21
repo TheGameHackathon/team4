@@ -10,5 +10,9 @@ namespace thegame.Models
 
         public readonly int X, Y;
 
+        public bool Equals(Vec secondVec)
+        {
+            return this.X == secondVec.X && this.Y == secondVec.Y;
+        }
     }
 }
