@@ -128,6 +128,8 @@ function deleteCell(cell) {
 
 function updateCellDiv(cellDiv, cell) {
     const staticGridCell = document.getElementById(`td_${cell.pos.x}_${cell.pos.y}`);
+    if (staticGridCell == null) return;
+    
     const rect = staticGridCell.getBoundingClientRect();
     cellDiv.dataset.x = cell.pos.x;
     cellDiv.dataset.y = cell.pos.y;
@@ -150,7 +152,7 @@ function addKeyboardListener() {
                     e.preventDefault();
             }
         });
-};
+}
 
 function addResizeListener() {
     window.addEventListener("resize",

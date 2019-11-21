@@ -131,7 +131,7 @@
     filter: brightness(50%);
 }
 
-.levelMenu {
+button {
     display: inline-block;
     color: black;
     font-weight: 700;
@@ -142,10 +142,20 @@
     border: 2px solid;
     border-radius: 1px;
     transition: 0.2s;
+    cursor: pointer;
 }
 
-.levelMenu:hover { background: rgba(255,255,255,.2); }
-.levelMenu:active { background: white; }
+button:hover { 
+    background: rgba(255,255,255,.6); 
+}
 
+button:active { 
+    background: white; 
+}
 
-
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 80px;
+}
