@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Infrastructure.Common;
 using thegame.Models;
@@ -13,7 +14,7 @@ namespace thegame.Infrastructure
         Level level;
         int score = 0;
 
-        public Game() => level = TestData.FirstLevel();
+        public Game() => level = Level.First();
 
         public bool CheckPosition(string type, Vec position)
         {

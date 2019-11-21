@@ -19,7 +19,10 @@ namespace thegame.Controllers
         public IActionResult Moves(Guid gameId, [FromBody]UserInputForMovesPost userInput)
         {
             var game = cache.Get<Game>(gameId);
-
+            
+            if (game == null)
+                return new BadRequestResult();
+            
             var direction = userInput.GetDirection();
             // game.MovePlayer(direction); // Not implemented
 
