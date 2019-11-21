@@ -8,7 +8,7 @@ namespace thegame.Models
             Y = y;
         }
 
-        public readonly int X, Y;
+        public int X, Y;
 
         public override bool Equals(object obj)
         {

@@ -30,7 +30,6 @@ namespace thegame.Services
                 new CellDto("15", new Vec(7, 6), "wall", "", 0),
                 new CellDto("16", new Vec(7, 7), "wall", "", 0),
                 new CellDto("17", new Vec(7, 8), "wall", "", 0),
-                new CellDto("35", new Vec(6, 8), "wall", "", 0),
                 new CellDto("18", new Vec(5, 8), "wall", "", 0),
                 new CellDto("19", new Vec(4, 8), "wall", "", 0),
                 new CellDto("20", new Vec(3, 8), "wall", "", 0),
@@ -48,6 +47,7 @@ namespace thegame.Services
                 new CellDto("32", new Vec(2, 4), "wall", "", 0),
                 new CellDto("33", new Vec(2, 5), "wall", "", 0),
                 new CellDto("34", new Vec(3, 4), "wall", "", 0),
+                new CellDto("35", new Vec(6, 8), "wall", "", 0),
 
                 new CellDto("36", new Vec(3, 2), "box", "", 0),
                 new CellDto("37", new Vec(4, 3), "box", "", 0),
