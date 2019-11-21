@@ -9,9 +9,11 @@ namespace thegame.Infrastructure
 {
     public class Game
     {
+        public readonly Guid Id = Guid.NewGuid();
         Level level;
+        int score = 0;
 
-        public Game(Vec vector) => level = TestData.FirstLevel(vector);
+        public Game() => level = TestData.FirstLevel();
 
         public bool CheckPosition(string type, Vec position)
         {
@@ -37,7 +39,7 @@ namespace thegame.Infrastructure
 
         public ObjectResult ToResponse() =>
             new ObjectResult(
-                new GameDto(level.Map, true, true, level.Width, level.Height, new Guid(), false, 0)
+                new GameDto(level.Map, true, true, level.Width, level.Height, Id, false, score)
             );
     }
 }
