@@ -30,6 +30,7 @@ namespace thegame.Models
                     vec.Y += 1;
                     break;
             }
+
             return vec;
         }
 

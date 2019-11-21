@@ -1,31 +1,32 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using thegame.Infrastructure.Common;
 using thegame.Models;
 
 namespace thegame.Infrastructure
 {
     public class Level
     {
+        public readonly string File;
         public readonly CellDto[] Map;
 
         public readonly int Width;
         public readonly int Height;
 
-        public Level(CellDto[] map, int width, int height)
+        public Level(CellDto[] map, int width, int height, string file = null)
         {
             Map = map;
             Width = width;
             Height = height;
+            File = file;
         }
 
-        public static Level FromFile(string path) => FromSource(File.ReadAllLines(path));
+        public static string[] All() => Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
-        public Vec GetPlayerPosition()
-        {
-            var pastVec = Map.First(x => x.Type == "player").Pos;
-            return new Vec(pastVec.X, pastVec.Y);
-        }
+        public static Level First() => FromFile(All().First());
 
         public CellDto GetCell(Vec vector)
         {
@@ -33,26 +34,56 @@ namespace thegame.Infrastructure
         }
 
         public static Level FromSource(string[] lines)
-        {
-            foreach (var singleLine in lines)
-            {
-                foreach (var symbol in singleLine.ToCharArray())
-                {
+        public static Level FromFile(string name) =>
+            FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream(name), name);
 
-                    
+        static Level FromStream(Stream stream, string file) => FromSource(stream.ReadAllLines().ToArray(), file);
+
+        static Level FromSource(string[] lines, string file)
+        {
+            List<CellDto> map = new List<CellDto>();
+            int index = 0, width = 0, x = 0, y = 0;
+
+            foreach (var line in lines)
+            {
+                foreach (var ch in line)
+                {
+                    switch (ch)
+                    {
+                        case 'w':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "wall", "", 1));
+                            break;
+
+                        case '*':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "target", "", 0));
+                            break;
+
+                        case 'P':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "player", "", 1));
+                            break;
+
+                        case 'B':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "box", "", 1));
+                            break;
+
+                        case '.':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "", "", 1));
+                            break;
+                    }
                 }
 
-                
+                y++;
+                x = 0;
+                width = Math.Max(width, line.Length);
             }
 
-            var map = Enumerable
-                .Range(0, 9)
-                .Select(i => new CellDto(i.ToString(), new Vec(i % 3, i / 3), "wall", "", 1))
-                .ToArray();
+            return new Level(map.ToArray(), width, lines.Length, file);
+        }
 
-            map[4].Type = "";
-
-            return new Level(map, 8,9);
+        public Vec GetPlayerPosition()
+        {
+            var pastVec = Map.First(x => x.Type == "player").Pos;
+            return new Vec(pastVec.X, pastVec.Y);
         }
     }
 }

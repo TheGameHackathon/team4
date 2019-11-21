@@ -1,5 +1,4 @@
-﻿using System;
-using thegame.Infrastructure;
+﻿using thegame.Infrastructure;
 using thegame.Models;
 
 namespace thegame.Services
