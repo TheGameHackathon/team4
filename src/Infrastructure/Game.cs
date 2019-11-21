@@ -13,9 +13,27 @@ namespace thegame.Infrastructure
         bool isFinished;
         int score;
 
-        public Game() => level = Level.First();
-        
-        public void OnLevelLoaded() => isFinished = false;
+        public Game(int levelId)
+        {
+            string filename = "";
+            switch (levelId)
+            {
+                case 1:
+                    filename = "thegame.Infrastructure.Levels.level-1.txt";
+                    break;
+                case 2:
+                    filename = "thegame.Infrastructure.Levels.level-2.txt";
+                    break;
+                    ;
+                case 3:
+                    filename = "thegame.Infrastructure.Levels.level-3.txt";
+                    break;
+                    ;
+
+            }
+            level = Level.FromFile(filename);
+
+        }
 
         public bool CheckPosition(string type, Vec position) => 
             level.Map.Any(cell => cell.Type == type && cell.Pos.Equals(position));
