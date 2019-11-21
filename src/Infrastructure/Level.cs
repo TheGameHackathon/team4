@@ -21,6 +21,12 @@ namespace thegame.Infrastructure
 
         public static Level FromFile(string path) => FromSource(File.ReadAllLines(path));
 
+        public Vec GetPlayerPosition()
+        {
+            var pastVec = Map.First(x => x.Type == "player").Pos;
+            return new Vec(pastVec.X, pastVec.Y);
+        }
+
         public static Level FromSource(string[] lines)
         {
             var map = Enumerable
