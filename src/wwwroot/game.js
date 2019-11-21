@@ -1,4 +1,4 @@
-﻿const field = document.getElementById("field");
+const field = document.getElementById("field");
 const startMessage = document.getElementsByClassName("startMessage")[0];
 const startgameOverlay = document.getElementsByClassName("start")[0];
 const scoreElement = document.getElementsByClassName("scoreContainer")[0];
@@ -39,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function startGame() {
-    game = await fetch("/api/games", { method: "POST" })
+    let guid = (game !== null ? game.id : (window.location.pathname !== "/" ? window.location.pathname.substr(1) : null)); 
+    
+    game = await fetch("/api/games/" + guid || "", { method: "POST" })
         .then(handleApiErrors);
     window.history.replaceState(game.id, "The Game", "/" + game.id);
     renderField(game);

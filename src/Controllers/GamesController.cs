@@ -34,7 +34,7 @@ namespace thegame.Controllers
         [HttpPost("{gameId}")]
         public IActionResult Index(Guid gameId)
         {
-            var game = cache.Get<Game>(gameId);
+            var game = cache.Get<Game>(gameId) ?? new Game(gameId);
             cache.Set(game.Id, game);
             game.OnLevelLoaded();
 

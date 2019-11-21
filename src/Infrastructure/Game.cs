@@ -14,7 +14,9 @@ namespace thegame.Infrastructure
         int score;
 
         public Game() => level = Level.First();
-        
+
+        public Game(Guid guid) : this() => Id = guid;
+
         public void OnLevelLoaded() => isFinished = false;
 
         public bool CheckPosition(string type, Vec position) => 
