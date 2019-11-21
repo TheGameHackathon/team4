@@ -14,9 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="LEVELS.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Remove="Infrastructure\Levels\level-1.txt" />
     <EmbeddedResource Include="Infrastructure\Levels\level-1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

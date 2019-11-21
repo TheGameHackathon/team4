@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -33,25 +34,42 @@ namespace thegame.Infrastructure
         
         static Level FromSource(string[] lines, string file)
         {
-            foreach (var singleLine in lines)
+            List<CellDto> map = new List<CellDto>();
+            int index = 0, width = 0, x = 0, y = 0;
+            
+            foreach (var line in lines)
             {
-                foreach (var symbol in singleLine.ToCharArray())
+                foreach (var ch in line)
                 {
+                    switch (ch)
+                    {
+                        case 'w':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "wall", "", 1));
+                            break;
 
-                    
+                        case '*':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "target", "", 0));
+                            break;
+                        
+                        case 'P':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "player", "", 1));
+                            break;
+                        
+                        case 'B':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "box", "", 1));
+                            break;
+                        
+                        case '.':
+                            map.Add(new CellDto(index.ToString(), new Vec(x++, y), "", "", 1));
+                            break;
+                    }
                 }
 
-                
+                y++; x = 0;
+                width = Math.Max(width, line.Length);
             }
 
-            var map = Enumerable
-                .Range(0, 9)
-                .Select(i => new CellDto(i.ToString(), new Vec(i % 3, i / 3), "wall", "", 1))
-                .ToArray();
-
-            map[4].Type = "";
-
-            return new Level(map, 8,9, file);
+            return new Level(map.ToArray(), width, lines.Length, file);
         }
         
         public Vec GetPlayerPosition()

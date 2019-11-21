@@ -1,8 +1,8 @@
---www---
---w*w---
---wswwww
-wwwBsB*w
-w*sBPwww
-wwwwBw--
----w*w--
----www--
+..www...
+..w*w...
+..w.wwww
+wwwB.B*w
+w*.BPwww
+wwwwBw..
+...w*w..
+...www..
