@@ -14,13 +14,13 @@ namespace thegame.Infrastructure
         Level level;
         int score = 0;
 
-        public Game() => level = LevelParser.ParseFromFile("LEVELS.txt"); //TestData.FirstLevel();
+        public Game() => level = TestData.FirstLevel();//LevelParser.ParseFromFile("LEVELS.txt"); //
 
         public bool CheckPosition(string type, Vec position)
         {
             foreach (var cell in level.Map)
             {
-                if (cell.Type == type && cell.Pos.X == position.X && cell.Pos.Y == position.Y)
+                if (cell.Type == type && cell.Pos.Equals(position))
                 {
                     return true;
                 }
@@ -39,7 +39,7 @@ namespace thegame.Infrastructure
                 return;
             }
 
-            var newPosPlayer = GetNextPosition(playerPos, direction);
+            var newPosPlayer = playerPos.GetNextPosition(direction);
              
             if (CheckPosition("box", newPosPlayer) || CheckPosition("boxOnTarget", newPosPlayer))
             {
@@ -48,7 +48,7 @@ namespace thegame.Infrastructure
                     return;
                 }
 
-                var newPosOfBox = GetNextPosition(newPosPlayer, direction);
+                var newPosOfBox = newPosPlayer.GetNextPosition(direction);
                 Move(newPosPlayer, newPosOfBox);
                 
             }
@@ -82,27 +82,6 @@ namespace thegame.Infrastructure
             {
                 return false;
             }
-        }
-
-        public Vec GetNextPosition(Vec pastVec, Direction direction)
-        {
-            Vec vec = new Vec(pastVec.X, pastVec.Y);
-            switch (direction)
-            {
-                case Direction.Up:
-                    vec.Y -= 1;
-                    break;
-                case Direction.Left:
-                    vec.X -= 1;
-                    break;
-                case Direction.Right:
-                    vec.X += 1;
-                    break;
-                case Direction.Down:
-                    vec.Y += 1;
-                    break;
-            }
-            return vec;
         }
 
         public void Move(Vec pastVec, Vec newVec)

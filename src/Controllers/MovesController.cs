@@ -21,7 +21,7 @@ namespace thegame.Controllers
             var game = cache.Get<Game>(gameId);
 
             var direction = userInput.GetDirection();
-            game.MovePlayer(direction); // Not implemented
+            game.MovePlayer(direction);
 
             return game.ToResponse();
         }
