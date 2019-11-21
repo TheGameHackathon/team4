@@ -5,16 +5,6 @@ using thegame.Infrastructure;
 
 namespace thegame.Controllers
 {
-    
-    public class LevelGetter : Controller
-    {
-        [HttpPost]
-        public int GetLevel(int levelId)
-        {
-            return levelId;
-        }
-    }
-    
     [Route("api/games")]
     public class GamesController : Controller
     {
