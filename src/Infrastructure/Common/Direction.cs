@@ -2,6 +2,6 @@ namespace thegame.Infrastructure.Common
 {
     public enum Direction
     {
-        Up, Down, Left, Right
+        None, Up, Down, Left, Right
     }
 }

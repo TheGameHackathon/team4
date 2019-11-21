@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using thegame.Infrastructure;
 using thegame.Models;
 using thegame.Services;
 
@@ -9,16 +11,19 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
+        readonly IMemoryCache cache;
+        
+        public MovesController(IMemoryCache cache) => this.cache = cache;
+
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputForMovesPost userInput)
         {
-            var game = TestData.AGameDto(userInput.ClickedPos ?? new Vec(1, 2));
-            if (userInput.ClickedPos != null && !game.CheckPosition("wall", userInput.ClickedPos))
-            {
-                game.Cells.First(c => c.Type == "player").Pos = userInput.ClickedPos;
-            }
+            var game = cache.Get<Game>(gameId);
 
-            return new ObjectResult(game);
+            var direction = userInput.GetDirection();
+            // game.MovePlayer(direction); // Not implemented
+
+            return game.ToResponse();
         }
     }
 }
