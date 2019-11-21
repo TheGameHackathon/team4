@@ -131,8 +131,21 @@
     filter: brightness(50%);
 }
 
-.levelMenu a{
-    font-size: 16px;    
+#level1, #level2, #level3 {
+    display: inline-block;
+    color: black;
+    font-weight: 700;
     text-decoration: none;
+    user-select: none;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+    transition: 0.2s;
 }
+
+#level1:hover, #level2:hover, #level3:hover { background: rgba(255,255,255,.2); }
+#level1:active, #level2:active, #level3:active { background: white; }
+
+
 

@@ -5,17 +5,7 @@ using thegame.Infrastructure;
 
 namespace thegame.Controllers
 {
-    
-    public class LevelGetter : Controller
-    {
-        [HttpPost]
-        public int GetLevel(int levelId)
-        {
-            return levelId;
-        }
-    }
 
-   
     public class GamesController : Controller
     {
         readonly IMemoryCache cache;
