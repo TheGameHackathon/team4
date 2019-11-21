@@ -29,6 +29,17 @@ namespace thegame.Infrastructure
 
         public static Level FromSource(string[] lines)
         {
+            foreach (var singleLine in lines)
+            {
+                foreach (var symbol in singleLine.ToCharArray())
+                {
+
+                    
+                }
+
+                
+            }
+
             var map = Enumerable
                 .Range(0, 9)
                 .Select(i => new CellDto(i.ToString(), new Vec(i % 3, i / 3), "wall", "", 1))

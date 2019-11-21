@@ -14,7 +14,7 @@ namespace thegame.Infrastructure
         Level level;
         int score = 0;
 
-        public Game() => level = TestData.FirstLevel();
+        public Game() => level = LevelParser.ParseFromFile("LEVELS.txt"); //TestData.FirstLevel();
 
         public bool CheckPosition(string type, Vec position)
         {

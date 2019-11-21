@@ -14,6 +14,30 @@ function handleApiErrors(result) {
     return result.json();
 }
 
+
+async function getLevel(levelId) {
+    game = await fetch(`/api/games/level${levelId}`, { method: "GET" })
+        .then(handleApiErrors);
+    console.log("Должен вернуться какой-то объект игры", game)
+    window.history.replaceState(game.id, "The Game", "/" + game.id);
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const buttonLevel1 = document.getElementById("level1");
+    const buttonLevel2 = document.getElementById("level2");
+    const buttonLevel3 = document.getElementById("level3");
+    buttonLevel1 .addEventListener("click", () => {
+        getLevel(1)
+    })
+    buttonLevel2 .addEventListener("click", () => {
+        getLevel(2)
+    })
+    buttonLevel2 .addEventListener("click", () => {
+        getLevel(3)
+    })
+
+})
+
+
 async function startGame() {
     game = await fetch("/api/games", { method: "POST" })
         .then(handleApiErrors);
