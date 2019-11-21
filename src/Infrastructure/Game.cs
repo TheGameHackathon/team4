@@ -57,25 +57,26 @@ namespace thegame.Infrastructure
 
         public bool CheckValidMove(Vec vector, Direction direction)
         {
+            Vec vec = new Vec(vector.X, vector.Y);
             if (direction == Direction.Up)
             {
-                vector.Y -= 1;
-                return vector.Y >= 0 && !CheckPosition("wall", vector);
+                vec.Y -= 1;
+                return vec.Y >= 0 && !CheckPosition("wall", vec);
             }
             else if (direction == Direction.Left)
             {
-                vector.X -= 1;
-                return (vector.X - 1) >= 0 && !CheckPosition("wall", vector);
+                vec.X -= 1;
+                return (vec.X - 1) >= 0 && !CheckPosition("wall", vec);
             }
             else if (direction == Direction.Right)
             {
-                vector.X += 1;
-                return (vector.X + 1) < level.Width && !CheckPosition("wall", vector);
+                vec.X += 1;
+                return (vec.X + 1) < level.Width && !CheckPosition("wall", vec);
             }
             else if (direction == Direction.Down)
             {
-                vector.Y += 1;
-                return (vector.Y + 1) < level.Height && !CheckPosition("wall", vector);
+                vec.Y += 1;
+                return (vec.Y + 1) < level.Height && !CheckPosition("wall", vec);
             }
             else
             {
@@ -85,22 +86,22 @@ namespace thegame.Infrastructure
 
         public Vec GetNextPosition(Vec pastVec, Direction direction)
         {
+            Vec vec = new Vec(pastVec.X, pastVec.Y);
             switch (direction)
             {
                 case Direction.Up:
-                    pastVec.Y -= 1;
+                    vec.Y -= 1;
                     break;
                 case Direction.Left:
-                    pastVec.X -= 1;
+                    vec.X -= 1;
                     break;
                 case Direction.Right:
-                    pastVec.X += 1;
+                    vec.X += 1;
                     break;
                 case Direction.Down:
-                    pastVec.Y += 1;
+                    vec.Y += 1;
                     break;
             }
-            Vec vec = new Vec(pastVec.X, pastVec.Y);
             return vec;
         }
 
