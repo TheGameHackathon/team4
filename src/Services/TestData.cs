@@ -6,13 +6,13 @@ namespace thegame.Services
 {
     public class TestData
     {
-        public static Level FirstLevel(Vec movingObjectPosition)
+        public static Level FirstLevel()
         {
             var width = 8;
             var height = 9;
             var testCells = new[]
             {
-                new CellDto("0", movingObjectPosition, "player", "", 10),
+                new CellDto("0", new Vec(2, 2), "player", "", 10),
                 new CellDto("1", new Vec(0, 1), "wall", "", 0),
                 new CellDto("2", new Vec(1, 1), "wall", "", 0),
                 new CellDto("3", new Vec(2, 1), "wall", "", 0),
