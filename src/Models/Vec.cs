@@ -34,15 +34,12 @@ namespace thegame.Models
             return vec;
         }
 
+        public Vec Clone() => new Vec(X, Y);
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Vec);
-        }
+        public override bool Equals(object obj) => Equals(obj as Vec);
 
-        bool Equals(Vec secondVec)
-        {
-            return this.X == secondVec.X && this.Y == secondVec.Y;
-        }
+        bool Equals(Vec secondVec) => X == secondVec.X && Y == secondVec.Y;
+
+        public override string ToString() => $"{{X: {X} | Y: {Y}}}";
     }
 }

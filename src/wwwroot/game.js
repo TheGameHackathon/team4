@@ -15,14 +15,6 @@ function handleApiErrors(result) {
     return result.json();
 }
 
-
-async function getLevel(levelId) {
-    console.log(levelId);
-    game = await fetch(`/api/games/level${levelId}`, { method: "POST" })
-        .then(handleApiErrors);
-    console.log("Должен вернуться какой-то объект игры", game)
-    window.history.replaceState(game.id, "The Game", "/" + game.id);
-}
 document.addEventListener('DOMContentLoaded', () => {
     let buttons = document.getElementsByClassName("levelMenu");
     for (let btn of buttons) {
@@ -52,7 +44,7 @@ function makeMove(userInput) {
     if (!game || game.isFinished || awaiting) return;
     console.log("send userInput: %o", userInput);
     
-    // awaiting = true;
+    awaiting = true;
     fetch(`/api/games/${game.id}/moves`,
             {
                 method: "POST",

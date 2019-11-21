@@ -40,15 +40,15 @@ namespace thegame.Infrastructure
 
                 if(CheckPosition("box", newPosOfBox) || CheckPosition("boxOnTarget", newPosOfBox)) return;
 
-                Move(newPosPlayer, newPosOfBox);
+                Move(newPosPlayer, newPosOfBox, "box", "boxOnTarget");
             }
 
-            Move(playerPos, newPosPlayer);
+            Move(playerPos, newPosPlayer, "player");
         }
 
         public bool CheckValidMove(Vec vector, Direction direction)
         {
-            Vec vec = new Vec(vector.X, vector.Y);
+            Vec vec = vector.Clone();
             switch (direction)
             {
                 case Direction.Up:
@@ -72,10 +72,10 @@ namespace thegame.Infrastructure
             }
         }
 
-        public void Move(Vec pastVec, Vec newVec)
+        public void Move(Vec pastVec, Vec newVec, params string[] type)
         {
-            var currentCell = level.GetCell(pastVec);
-            var futureCell = level.GetCell(newVec);
+            var currentCell = level.GetCell(pastVec, type);
+            var futureCell = level.GetCell(newVec, null);
             if (futureCell != null && futureCell.Type == "target" && currentCell.Type == "box")
             {
                 currentCell.Type = "boxOnTarget";
@@ -86,7 +86,7 @@ namespace thegame.Infrastructure
                 currentCell.Type = "box";
             }
             
-            currentCell.Pos = newVec;
+            currentCell.Pos = newVec.Clone();
         }
 
         public void CheckForLevelIsFinished()

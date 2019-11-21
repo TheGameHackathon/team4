@@ -38,10 +38,8 @@ namespace thegame.Infrastructure
         
         public static Level Load(int level) => FromFile(All().First(name => name.Contains(level.ToString())));
 
-        public CellDto GetCell(Vec vector)
-        {
-            return Map.FirstOrDefault(x => x.Pos.Equals(vector));
-        }
+        public CellDto GetCell(Vec vector, params string[] type) => 
+            Map.FirstOrDefault(x => x.Pos.Equals(vector) && (type == null || type.Contains(x.Type)));
 
         public static Level FromFile(string name) =>
             FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream(name), name);
@@ -91,10 +89,7 @@ namespace thegame.Infrastructure
             return new Level(map.ToArray(), width, lines.Length, file);
         }
 
-        public Vec GetPlayerPosition()
-        {
-            var pastVec = Map.First(x => x.Type == "player").Pos;
-            return new Vec(pastVec.X, pastVec.Y);
-        }
+        public Vec GetPlayerPosition() => 
+            Map.First(x => x.Type == "player").Pos.Clone();
     }
 }

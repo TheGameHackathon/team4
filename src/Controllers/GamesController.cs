@@ -35,6 +35,7 @@ namespace thegame.Controllers
         {
             var game = cache.Get<Game>(gameId) ?? new Game(gameId);
             cache.Set(game.Id, game);
+            game.OnLevelLoaded();
 
             return game.ToResponse();
         }
