@@ -77,6 +77,8 @@ namespace thegame.Infrastructure
                             map.Add(new CellDto(index.ToString(), new Vec(x++, y), "", "", 1));
                             break;
                     }
+
+                    index++;
                 }
 
                 y++;

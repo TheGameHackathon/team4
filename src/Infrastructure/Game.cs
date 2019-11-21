@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Infrastructure.Common;
 using thegame.Models;
-using thegame.Services;
 
 namespace thegame.Infrastructure
 {
@@ -11,51 +10,31 @@ namespace thegame.Infrastructure
     {
         public readonly Guid Id = Guid.NewGuid();
         Level level;
-        bool isFinished = false;
-        int score = 0;
+        bool isFinished;
+        int score;
 
-        public Game() => level = TestData.FirstLevel();
+        public Game() => level = Level.First();
+        
+        public void OnLevelLoaded() => isFinished = false;
 
-        public bool CheckPosition(string type, Vec position)
-        {
-            foreach (var cell in level.Map)
-            {
-                if (cell.Type == type && cell.Pos.Equals(position))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        public bool CheckPosition(string type, Vec position) => 
+            level.Map.Any(cell => cell.Type == type && cell.Pos.Equals(position));
 
         public void MovePlayer(Direction direction)
         {
-            isFinished = false;
             var playerPos = level.GetPlayerPosition();
 
             var validMove = CheckValidMove(playerPos, direction);
-
-            if (!validMove)
-            {
-                return;
-            }
+            if (!validMove) return;
 
             var newPosPlayer = playerPos.GetNextPosition(direction);
-
             if (CheckPosition("box", newPosPlayer) || CheckPosition("boxOnTarget", newPosPlayer))
             {
-                if (!CheckValidMove(newPosPlayer, direction))
-                {
-                    return;
-                }
-
+                if (!CheckValidMove(newPosPlayer, direction)) return;
+                
                 var newPosOfBox = newPosPlayer.GetNextPosition(direction);
 
-                if(CheckPosition("box", newPosOfBox) || CheckPosition("boxOnTarget", newPosOfBox))
-                {
-                    return;
-                }
+                if(CheckPosition("box", newPosOfBox) || CheckPosition("boxOnTarget", newPosOfBox)) return;
 
                 Move(newPosPlayer, newPosOfBox);
             }
@@ -71,15 +50,19 @@ namespace thegame.Infrastructure
                 case Direction.Up:
                     vec.Y -= 1;
                     return vec.Y >= 0 && !CheckPosition("wall", vec);
+                
                 case Direction.Left:
                     vec.X -= 1;
                     return (vec.X - 1) >= 0 && !CheckPosition("wall", vec);
+                
                 case Direction.Right:
                     vec.X += 1;
                     return (vec.X + 1) < level.Width && !CheckPosition("wall", vec);
+                
                 case Direction.Down:
                     vec.Y += 1;
                     return (vec.Y + 1) < level.Height && !CheckPosition("wall", vec);
+                
                 default:
                     return false;
             }
@@ -98,12 +81,8 @@ namespace thegame.Infrastructure
             {
                 currentCell.Type = "box";
             }
+            
             currentCell.Pos = newVec;
-        }
-
-        public void MovePlayer(Vec newPosition)
-        {
-            level.Map.First(c => c.Type == "player").Pos = newPosition;
         }
 
         public void CheckForLevelIsFinished()

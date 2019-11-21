@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using thegame.Infrastructure;
@@ -26,6 +27,16 @@ namespace thegame.Controllers
         {
             var game = new Game();
             cache.Set(game.Id, game);
+
+            return game.ToResponse();
+        }
+        
+        [HttpPost("{gameId}")]
+        public IActionResult Index(Guid gameId)
+        {
+            var game = cache.Get<Game>(gameId);
+            cache.Set(game.Id, game);
+            game.OnLevelLoaded();
 
             return game.ToResponse();
         }
