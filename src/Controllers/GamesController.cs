@@ -11,7 +11,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            return new Game().ToResponse();
+            return new Game(new Vec(2, 2)).ToResponse();
         }
     }
 }

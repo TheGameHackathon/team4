@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using thegame.Infrastructure;
 using thegame.Models;
 using thegame.Services;
 
@@ -12,13 +13,13 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputForMovesPost userInput)
         {
-            var game = TestData.AGameDto(userInput.ClickedPos ?? new Vec(1, 2));
+            var game = new Game(new Vec(1, 2));
             if (userInput.ClickedPos != null && !game.CheckPosition("wall", userInput.ClickedPos))
             {
-                game.Cells.First(c => c.Type == "player").Pos = userInput.ClickedPos;
+                game.MovePlayer(userInput.ClickedPos);
             }
 
-            return new ObjectResult(game);
+            return game.ToResponse();
         }
     }
 }
