@@ -4,7 +4,8 @@ namespace thegame.Models
 {
     public class GameDto
     {
-        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id, bool isFinished, int score)
+        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id,
+            bool isFinished, int score)
         {
             Cells = cells;
             MonitorKeyboard = monitorKeyboard;

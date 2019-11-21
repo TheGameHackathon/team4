@@ -1,11 +1,8 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
-using Remotion.Linq.Parsing.ExpressionVisitors.MemberBindings;
 using thegame.Infrastructure.Common;
 using thegame.Models;
-using thegame.Services;
 
 namespace thegame.Infrastructure
 {
@@ -26,6 +23,7 @@ namespace thegame.Infrastructure
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -34,14 +32,14 @@ namespace thegame.Infrastructure
             var playerPos = level.GetPlayerPosition();
 
             var validMove = CheckValidMove(playerPos, direction);
-            
+
             if (!validMove)
             {
                 return;
             }
 
             var newPosPlayer = playerPos.GetNextPosition(direction);
-             
+
             if (CheckPosition("box", newPosPlayer) || CheckPosition("boxOnTarget", newPosPlayer))
             {
                 if (!CheckValidMove(newPosPlayer, direction))
@@ -51,8 +49,8 @@ namespace thegame.Infrastructure
 
                 var newPosOfBox = newPosPlayer.GetNextPosition(direction);
                 Move(newPosPlayer, newPosOfBox);
-                
             }
+
             Move(playerPos, newPosPlayer);
         }
 

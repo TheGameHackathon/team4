@@ -28,15 +28,16 @@ namespace thegame.Infrastructure
 
         public static Level First() => FromFile(All().First());
 
-        public static Level FromFile(string name) => FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream(name), name);
-        
+        public static Level FromFile(string name) =>
+            FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream(name), name);
+
         static Level FromStream(Stream stream, string file) => FromSource(stream.ReadAllLines().ToArray(), file);
-        
+
         static Level FromSource(string[] lines, string file)
         {
             List<CellDto> map = new List<CellDto>();
             int index = 0, width = 0, x = 0, y = 0;
-            
+
             foreach (var line in lines)
             {
                 foreach (var ch in line)
@@ -50,28 +51,29 @@ namespace thegame.Infrastructure
                         case '*':
                             map.Add(new CellDto(index.ToString(), new Vec(x++, y), "target", "", 0));
                             break;
-                        
+
                         case 'P':
                             map.Add(new CellDto(index.ToString(), new Vec(x++, y), "player", "", 1));
                             break;
-                        
+
                         case 'B':
                             map.Add(new CellDto(index.ToString(), new Vec(x++, y), "box", "", 1));
                             break;
-                        
+
                         case '.':
                             map.Add(new CellDto(index.ToString(), new Vec(x++, y), "", "", 1));
                             break;
                     }
                 }
 
-                y++; x = 0;
+                y++;
+                x = 0;
                 width = Math.Max(width, line.Length);
             }
 
             return new Level(map.ToArray(), width, lines.Length, file);
         }
-        
+
         public Vec GetPlayerPosition()
         {
             var pastVec = Map.First(x => x.Type == "player").Pos;
