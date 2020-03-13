@@ -18,7 +18,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            GameDto newGame = _gameService.CreateNewGame();
+           // GameDto newGame = _gameService.CreateNewGame();
             return new ObjectResult(TestData.AGameDto(new Vec(1, 1)));
         }
     }

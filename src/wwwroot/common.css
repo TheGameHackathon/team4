@@ -26,11 +26,6 @@
     width: 100%;
 }
 
-    .field td {
-        border: 0;
-        padding: 0px;
-    }
-
         
         .field td:after {
             content: ' ';
