@@ -9,6 +9,13 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
+        private readonly IGamesRepo gamesRepo;
+
+        public MovesController(IGamesRepo gamesRepo)
+        {
+            this.gamesRepo = gamesRepo;
+        }
+
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
         {
