@@ -10,20 +10,26 @@ namespace thegame.Services
 {
     public class TestData
     {
+        private static Dictionary<int, string> levels = new();
+
+        static TestData()
+        {
+            levels.Add(1, "0400000\n00    0\n03 0  0\n02  1 0\n0000000\n");
+        }
+
         public static Game AGame(VectorDto movingObjectPosition)
         {
-            string path = Directory.GetCurrentDirectory() + "/Fields/level0.txt";
-            var gameField = GetField(path);
+            var gameField = GetField(1);
 
             return new Game(gameField.cells, true, false, gameField.size, Guid.Empty, movingObjectPosition.X == 0,
                 movingObjectPosition.Y);
         }
 
-        private static (ICell[] cells, Size size) GetField(string path)
+
+        private static (ICell[] cells, Size size) GetField(int level)
         {
-            var sr = new StreamReader(path);
-            var field = sr.ReadToEnd();
-            var rows = field.Split("\r\n");
+            var field = levels[level];
+            var rows = field.Split("\n");
 
             var result = new List<ICell>();
 
