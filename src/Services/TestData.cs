@@ -14,7 +14,8 @@ namespace thegame.Services
 
         static TestData()
         {
-            levels.Add(1, "0400000\n00    0\n03 0  0\n02  1 0\n0000000\n");
+            levels.Add(0, "0400000\n00    0\n03 0  0\n02  1 0\n0000000\n");
+            levels.Add(1, "00000\n01  0\n0 2 0\n0 3 0\n00000\n");
         }
 
         public static Game AGame(VectorDto movingObjectPosition)
