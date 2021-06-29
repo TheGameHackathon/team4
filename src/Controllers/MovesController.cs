@@ -74,6 +74,9 @@ namespace thegame.Controllers
         private static bool CanMoveFromTo(Game game, VectorDto from, VectorDto delta)
         {
             var nextCell = GetCell(game, new VectorDto(from.X + delta.X, from.Y + delta.Y));
+            if (nextCell == null)
+                return true;
+            
             switch (nextCell.Type)
             {
                 case CellType.Wall or CellType.BoxOnTarget:
@@ -81,7 +84,7 @@ namespace thegame.Controllers
                 case CellType.Box:
                 {
                     var doubleNextCell = GetCell(game, new VectorDto(@from.X + delta.X * 2, @from.Y + delta.Y * 2));
-                    if (doubleNextCell.Type is CellType.Wall or CellType.Box)
+                    if (doubleNextCell is {Type: CellType.Wall or CellType.Box})
                         return false;
                     break;
                 }
@@ -144,18 +147,31 @@ namespace thegame.Controllers
                 {
                     if (cell.Type == CellType.Box)
                     {
-                        newCells.Add(new Cell(cell.Id,
-                            new VectorDto(newPlayerPos.X + delta.X, newPlayerPos.Y + delta.Y), CellType.BoxOnTarget,
-                            cell.Content, cell.ZIndex));
+                        var nextBoxPosition = new VectorDto(cell.Pos.X + delta.X, cell.Pos.Y + delta.Y);
+                        var nextBoxCell = GetCell(game, nextBoxPosition);
+                        if (nextBoxCell is {Type: CellType.Target})
+                        {
+                            newCells.Add(new Cell(cell.Id, nextBoxPosition, CellType.BoxOnTarget, cell.Content, cell.ZIndex));
+                            game.Score++;
+                        }
+                        else
+                        {
+                            newCells.Add(new Cell(cell.Id, nextBoxPosition, cell.Type, cell.Content, cell.ZIndex));
+                        }
                     }
                     else
                     {
                         newCells.Add(cell);
                     }
                 }
+                else
+                {
+                    newCells.Add(cell);
+                }
             }
 
-            return new Game(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, game.IsFinished, game.Score);
+            var isFinished = newCells.All(cell => cell.Type != CellType.Box);
+            return new Game(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, isFinished, game.Score);
         }
     }
     
