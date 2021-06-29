@@ -14,13 +14,13 @@ namespace thegame.Services
 
         static TestData()
         {
-            levels.Add(0, "0400000\n00    0\n03 0  0\n02  1 0\n0000000\n");
-            levels.Add(1, "00000\n01  0\n0 2 0\n0 3 0\n00000\n");
+            levels.Add(0, "00000\n01  0\n0 2 0\n0 3 0\n00000\n");
+            levels.Add(1, "000000\n01 230\n0  2 0\n0  3 0\n000000\n");
         }
 
         public static Game AGame(VectorDto movingObjectPosition)
         {
-            var gameField = GetField(1);
+            var gameField = GetField(0);
 
             return new Game(gameField.cells, true, false, gameField.size, Guid.NewGuid(), movingObjectPosition.X == 0, 0);
         }
