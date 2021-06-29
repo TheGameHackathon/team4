@@ -1,16 +1,17 @@
 using System;
+using System.Drawing;
 
 namespace thegame.Models
 {
     public class GameDto
     {
-        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id, bool isFinished, int score)
+        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, Size size, Guid id, bool isFinished, int score)
         {
             Cells = cells;
             MonitorKeyboard = monitorKeyboard;
             MonitorMouseClicks = monitorMouseClicks;
-            Width = width;
-            Height = height;
+            Width = size.Width;
+            Height = size.Height;
             Id = id;
             IsFinished = isFinished;
             Score = score;
