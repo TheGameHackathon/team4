@@ -19,7 +19,7 @@ namespace thegame.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index()
+        public IActionResult Index(string level)
         {
             var game = TestData.AGame(new VectorDto(1, 1));
 

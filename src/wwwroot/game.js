@@ -17,7 +17,7 @@ function handleApiErrors(result) {
 }
 
 async function startGame() {
-    game = await fetch("/api/games", {method: "POST"})
+    game = await fetch(`/api/games?level=${selectedLevel}`, {method: "POST"})
         .then(handleApiErrors);
     window.history.replaceState(game.id, "The Game", "/" + game.id);
     renderField(game);
@@ -57,7 +57,7 @@ function takeLevels() {
                         e.currentTarget.parentElement.children[i].style.color = "green";
                     }
                     e.currentTarget.style.color = "red";
-                    selectLevels(e.currentTarget.innerText);
+                    selectedLevel=e.currentTarget.innerText;
                 }
 
                 for (let i = 0; i < levels.length; i++) {
@@ -70,15 +70,7 @@ function takeLevels() {
         );
 }
 
-function selectLevels(selectedLevel) {
-    console.log("sendSelectedLevels");
-    fetch(`/api/levels/${selectedLevel}`,
-        {
-            method: "POST",
-            headers: {}
-        })
-        .then(handleApiErrors);
-}
+
 
 function renderField(game) {
     field.innerHTML = "";
