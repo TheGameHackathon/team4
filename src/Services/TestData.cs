@@ -10,7 +10,8 @@ namespace thegame.Services
 {
     public class TestData
     {
-        private static Dictionary<int, string> levels = new();
+        public static Dictionary<int, string> levels = new();
+        public static int selectedLevel;
 
         static TestData()
         {

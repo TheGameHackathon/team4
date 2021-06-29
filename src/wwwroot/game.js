@@ -5,6 +5,8 @@ const scoreElement = document.getElementsByClassName("scoreContainer")[0];
 const startButton = document.getElementsByClassName("startButton")[0];
 let game = null;
 let currentCells = {};
+let selectedLevel = null;
+let allLevels = null;
 
 function handleApiErrors(result) {
     if (!result.ok) {
@@ -15,7 +17,7 @@ function handleApiErrors(result) {
 }
 
 async function startGame() {
-    game = await fetch("/api/games", { method: "POST" })
+    game = await fetch("/api/games", {method: "POST"})
         .then(handleApiErrors);
     window.history.replaceState(game.id, "The Game", "/" + game.id);
     renderField(game);
@@ -25,18 +27,57 @@ function makeMove(userInput) {
     if (!game || game.isFinished) return;
     console.log("send userInput: %o", userInput);
     fetch(`/api/games/${game.id}/moves`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(userInput)
-            })
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userInput)
+        })
         .then(handleApiErrors)
         .then(newGame => {
             game = newGame;
             updateField(game);
         });
+}
+
+function takeLevels() {
+    console.log("ask all levels");
+    fetch(`/api/levels`,
+        {
+            method: "GET",
+            headers: {}
+        })
+        .then(handleApiErrors)
+        .then(levels => {
+                let ul = document.getElementsByClassName('levelSelector')[0];
+                allLevels =levels;
+                function clickOnLevel(e) {
+                    for (let i = 0; i < e.currentTarget.parentElement.children.length; i++) {
+                        e.currentTarget.parentElement.children[i].style.color = "green";
+                    }
+                    e.currentTarget.style.color = "red";
+                    selectLevels(e.currentTarget.innerText);
+                }
+
+                for (let i = 0; i < levels.length; i++) {
+                    let li = document.createElement('li');
+                    li.onclick = clickOnLevel
+                    li.appendChild(document.createTextNode('Level '+levels[i]));
+                    ul.appendChild(li);
+                }
+            }
+        );
+}
+
+function selectLevels(selectedLevel) {
+    console.log("sendSelectedLevels");
+    fetch(`/api/levels/${selectedLevel}`,
+        {
+            method: "POST",
+            headers: {}
+        })
+        .then(handleApiErrors);
 }
 
 function renderField(game) {
@@ -123,7 +164,7 @@ function addKeyboardListener() {
     window.addEventListener("keydown",
         e => {
             if (game && game.monitorKeyboard) {
-                makeMove({ keyPressed: e.keyCode });
+                makeMove({keyPressed: e.keyCode});
                 if (e.keyCode >= 37 && e.keyCode <= 40)
                     e.preventDefault();
             }
@@ -139,11 +180,12 @@ function onCellClick(e) {
     if (!game || !game.monitorMouseClicks) return;
     const x = e.target.dataset.x;
     const y = e.target.dataset.y;
-    makeMove({ clickedPos: { x, y } });
+    makeMove({clickedPos: {x, y}});
 }
 
 function initializePage() {
     const gameId = window.location.pathname.substring(1);
+    takeLevels();
     // use gameId if you want
     startButton.addEventListener("click", e => {
         startgameOverlay.classList.toggle("hidden", true);

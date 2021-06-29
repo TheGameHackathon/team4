@@ -104,4 +104,11 @@
 .color4 {
     background-color: magenta;
 }
+.levelSelector{
+    
+    padding-left: 0;
+}
+li{
+    text-align: center;
+}
 
