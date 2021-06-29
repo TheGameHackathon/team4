@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using AutoMapper;
-using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using thegame.GameObjects;
 using thegame.Models;
@@ -29,38 +27,31 @@ namespace thegame.Controllers
         {
             var game = gamesRepo.GetGameById(gameId);
             var playerPosition = GetCellPlayer(game);
-            var newPosition = new VectorDto(playerPosition.Pos.X, playerPosition.Pos.Y);
+            var deltaMove = new VectorDto(0, 0);
 
-            if (game.MonitorMouseClicks && userInput.ClickedPos != null)
+            if (game.MonitorKeyboard)
+            {
+                deltaMove = GetDeltaMove(userInput.KeyPressed);
+            } 
+            else if (game.MonitorMouseClicks && userInput.ClickedPos != null)
             {
                 foreach (var neighbor in GetNeighborsPoints(playerPosition.Pos))
                 {
-                    if (EqualsVectorsDto(neighbor, userInput.ClickedPos) && CanMoveTo(game, userInput.ClickedPos))
+                    if (EqualsVectorsDto(neighbor, userInput.ClickedPos))
                     {
-                        newPosition = userInput.ClickedPos;
+                        deltaMove = new VectorDto(userInput.ClickedPos.X - playerPosition.Pos.X, userInput.ClickedPos.Y - playerPosition.Pos.Y);
                         break;
                     }
                 }
             }
 
-            if (game.MonitorKeyboard)
-            {
-                var deltaMove = GetDeltaMove(userInput.KeyPressed);
-                var newPos = new VectorDto(playerPosition.Pos.X + deltaMove.X, playerPosition.Pos.Y + deltaMove.Y);
-                if (CanMoveTo(game, newPos))
-                {
-                    newPosition = newPos;
-                }
-            }
-
-            var newGame = MovePlayer(game, newPosition);
+            var newGame = MovePlayer(game, playerPosition.Pos, deltaMove);
             gamesRepo.AddGame(newGame);
 
             var gameDto = mapper.Map<GameDto>(newGame);
             
             return Ok(gameDto);
         }
-
         
         private static ICell GetCellPlayer(Game game)
         {
@@ -75,13 +66,27 @@ namespace thegame.Controllers
             throw new ArgumentException("Не был найден игрок на поле");
         }
 
-        private static bool CanMoveTo(Game game, VectorDto to)
+        private static ICell GetCell(Game game, VectorDto position)
         {
-            foreach (var cell in game.Cells)
+            return game.Cells.FirstOrDefault(cell => EqualsVectorsDto(cell.Pos, position));
+        }
+
+        private static bool CanMoveFromTo(Game game, VectorDto from, VectorDto delta)
+        {
+            var nextCell = GetCell(game, new VectorDto(from.X + delta.X, from.Y + delta.Y));
+            if (nextCell == null)
+                return true;
+            
+            switch (nextCell.Type)
             {
-                if (EqualsVectorsDto(cell.Pos, to))
+                case CellType.Wall or CellType.BoxOnTarget:
+                    return false;
+                case CellType.Box:
                 {
-                    return cell.Type != CellType.Wall;
+                    var doubleNextCell = GetCell(game, new VectorDto(@from.X + delta.X * 2, @from.Y + delta.Y * 2));
+                    if (doubleNextCell is {Type: CellType.Wall or CellType.Box})
+                        return false;
+                    break;
                 }
             }
 
@@ -103,24 +108,61 @@ namespace thegame.Controllers
 
         private static VectorDto GetDeltaMove(int keyPressed)
         {
-            return keyPressed switch
+            switch (keyPressed)
             {
-                87 => new VectorDto(0, -1),
-                65 => new VectorDto(-1, 0),
-                83 => new VectorDto(0, 1),
-                68 => new VectorDto(1, 0),
-                _ => new VectorDto(0, 0)
-            };
+                case 87:
+                case 38:
+                    return new VectorDto(0, -1);
+                case 65:
+                case 37:
+                    return new VectorDto(-1, 0);
+                case 83:
+                case 40:
+                    return new VectorDto(0, 1);
+                case 68:
+                case 39:
+                    return new VectorDto(1, 0);
+                default:
+                    return new VectorDto(0, 0);
+            }
         }
 
-        private static Game MovePlayer(Game game, VectorDto newPosition)
+        private static Game MovePlayer(Game game, VectorDto playerPosition, VectorDto delta)
         {
+            if (!CanMoveFromTo(game, playerPosition, delta))
+            {
+                return game;
+            }
+            
+            var newPlayerPos = new VectorDto(playerPosition.X + delta.X, playerPosition.Y + delta.Y);
+            
             var newCells = new List<ICell>();
             foreach (var cell in game.Cells)
             {
                 if (cell.Type == CellType.Player)
                 {
-                    newCells.Add(new Cell(cell.Id, newPosition, CellType.Player, cell.Content, cell.ZIndex));
+                    newCells.Add(new Cell(cell.Id, newPlayerPos, CellType.Player, cell.Content, cell.ZIndex));
+                }
+                else if (EqualsVectorsDto(newPlayerPos, cell.Pos))
+                {
+                    if (cell.Type == CellType.Box)
+                    {
+                        var nextBoxPosition = new VectorDto(cell.Pos.X + delta.X, cell.Pos.Y + delta.Y);
+                        var nextBoxCell = GetCell(game, nextBoxPosition);
+                        if (nextBoxCell is {Type: CellType.Target})
+                        {
+                            newCells.Add(new Cell(cell.Id, nextBoxPosition, CellType.BoxOnTarget, cell.Content, cell.ZIndex));
+                            game.Score++;
+                        }
+                        else
+                        {
+                            newCells.Add(new Cell(cell.Id, nextBoxPosition, cell.Type, cell.Content, cell.ZIndex));
+                        }
+                    }
+                    else
+                    {
+                        newCells.Add(cell);
+                    }
                 }
                 else
                 {
@@ -128,7 +170,8 @@ namespace thegame.Controllers
                 }
             }
 
-            return new Game(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, game.IsFinished, game.Score);
+            var isFinished = newCells.All(cell => cell.Type != CellType.Box);
+            return new Game(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, isFinished, game.Score);
         }
     }
     
