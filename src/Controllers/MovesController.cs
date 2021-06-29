@@ -56,7 +56,7 @@ namespace thegame.Controllers
             var newGame = MovePlayer(game, newPosition);
             gamesRepo.AddGame(newGame);
 
-            var gameDto = mapper.Map<GameDto>(game);
+            var gameDto = mapper.Map<GameDto>(newGame);
             
             return Ok(gameDto);
         }
