@@ -11,8 +11,6 @@ namespace thegame.Services
             var height = 8;
             var testCells = new[]
             {
-                
-                
                 new CellDto("1", new VectorDto(0, 0), "wall", "", 20),
                 new CellDto("2", new VectorDto(1, 0), "wall", "", 20),
                 new CellDto("3", new VectorDto(2, 0), "wall", "", 20),
@@ -35,7 +33,7 @@ namespace thegame.Services
                 
                 new CellDto("5", movingObjectPosition, "player", "", 10),
             };
-            return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
+            return new GameDto(testCells, true, false, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
         }
     }
 }
