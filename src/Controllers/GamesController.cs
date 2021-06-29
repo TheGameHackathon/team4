@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using thegame.Models;
@@ -9,20 +10,24 @@ namespace thegame.Controllers
     public class GamesController : Controller
     {
         private readonly IGamesRepo gamesRepo;
+        private readonly IMapper mapper;
 
-        public GamesController(IGamesRepo gamesRepo)
+        public GamesController(IGamesRepo gamesRepo, IMapper mapper)
         {
             this.gamesRepo = gamesRepo;
+            this.mapper = mapper;
         }
 
         [HttpPost]
         public IActionResult Index()
         {
-            var game = TestData.AGameDto(new VectorDto(1, 1));
+            var game = TestData.AGame(new VectorDto(1, 1));
 
             gamesRepo.AddGame(game);
 
-            return Ok(game);
+            var gameDto = mapper.Map<GameDto>(game);
+
+            return Ok(gameDto);
         }
     }
 }
