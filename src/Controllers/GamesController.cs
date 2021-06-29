@@ -21,7 +21,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index(string level)
         {
-            var game = TestData.AGame(new VectorDto(1, 1));
+            var game = TestData.AGame(new VectorDto(1, 1), int.Parse(level.Split()[1]));
 
             gamesRepo.AddGame(game);
 

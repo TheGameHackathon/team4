@@ -19,11 +19,11 @@ namespace thegame.Services
             levels.Add(1, "000000\n01 230\n0  2 0\n0  3 0\n000000\n");
         }
 
-        public static Game AGame(VectorDto movingObjectPosition)
+        public static Game AGame(VectorDto movingObjectPosition, int level = 0, int score = 0)
         {
-            var gameField = GetField(0);
+            var gameField = GetField(level);
 
-            return new Game(gameField.cells, true, false, gameField.size, Guid.NewGuid(), movingObjectPosition.X == 0, 0);
+            return new Game(gameField.cells, true, false, gameField.size, Guid.NewGuid(), movingObjectPosition.X == 0, score);
         }
 
 

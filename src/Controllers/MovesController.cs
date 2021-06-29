@@ -46,6 +46,8 @@ namespace thegame.Controllers
             }
 
             var newGame = MovePlayer(game, playerPosition.Pos, deltaMove);
+            newGame.Score += game.Score;
+
             gamesRepo.AddGame(newGame);
 
             var gameDto = mapper.Map<GameDto>(newGame);
