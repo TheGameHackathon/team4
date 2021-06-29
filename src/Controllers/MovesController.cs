@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -12,11 +13,17 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
+        private readonly IGamesRepo gamesRepo;
+
+        public MovesController(IGamesRepo gamesRepo)
+        {
+            this.gamesRepo = gamesRepo;
+        }
+
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
         {
-            var game = TestData.AGameDto(new VectorDto(1, 1));
-        //GamesRepo.GetGameById(gameId);
+            var game = gamesRepo.GetGameById(gameId);
             var playerPosition = GetCellPlayer(game);
             var newPosition = new VectorDto(playerPosition.Pos.X, playerPosition.Pos.Y);
 
@@ -43,7 +50,7 @@ namespace thegame.Controllers
             }
 
             var newGame = MovePlayer(game, newPosition);
-            //GamesRepo.SaveGameById(game.Id, newGame);
+            gamesRepo.AddGame(newGame);
             
             return Ok(newGame);
         }
@@ -53,7 +60,7 @@ namespace thegame.Controllers
         {
             foreach (var cell in gameDto.Cells)
             {
-                if (cell.Type == "player")
+                if (cell.Type == CellType.Player.ToString())
                 {
                     return cell;
                 }
@@ -68,7 +75,7 @@ namespace thegame.Controllers
             {
                 if (EqualsVectorsDto(cell.Pos, to))
                 {
-                    return cell.Type != "wall";
+                    return cell.Type != CellType.Wall.ToString();
                 }
             }
 
@@ -105,9 +112,9 @@ namespace thegame.Controllers
             var newCells = new List<CellDto>();
             foreach (var cell in game.Cells)
             {
-                if (cell.Type == "player")
+                if (cell.Type == CellType.Player.ToString())
                 {
-                    newCells.Add(new CellDto(cell.Id, newPosition, cell.Type, cell.Content, cell.ZIndex));
+                    newCells.Add(new CellDto(cell.Id, newPosition, CellType.Player, cell.Content, cell.ZIndex));
                 }
                 else
                 {
@@ -115,8 +122,7 @@ namespace thegame.Controllers
                 }
             }
 
-            return new GameDto(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, game.Width,
-                game.Height, game.Id, game.IsFinished, game.Score);
+            return new GameDto(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, game.IsFinished, game.Score);
         }
     }
     

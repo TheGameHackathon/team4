@@ -5,16 +5,23 @@ using thegame.Models;
 
 namespace thegame.Services
 {
-    public class GamesRepo
+    public class GamesRepo : IGamesRepo
     {
-        public static GameDto GetGameById(Guid guid)
+        private readonly Dictionary<Guid, GameDto> games;
+
+        public GamesRepo()
         {
-            throw new NotImplementedException();
+            games = new Dictionary<Guid, GameDto>();
         }
 
-        public static void SaveGameById(Guid guid, GameDto gameDto)
+        public void AddGame(GameDto gameDto)
         {
-            throw new NotImplementedException();
+            games[gameDto.Id] = gameDto;
+        }
+
+        public GameDto GetGameById(Guid gameId)
+        {
+            return games[gameId];
         }
     }
 }

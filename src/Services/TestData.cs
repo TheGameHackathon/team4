@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using thegame.Models;
 
 namespace thegame.Services
@@ -7,33 +11,32 @@ namespace thegame.Services
     {
         public static GameDto AGameDto(VectorDto movingObjectPosition)
         {
-            var width = 10;
-            var height = 8;
-            var testCells = new[]
+            string path = Directory.GetCurrentDirectory() + "/Fields/level0.txt";
+            var gameField = GetField(path);
+
+            return new GameDto(gameField.cells, true, false, gameField.size, Guid.Empty, movingObjectPosition.X == 0,
+                movingObjectPosition.Y);
+        }
+
+        private static (CellDto[] cells, Size size) GetField(string path)
+        {
+            var sr = new StreamReader(path);
+            var field = sr.ReadToEnd();
+            var rows = field.Split("\r\n");
+            var result = new List<CellDto>();
+            var fieldSize = new Size(rows[0].Length, rows.Length);
+            
+            for (var i = 0; i < rows.Length; i++)
             {
-                new CellDto("1", new VectorDto(0, 0), "wall", "", 20),
-                new CellDto("2", new VectorDto(1, 0), "wall", "", 20),
-                new CellDto("3", new VectorDto(2, 0), "wall", "", 20),
-                new CellDto("4", new VectorDto(3, 0), "wall", "", 20),
-                new CellDto("6", new VectorDto(4, 0), "wall", "", 20),
-                new CellDto("7", new VectorDto(4, 1), "wall", "", 20),
-                new CellDto("8", new VectorDto(4, 2), "wall", "", 20),
-                new CellDto("9", new VectorDto(4, 3), "wall", "", 20),
-                new CellDto("10", new VectorDto(4, 4), "wall", "", 20),
-                new CellDto("11", new VectorDto(0,4),  "wall", "", 20),
-                new CellDto("12", new VectorDto(1,4),  "wall", "", 20),
-                new CellDto("13", new VectorDto(2,4),  "wall", "", 20),
-                new CellDto("14", new VectorDto(3,4),  "wall", "", 20),
-                new CellDto("15", new VectorDto(4,4),  "wall", "", 20),
-                new CellDto("16", new VectorDto(0, 0), "wall", "", 20),
-                new CellDto("17", new VectorDto(0, 1), "wall", "", 20),
-                new CellDto("18", new VectorDto(0, 2), "wall", "", 20),
-                new CellDto("19", new VectorDto(0, 3), "wall", "", 20),
-                new CellDto("20", new VectorDto(0, 4), "wall", "", 20),
-                
-                new CellDto("5", movingObjectPosition, "player", "", 10),
-            };
-            return new GameDto(testCells, true, false, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
+                for (var j = 0; j < rows[i].Length; j++)
+                {
+                    if (rows[i][j] != ' ')
+                        result.Add(new CellDto($"{rows[i].Length * i + j}",
+                            new VectorDto(j, i), (CellType) int.Parse(rows[i][j].ToString()), "", 20));
+                }
+            }
+
+            return (result.ToArray(), fieldSize);
         }
     }
 }

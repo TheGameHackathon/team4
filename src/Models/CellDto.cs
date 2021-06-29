@@ -10,11 +10,11 @@ namespace thegame.Models
         /// <param name="type">Frontend apply images and other styling to the cell according to this type</param>
         /// <param name="content">Frontend can put this text in the cell</param>
         /// <param name="zIndex">Frontend render cells with higher zIndex above cells with lower zIndex</param>
-        public CellDto(string id, VectorDto pos, string type, string content, int zIndex)
+        public CellDto(string id, VectorDto pos, CellType type, string content, int zIndex)
         {
             Id = id;
             Pos = pos;
-            Type = type;
+            Type = type.ToString();
             Content = content;
             ZIndex = zIndex;
         }
