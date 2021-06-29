@@ -21,7 +21,7 @@ namespace thegame.Services
         {
             var gameField = GetField(1);
 
-            return new Game(gameField.cells, true, false, gameField.size, Guid.Empty, movingObjectPosition.X == 0,
+            return new Game(gameField.cells, true, false, gameField.size, Guid.NewGuid(), movingObjectPosition.X == 0,
                 movingObjectPosition.Y);
         }
 
