@@ -141,7 +141,7 @@ namespace thegame.Controllers
             {
                 if (cell.Type == CellType.Player)
                 {
-                    newCells.Add(new Cell(cell.Id, newPlayerPos, CellType.Player, cell.Content, cell.ZIndex));
+                    newCells.Add(new Cell(cell.Id, newPlayerPos, CellType.Player, cell.Content));
                 }
                 else if (EqualsVectorsDto(newPlayerPos, cell.Pos))
                 {
@@ -151,12 +151,12 @@ namespace thegame.Controllers
                         var nextBoxCell = GetCell(game, nextBoxPosition);
                         if (nextBoxCell is {Type: CellType.Target})
                         {
-                            newCells.Add(new Cell(cell.Id, nextBoxPosition, CellType.BoxOnTarget, cell.Content, cell.ZIndex));
+                            newCells.Add(new Cell(cell.Id, nextBoxPosition, CellType.BoxOnTarget, cell.Content));
                             game.Score++;
                         }
                         else
                         {
-                            newCells.Add(new Cell(cell.Id, nextBoxPosition, cell.Type, cell.Content, cell.ZIndex));
+                            newCells.Add(new Cell(cell.Id, nextBoxPosition, cell.Type, cell.Content));
                         }
                     }
                     else
