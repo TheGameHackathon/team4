@@ -42,7 +42,7 @@ namespace thegame.Services
                 {
                     if (rows[i][j] != ' ')
                         result.Add(new Cell($"{rows[i].Length * i + j}",
-                            new VectorDto(j, i), (CellType) int.Parse(rows[i][j].ToString()), "", 20));
+                            new VectorDto(j, i), (CellType) int.Parse(rows[i][j].ToString()), ""));
                 }
             }
 

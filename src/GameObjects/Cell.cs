@@ -11,14 +11,26 @@ namespace thegame.GameObjects
         /// <param name="pos">Logical position of the cell in the game grid. Upper left corner is `new Vec(0, 0)`</param>
         /// <param name="type">Frontend apply images and other styling to the cell according to this type</param>
         /// <param name="content">Frontend can put this text in the cell</param>
-        /// <param name="zIndex">Frontend render cells with higher zIndex above cells with lower zIndex</param>
-        public Cell(string id, VectorDto pos, CellType type, string content, int zIndex)
+        public Cell(string id, VectorDto pos, CellType type, string content)
         {
             Id = id;
             Pos = pos;
             Type = type;
             Content = content;
-            ZIndex = zIndex;
+            ZIndex = GetZIndex(type);
+        }
+
+        private int GetZIndex(CellType type)
+        {
+            return type switch
+            {
+                CellType.Box => 5,
+                CellType.Player => 10,
+                CellType.Target => 1,
+                CellType.Wall => 15,
+                CellType.BoxOnTarget => 5,
+                _ => 0
+            };
         }
 
         public string Id { get; set; }
