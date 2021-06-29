@@ -1,11 +1,13 @@
-namespace thegame.Models
+﻿using thegame.Models;
+
+namespace thegame.GameObjects
 {
-    public class CellDto
+    public interface ICell
     {
         public string Id { get; set; }
         public VectorDto Pos { get; set; }
         public int ZIndex { get; set; }
-        public string Type { get; set; }
+        public CellType Type { get; set; }
         public string Content { get; set; }
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using AutoMapper;
 using System.Xml;
 using Microsoft.AspNetCore.Mvc;
+using thegame.GameObjects;
 using thegame.Models;
 using thegame.Services;
 
@@ -14,10 +16,12 @@ namespace thegame.Controllers
     public class MovesController : Controller
     {
         private readonly IGamesRepo gamesRepo;
+        private readonly IMapper mapper;
 
-        public MovesController(IGamesRepo gamesRepo)
+        public MovesController(IGamesRepo gamesRepo, IMapper mapper)
         {
             this.gamesRepo = gamesRepo;
+            this.mapper = mapper;
         }
 
         [HttpPost]
@@ -51,16 +55,18 @@ namespace thegame.Controllers
 
             var newGame = MovePlayer(game, newPosition);
             gamesRepo.AddGame(newGame);
+
+            var gameDto = mapper.Map<GameDto>(newGame);
             
-            return Ok(newGame);
+            return Ok(gameDto);
         }
 
         
-        private static CellDto GetCellPlayer(GameDto gameDto)
+        private static ICell GetCellPlayer(Game game)
         {
-            foreach (var cell in gameDto.Cells)
+            foreach (var cell in game.Cells)
             {
-                if (cell.Type == CellType.Player.ToString())
+                if (cell.Type == CellType.Player)
                 {
                     return cell;
                 }
@@ -69,13 +75,13 @@ namespace thegame.Controllers
             throw new ArgumentException("Не был найден игрок на поле");
         }
 
-        private static bool CanMoveTo(GameDto game, VectorDto to)
+        private static bool CanMoveTo(Game game, VectorDto to)
         {
             foreach (var cell in game.Cells)
             {
                 if (EqualsVectorsDto(cell.Pos, to))
                 {
-                    return cell.Type != CellType.Wall.ToString();
+                    return cell.Type != CellType.Wall;
                 }
             }
 
@@ -107,14 +113,14 @@ namespace thegame.Controllers
             };
         }
 
-        private static GameDto MovePlayer(GameDto game, VectorDto newPosition)
+        private static Game MovePlayer(Game game, VectorDto newPosition)
         {
-            var newCells = new List<CellDto>();
+            var newCells = new List<ICell>();
             foreach (var cell in game.Cells)
             {
-                if (cell.Type == CellType.Player.ToString())
+                if (cell.Type == CellType.Player)
                 {
-                    newCells.Add(new CellDto(cell.Id, newPosition, CellType.Player, cell.Content, cell.ZIndex));
+                    newCells.Add(new Cell(cell.Id, newPosition, CellType.Player, cell.Content, cell.ZIndex));
                 }
                 else
                 {
@@ -122,7 +128,7 @@ namespace thegame.Controllers
                 }
             }
 
-            return new GameDto(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, game.IsFinished, game.Score);
+            return new Game(newCells.ToArray(), game.MonitorKeyboard, game.MonitorMouseClicks, new Size(game.Width, game.Height), game.Id, game.IsFinished, game.Score);
         }
     }
     
