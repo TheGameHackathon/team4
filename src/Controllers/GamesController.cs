@@ -10,7 +10,9 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            return Ok(TestData.AGameDto(new VectorDto(1, 1)));
+            var game = TestData.AGameDto(new VectorDto(1, 1));
+            GamesRepo.AddOrUpdate(game.Id, game);
+            return Ok(game);
         }
     }
 }

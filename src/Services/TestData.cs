@@ -17,7 +17,7 @@ namespace thegame.Services
             for (var j = 0; j < height; j++)
                 testCells[i * width + j] = GenerateNewCell(i, j);
             
-            return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
+            return new GameDto(testCells, true, true, width, height, Guid.NewGuid(), movingObjectPosition.X == 0, movingObjectPosition.Y);
         }
 
         private static CellDto GenerateNewCell(int x, int y)
