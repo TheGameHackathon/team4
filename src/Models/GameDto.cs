@@ -19,9 +19,9 @@ namespace thegame.Models
             Score = score;
         }
 
-        public CellDto[] Cells { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public CellDto[] Cells { get; }
+        public int Width { get; }
+        public int Height { get; }
         public bool MonitorKeyboard { get; set; }
         public bool MonitorMouseClicks { get; set; }
         public Guid Id { get; set; }

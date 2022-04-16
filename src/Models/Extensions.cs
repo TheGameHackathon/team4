@@ -21,14 +21,5 @@ namespace thegame.Models
                 .OrderBy(cell => cell.Pos.X)
                 .ToArray();
         }
-
-        public static void SetCells(this CellDto[] cells, IEnumerable<CellDto> newCells)
-        {
-            foreach (var newCell in newCells)
-            {
-                var oldCell = cells.First(cell => cell.Pos.Equals(newCell.Pos));
-                cells[Array.IndexOf(cells, oldCell)] = newCell;
-            }
-        }
     }
 }

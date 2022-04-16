@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
 using thegame.Services;

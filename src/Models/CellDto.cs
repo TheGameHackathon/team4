@@ -19,10 +19,10 @@ namespace thegame.Models
             ZIndex = zIndex;
         }
 
-        public string Id { get; set; }
+        public string Id { get; }
         public VectorDto Pos { get; set; }
-        public int ZIndex { get; set; }
-        public string Type { get; set; }
+        public int ZIndex { get; }
+        public string Type { get; }
         public string Content { get; set; }
 
         public override string ToString() => $"x={Pos.X} y={Pos.Y} val={Content}";
