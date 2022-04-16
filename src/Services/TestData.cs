@@ -5,19 +5,32 @@ namespace thegame.Services
 {
     public class TestData
     {
+        private static Random rand = new Random();
+        
         public static GameDto AGameDto(VectorDto movingObjectPosition)
         {
-            var width = 10;
-            var height = 8;
-            var testCells = new[]
-            {
-                new CellDto("1", new VectorDto(2, 4), "color1", "", 0),
-                new CellDto("2", new VectorDto(5, 4), "color1", "", 0),
-                new CellDto("3", new VectorDto(3, 1), "color2", "", 20),
-                new CellDto("4", new VectorDto(1, 0), "color2", "", 20),
-                new CellDto("5", movingObjectPosition, "color4", "☺", 10),
-            };
+            var width = 4;
+            var height = 4;
+            var testCells = new CellDto[width * height];
+            
+            for (var i = 0; i < width; i++)
+            for (var j = 0; j < height; j++)
+                testCells[i * width + j] = GenerateNewCell(i, j);
+            
             return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
+        }
+
+        private static CellDto GenerateNewCell(int x, int y)
+        {
+            var perCent = rand.Next(0, 100);
+            
+            if (perCent > 80)
+                return new CellDto($"{x * 4 + y}", new VectorDto(x,y), "tile-4", "4", 0);
+            
+            if (perCent > 20)
+                return new CellDto($"{x * 4 + y}", new VectorDto(x,y), "tile-2", "2", 0);
+            
+            return new CellDto($"{x * 4 + y}", new VectorDto(x,y), "tile-0", "0", 0);
         }
     }
 }
