@@ -1,40 +1,34 @@
-﻿namespace thegame.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace thegame.Models
 {
     public static class Extensions
     {
-        public static CellDto[] GetRow(this CellDto[] cells, int rowIndex, int numOfColElements)
+        public static CellDto[] GetRow(this CellDto[] cells, int rowIndex)
         {
-            var numOfRowElements = cells.Length / numOfColElements;
-
-            var row = new CellDto[numOfRowElements];
-            for (int i = 0, j = rowIndex; i < numOfRowElements; i++, j += numOfColElements)
-                row[i] = cells[j];
-
-            return row;
+            return cells
+                .Where(cell => cell.Pos.Y == rowIndex)
+                .OrderBy(cell => cell.Pos.Y)
+                .ToArray();
         }
 
-        public static void SetRow(this CellDto[] cells, CellDto[] row, int rowIndex, int numOfColElements)
+        public static CellDto[] GetColumn(this CellDto[] cells, int colIndex)
         {
-            var numOfRowElements = cells.Length / numOfColElements;
-
-            for (int i = 0, j = rowIndex; i < numOfRowElements; i++, j += numOfColElements)
-                cells[j] = row[i];
+            return cells
+                .Where(cell => cell.Pos.X == colIndex)
+                .OrderBy(cell => cell.Pos.X)
+                .ToArray();
         }
 
-        public static CellDto[] GetColumn(this CellDto[] cells, int colIndex, int numOfColElements)
+        public static void SetCells(this CellDto[] cells, IEnumerable<CellDto> newCells)
         {
-            var col = new CellDto[numOfColElements];
-            for (int i = 0, j = colIndex * numOfColElements; i < numOfColElements; i++, j++)
-                col[i] = cells[j];
-
-            return col;
-        }
-
-        public static void SetColumn(this CellDto[] cells, CellDto[] column, int colIndex)
-        {
-            var numOfColElements = column.Length;
-            for (int i = 0, j = colIndex * numOfColElements; i < numOfColElements; i++, j++)
-                cells[j] = column[i];
+            foreach (var newCell in newCells)
+            {
+                var oldCell = cells.First(cell => cell.Pos.Equals(newCell.Pos));
+                cells[Array.IndexOf(cells, oldCell)] = newCell;
+            }
         }
     }
 }
