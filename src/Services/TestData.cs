@@ -27,7 +27,7 @@ namespace thegame.Services
             if (perCent > 80)
                 return new CellDto($"{x * 4 + y}", new VectorDto(x,y), "tile-4", "4", 0);
             
-            if (perCent > 20)
+            if (perCent < 20)
                 return new CellDto($"{x * 4 + y}", new VectorDto(x,y), "tile-2", "2", 0);
             
             return new CellDto($"{x * 4 + y}", new VectorDto(x,y), "tile-0", "0", 0);
