@@ -24,5 +24,31 @@ namespace thegame.Models
         public Guid Id { get; set; }
         public bool IsFinished { get; set; }
         public int Score { get; set; }
+
+        public GameDto MoveDown()
+        {
+            var cells = new CellDto[Width, Height];
+            foreach (var cell in Cells)
+            {
+                cells[cell.Pos.X, cell.Pos.Y] = cell;
+            }
+
+            for (var y = Height - 2; y >= 0; y--)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    if (cells[x, y - 1].Content.Equals("0"))
+                    {
+                        
+                    }
+                }
+            }
+            return this;
+        }
+
+        public GameDto MoveUp() => throw new NotImplementedException();
+        public GameDto MoveLeft() => throw new NotImplementedException();
+        public GameDto MoveRight() => throw new NotImplementedException();
+
     }
 }
