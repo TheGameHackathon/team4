@@ -33,7 +33,7 @@ namespace thegame.Models
             for (var x = 0; x < Width; x++)
             {
                 var col = Cells.GetColumn(x);
-                GetOffset(col, OffsetFor.Y, false);
+                var ofseted = GetOffset(col, OffsetFor.Y, false);
             }
 
             return this;
@@ -43,7 +43,6 @@ namespace thegame.Models
         public GameDto MoveUp() => throw new NotImplementedException();
         public GameDto MoveLeft() => throw new NotImplementedException();
         public GameDto MoveRight() => throw new NotImplementedException();
-
         public CellDto[] GetOffset(CellDto[] cells, OffsetFor offset, bool isNeedReverse)
         {
             if (isNeedReverse)
