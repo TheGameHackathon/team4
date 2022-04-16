@@ -24,5 +24,7 @@ namespace thegame.Models
         public int ZIndex { get; set; }
         public string Type { get; set; }
         public string Content { get; set; }
+
+        public override string ToString() => $"x={Pos.X} y={Pos.Y} val={Content}";
     }
 }

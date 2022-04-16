@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace thegame.Models
 {
@@ -28,22 +29,10 @@ namespace thegame.Models
 
         public GameDto MoveDown()
         {
-            var cells = new CellDto[Width, Height];
-            foreach (var cell in Cells)
-            {
-                cells[cell.Pos.X, cell.Pos.Y] = cell;
-            }
-
-
             for (var x = 0; x < Width; x++)
             {
-                for (var y = Height - 2; y >= 0; y--)
-                {
-                    for (var i = y; i < Height - 1 && cells[x, i - 1].Content.Equals("0"); i++)
-                    {
-                        (cells[x, i], cells[x, i - 1]) = (cells[x, i - 1], cells[x, i]);
-                    }
-                }
+                var col = Cells.GetColumn(x, Height);
+                GetOffset(col, OffsetFor.Y, false);
             }
 
             return this;
@@ -53,5 +42,35 @@ namespace thegame.Models
         public GameDto MoveUp() => throw new NotImplementedException();
         public GameDto MoveLeft() => throw new NotImplementedException();
         public GameDto MoveRight() => throw new NotImplementedException();
+
+        public CellDto[] GetOffset(CellDto[] cells, OffsetFor offset, bool isNeedReverse)
+        {
+            if (isNeedReverse)
+            {
+                cells = cells.Reverse().ToArray();
+            }
+
+            for (var i = cells.Length - 2; i >= 0; i--)
+            {
+                if (cells[i].Content.Equals("0")) continue;
+
+                for (var j = i + 1; j < cells.Length; j++)
+                {
+                    if (cells[j].Content.Equals("0"))
+                    {
+                        (cells[i], cells[j]) = (cells[j], cells[i]);
+                    }
+                }
+            }
+
+            return cells.Select((a, i) =>
+            {
+                var pos = offset == OffsetFor.X
+                    ? new VectorDto(i, a.Pos.Y)
+                    : new VectorDto(a.Pos.X, i);
+                a.Pos = pos;
+                return a;
+            }).ToArray();
+        }
     }
 }
