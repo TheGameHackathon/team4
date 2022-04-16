@@ -40,9 +40,38 @@ namespace thegame.Models
         }
 
 
-        public GameDto MoveUp() => throw new NotImplementedException();
-        public GameDto MoveLeft() => throw new NotImplementedException();
-        public GameDto MoveRight() => throw new NotImplementedException();
+        public GameDto MoveUp()
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                var col = Cells.GetColumn(x);
+                GetOffset(col, OffsetFor.Y, true);
+            }
+            return this;
+        }
+
+        public GameDto MoveLeft()
+        {
+            for (var y = 0; y < Height; y++)
+            {
+                var row = Cells.GetRow(y);
+                GetOffset(row, OffsetFor.X, true);
+            }
+
+            return this;
+        }
+
+        public GameDto MoveRight()
+        {
+            
+            for (var y = 0; y < Height; y++)
+            {
+                var row = Cells.GetRow(y);
+                GetOffset(row, OffsetFor.X, false);
+            }
+
+            return this;
+        }
         public CellDto[] GetOffset(CellDto[] cells, OffsetFor offset, bool isNeedReverse)
         {
             if (isNeedReverse)
