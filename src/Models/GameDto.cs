@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace thegame.Models
@@ -31,7 +32,7 @@ namespace thegame.Models
         {
             for (var x = 0; x < Width; x++)
             {
-                var col = Cells.GetColumn(x, Height);
+                var col = Cells.GetColumn(x);
                 GetOffset(col, OffsetFor.Y, false);
             }
 
@@ -58,9 +59,14 @@ namespace thegame.Models
                 {
                     if (cells[j].Content.Equals("0"))
                     {
-                        (cells[i], cells[j]) = (cells[j], cells[i]);
+                        (cells[j-1], cells[j]) = (cells[j], cells[j-1]);
                     }
                 }
+            }
+
+            if (isNeedReverse)
+            {
+                cells = cells.Reverse().ToArray();
             }
 
             return cells.Select((a, i) =>
@@ -72,5 +78,7 @@ namespace thegame.Models
                 return a;
             }).ToArray();
         }
+
+       
     }
 }

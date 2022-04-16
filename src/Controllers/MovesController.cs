@@ -31,7 +31,7 @@ namespace thegame.Controllers
                     break;
             }
 
-            return Ok(gamed);
+            return Ok(game);
         }
     }
 }
