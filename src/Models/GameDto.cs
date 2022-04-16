@@ -4,7 +4,8 @@ namespace thegame.Models
 {
     public class GameDto
     {
-        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id, bool isFinished, int score)
+        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id,
+            bool isFinished, int score)
         {
             Cells = cells;
             MonitorKeyboard = monitorKeyboard;
@@ -33,22 +34,24 @@ namespace thegame.Models
                 cells[cell.Pos.X, cell.Pos.Y] = cell;
             }
 
-            for (var y = Height - 2; y >= 0; y--)
+
+            for (var x = 0; x < Width; x++)
             {
-                for (var x = 0; x < Width; x++)
+                for (var y = Height - 2; y >= 0; y--)
                 {
-                    if (cells[x, y - 1].Content.Equals("0"))
+                    for (var i = y; i < Height - 1 && cells[x, i - 1].Content.Equals("0"); i++)
                     {
-                        
+                        (cells[x, i], cells[x, i - 1]) = (cells[x, i - 1], cells[x, i]);
                     }
                 }
             }
+
             return this;
         }
+
 
         public GameDto MoveUp() => throw new NotImplementedException();
         public GameDto MoveLeft() => throw new NotImplementedException();
         public GameDto MoveRight() => throw new NotImplementedException();
-
     }
 }
