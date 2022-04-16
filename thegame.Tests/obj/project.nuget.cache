@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "7ziYtJe5FBlJjnryVGhmzAR0rfsQy8/An5Clj03YjGB1jPSqTGWgtigbxuiIGwThLgN81VX++27O1NgHmrxucw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\visitor.K1607N0080383.000.001.002.003.004\\RiderProjects\\team4\\thegame.Tests\\thegame.Tests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\visitor.K1607N0080383.000.001.002.003.004\\.nuget\\packages\\fluentassertions\\6.6.0\\fluentassertions.6.6.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\visitor.K1607N0080383.000.001.002.003.004\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
+    "C:\\Users\\visitor.K1607N0080383.000.001.002.003.004\\.nuget\\packages\\nunit\\3.13.3\\nunit.3.13.3.nupkg.sha512",
+    "C:\\Users\\visitor.K1607N0080383.000.001.002.003.004\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.0\\system.configuration.configurationmanager.4.4.0.nupkg.sha512",
+    "C:\\Users\\visitor.K1607N0080383.000.001.002.003.004\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.4.0\\system.security.cryptography.protecteddata.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
