@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic.CompilerServices;
+
 namespace thegame.Models
 {
     public class VectorDto
@@ -10,5 +12,10 @@ namespace thegame.Models
 
         public int X { get; set; }
         public int Y { get; set; }
+
+        public static VectorDto operator +(VectorDto f, VectorDto a)
+        {
+            return new VectorDto(f.X + a.X, f.Y + a.Y);
+        }
     }
 }

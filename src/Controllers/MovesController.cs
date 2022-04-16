@@ -18,29 +18,28 @@ namespace thegame.Controllers
                 game.Cells.First(c => c.Type == "color4").Pos = userInput.ClickedPos;
             return Ok(game);*/
             GameDto game = null;
-            if (userInput.KeyPressed == 'w')
+            /*if (userInput.KeyPressed == 'W')
             {
-                game = TestData.AGameDto(new VectorDto(game.Cells.First(c => c.Type == "color4").Pos.X + 1,
-                    game.Cells.First(c => c.Type == "color4").Pos.Y + 0));
+                game = TestData.AGameDto(game.Cells.First(c => c.Type == "color4").Pos + new VectorDto(0, -1));
             }
             else if (userInput.KeyPressed == 'a')
             {
-                game = TestData.AGameDto(new VectorDto(0, 1));
+                game = TestData.AGameDto(game.Cells.First(c => c.Type == "color4").Pos + new VectorDto(-1, 0));
             }
             else if (userInput.KeyPressed == 'S')
             {
-                game = TestData.AGameDto(new VectorDto(1, 2));
+                game = TestData.AGameDto(game.Cells.First(c => c.Type == "color4").Pos + new VectorDto(0, 1));
             }
             else if (userInput.KeyPressed == 'D')
             {
-                game = TestData.AGameDto(new VectorDto(2, 1));
+                game = TestData.AGameDto(game.Cells.First(c => c.Type == "color4").Pos + new VectorDto(1, 0));
             }
             else
             {
-                game = TestData.AGameDto(new VectorDto(1, 1));
-            }
+                game = TestData.AGameDto(new VectorDto(0, 0));
+            }*/
 
-            return Ok(game);
+            return Ok(TestData.AGameDto(new VectorDto(1, 1)));
         }
     }
 }
