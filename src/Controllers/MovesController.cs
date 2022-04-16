@@ -24,7 +24,6 @@ namespace thegame.Controllers
                     game.MoveLeft();
                     break;
                 case 'S':
-                case 's':
                     game.MoveDown();
                     break;
                 case 'D':
