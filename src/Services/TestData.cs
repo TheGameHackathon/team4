@@ -56,18 +56,21 @@ namespace thegame.Services
                 }
             }
             
-            var boxes = new [] {(3, 2), (4, 3), (4, 4), (1, 6), (3, 6), (4, 6), (5, 6)};
-            var targets = new[] {(1, 2), (5, 3), (1, 4), (3, 6), (4, 5), (4, 7), (6, 6)};
+            var boxes = new [] {(3, 2), (4, 3), (4, 4), (1, 6), (4, 6), (5, 6)};
+            var targets = new[] {(1, 2), (5, 3), (1, 4), (4, 5), (4, 7), (6, 6)};
             foreach (var (x, y) in targets)
             {
                 cells.Add(new CellDto($"target_{x}_{y}", new VectorDto(){X = x, Y = y}, "target", "", 0));
             }
-            
-            var id = 0;
-            foreach (var (x, y) in boxes)
+            for (int i = 0; i < boxes.Length; i++)
             {
-                cells.Add(new CellDto($"box_{id}", new VectorDto(){X = x, Y = y}, "box", "", 10));
-                id++;
+                var (x, y) = boxes[i];
+                var type = "box";
+                if (x == 3 && y == 6)
+                {
+                    type = "boxOnTarget";
+                }
+                cells.Add(new CellDto($"box_{i}", new VectorDto(){X = x, Y = y}, type, "", 11));
             }
 
             cells.Add(new CellDto($"player", new VectorDto() {X = 2, Y = 2}, "player", "", 10));

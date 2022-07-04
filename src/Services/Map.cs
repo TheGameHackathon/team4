@@ -2,32 +2,37 @@
 using System.Collections.Generic;
 using thegame.Models.DTO;
 
-namespace thegame.Services
+namespace thegame.Services;
+
+public class Map
 {
-
-    public class Map
+    public Map(GameDto game)
     {
-        public Map(GameDto game)
-        {
-            Boxes = new HashSet<VectorDto>();
-            Targets = new HashSet<VectorDto>();
-            Table = new string[game.Width][];
-            for (var i = 0; i < game.Width; i++)
-                Table[i] = new string[game.Height];
+        Boxes = new HashSet<VectorDto>();
+        Targets = new HashSet<VectorDto>();
+        Table = new CellDto[game.Width][];
+        for (int i = 0; i < game.Width; i++) 
+            Table[i] = new CellDto[game.Height];
 
-            foreach (var gameCell in game.Cells)
+        foreach (var gameCell in game.Cells)
+        {
+            var pos = gameCell.Pos;
+            if (gameCell.Type is "wall" or "box")
+                Table[pos.X][pos.Y] = gameCell;
+            switch (gameCell.Type)
             {
-                var pos = gameCell.Pos;
-                Table[pos.X][pos.Y] = gameCell.Type;
-                if (gameCell.Type == "box")
+                case "box":
                     Boxes.Add(gameCell.Pos);
-                else if (gameCell.Type == "target")
+                    break;
+                case "target":
                     Targets.Add(gameCell.Pos);
+                    break;
             }
         }
-
-        public string[][] Table { get; }
-        public HashSet<VectorDto> Boxes { get; }
-        public HashSet<VectorDto> Targets { get; }
     }
+
+    public CellDto[][] Table { get; }
+    public HashSet<VectorDto> Boxes { get; }
+    public HashSet<VectorDto> Walls { get; }
+    public HashSet<VectorDto> Targets { get; }
 }
