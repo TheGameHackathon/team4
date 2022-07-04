@@ -1,25 +1,57 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
+using thegame.Models.DTO;
 using thegame.Models.Entities;
 
 namespace thegame.Services
 {
     public class GameService : IGameService
     {
-        public Game MakeMove(Game game, UserInput userInput)
+        private readonly MapRepository mapRepository;
+
+        public GameService(MapRepository mapRepository) => this.mapRepository = mapRepository;
+
+        public GameDto MakeMove(GameDto game, UserInput userInput)
         {
-            var currentPos = game.Player.Pos;
+            var cell = game.Cells.First(c => c.Type == "player");
+            var currentPos = cell.Pos;
             var nextPos = userInput.Move switch
             {
-                Move.Up => currentPos + new Position(0, -1),
-                Move.Down => currentPos + new Position(0, 1),
-                Move.Left => currentPos + new Position(-1, 0),
-                Move.Right => currentPos + new Position(1, 0),
-                _ => throw new ArgumentOutOfRangeException()
+                Move.Up =>  new VectorDto(0, -1),
+                Move.Down =>  new VectorDto(0, 1),
+                Move.Left => new VectorDto(-1, 0),
+                Move.Right =>  new VectorDto(1, 0),
+                _ => currentPos
             };
 
-            game.Player.Pos = nextPos;
-            return game;
+            return MoveNext(game, cell, currentPos, nextPos);
+        }
+
+        private GameDto MoveNext(GameDto gameDto, CellDto player, VectorDto currentPos, VectorDto nextPos)
+        {
+            var map = mapRepository.GetMapByGameId(gameDto.Id);
+            var next = currentPos + nextPos;
+            if (map.Table[next.X][next.Y] == "wall")
+                return gameDto;
+            var nextNext = next + nextPos;
+            if (map.Table[next.X][next.Y] == "box")
+            {
+                if (map.Table[nextNext.X][nextNext.Y] == null)
+                {
+                    
+                }
+                    
+                    // return 
+            }
+            
+            player.Pos = currentPos + nextPos;
+            return gameDto;
+        }
+
+        private ShiftBox(CellDto)
+        {
+            
         }
     }
 }

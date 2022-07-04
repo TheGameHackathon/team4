@@ -5,7 +5,8 @@ namespace thegame.Models.Entities
         Up,
         Down,
         Left,
-        Right
+        Right,
+        Empty
     }
 
     public record UserInput(Move Move);
