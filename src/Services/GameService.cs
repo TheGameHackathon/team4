@@ -48,10 +48,6 @@ namespace thegame.Services
             player.Pos = currentPos + nextPos;
             return gameDto;
         }
-
-        private ShiftBox(CellDto)
-        {
-            
-        }
+        
     }
 }

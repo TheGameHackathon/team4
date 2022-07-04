@@ -57,11 +57,10 @@ namespace thegame.Services
             {
                 cells.Add(new CellDto($"target_{x}_{y}", new VectorDto(){X = x, Y = y}, "target", "", 0));
             }
-            foreach (var (x, y) in boxes)
+            for (int i = 0; i < boxes.Length; i++)
             {
-                var id = 0;
-                cells.Add(new CellDto($"box_{id}", new VectorDto(){X = x, Y = y}, "box", "", 10));
-                id++;
+                var (x, y) = boxes[i];
+                cells.Add(new CellDto($"box_{i}", new VectorDto(){X = x, Y = y}, "box", "", 11));
             }
 
             cells.Add(new CellDto($"player", new VectorDto() {X = 2, Y = 2}, "player", "", 10));
