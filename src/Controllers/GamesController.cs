@@ -11,7 +11,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            return Ok(TestData.AGameDto(new VectorDto {X = 1, Y = 1}));
+            return Ok(TestData.FirstLevel());
         }
     }
 }
