@@ -18,24 +18,40 @@ namespace thegame.Services
             var currentPos = cell.Pos;
             var nextPos = userInput.Move switch
             {
-                Move.Up => currentPos + new VectorDto(0, -1),
-                Move.Down => currentPos + new VectorDto(0, 1),
-                Move.Left => currentPos + new VectorDto(-1, 0),
-                Move.Right => currentPos + new VectorDto(1, 0),
+                Move.Up =>  new VectorDto(0, -1),
+                Move.Down =>  new VectorDto(0, 1),
+                Move.Left => new VectorDto(-1, 0),
+                Move.Right =>  new VectorDto(1, 0),
                 _ => currentPos
             };
 
-            return MoveNext(game, cell, nextPos);
+            return MoveNext(game, cell, currentPos, nextPos);
         }
 
-        GameDto MoveNext(GameDto gameDto, CellDto player, VectorDto nextPos)
+        private GameDto MoveNext(GameDto gameDto, CellDto player, VectorDto currentPos, VectorDto nextPos)
         {
             var map = mapRepository.GetMapByGameId(gameDto.Id);
-            if (map.Table[nextPos.X][nextPos.Y] == "wall")
+            var next = currentPos + nextPos;
+            if (map.Table[next.X][next.Y] == "wall")
                 return gameDto;
+            var nextNext = next + nextPos;
+            if (map.Table[next.X][next.Y] == "box")
+            {
+                if (map.Table[nextNext.X][nextNext.Y] == null)
+                {
+                    
+                }
+                    
+                    // return 
+            }
             
-            player.Pos = nextPos;
+            player.Pos = currentPos + nextPos;
             return gameDto;
+        }
+
+        private ShiftBox(CellDto)
+        {
+            
         }
     }
 }
