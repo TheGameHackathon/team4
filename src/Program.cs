@@ -7,6 +7,7 @@ using thegame.Services;
 var builder = WebApplication.CreateBuilder();
 builder.Services.AddSingleton<IGamesRepository, GamesRepository>();
 builder.Services.AddSingleton<IGameService, GameService>();
+builder.Services.AddSingleton<MapRepository>();
 builder.Services.AddMvc();
 
 var app = builder.Build();

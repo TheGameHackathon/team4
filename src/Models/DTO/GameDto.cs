@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using thegame.Models.Entities;
 
 namespace thegame.Models.DTO
 {
