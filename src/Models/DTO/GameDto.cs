@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using thegame.Models.Entities;
 
 namespace thegame.Models.DTO
@@ -17,6 +18,10 @@ namespace thegame.Models.DTO
             Id = id;
             IsFinished = isFinished;
             Score = score;
+            targets = cells
+                .Where(x => x.Type == "target")
+                .Select(x => x.Pos)
+                .ToHashSet();
         }
 
         public CellDto[] Cells { get; set; }
@@ -27,5 +32,6 @@ namespace thegame.Models.DTO
         public Guid Id { get; set; }
         public bool IsFinished { get; set; }
         public int Score { get; set; }
+        public readonly HashSet<VectorDto> targets;
     }
 }
