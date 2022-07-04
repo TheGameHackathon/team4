@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using thegame.Mapping;
 using thegame.Models;
+using thegame.Models.DTO;
 using thegame.Models.Entities;
 
 var builder = WebApplication.CreateBuilder();
