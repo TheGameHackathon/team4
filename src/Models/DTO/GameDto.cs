@@ -1,6 +1,6 @@
 using System;
 
-namespace thegame.Models
+namespace thegame.Models.DTO
 {
     public class GameDto
     {

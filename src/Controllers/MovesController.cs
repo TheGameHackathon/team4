@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.EventSource;
 using thegame.Models;
+using thegame.Models.DTO;
 using thegame.Services;
 
 namespace thegame.Controllers
@@ -10,6 +12,15 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
+        private IMapper _mapper;
+        private IGamesRepository _gamesRepository;
+
+        public MovesController(IMapper mapper, IGamesRepository gamesRepository)
+        {
+            _mapper = mapper;
+            _gamesRepository = gamesRepository;
+        }
+
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody] UserInputDto userInput)
         {

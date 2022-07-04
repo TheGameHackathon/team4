@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
+using thegame.Models.DTO;
 using thegame.Services;
 
 namespace thegame.Controllers
@@ -10,7 +11,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            return Ok(TestData.AGameDto(new VectorDto {X = 1, Y = 1}));
+            return Ok(TestData.FirstLevel());
         }
     }
 }

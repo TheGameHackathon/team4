@@ -1,6 +1,5 @@
-namespace thegame.Models
+namespace thegame.Models.DTO
 {
-
     public class VectorDto
     {
         public int X { get; set; }
