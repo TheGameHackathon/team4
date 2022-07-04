@@ -8,6 +8,10 @@ namespace thegame.Services
 {
     public class GameService : IGameService
     {
+        private readonly MapRepository mapRepository;
+
+        public GameService(MapRepository mapRepository) => this.mapRepository = mapRepository;
+
         public GameDto MakeMove(GameDto game, UserInput userInput)
         {
             var cell = game.Cells.First(c => c.Type == "player");
@@ -21,8 +25,17 @@ namespace thegame.Services
                 _ => currentPos
             };
 
-            cell.Pos = nextPos;
-            return game;
+            return MoveNext(game, cell, nextPos);
+        }
+
+        GameDto MoveNext(GameDto gameDto, CellDto player, VectorDto nextPos)
+        {
+            var map = mapRepository.GetMapByGameId(gameDto.Id);
+            if (map.Table[nextPos.X][nextPos.Y] == "wall")
+                return gameDto;
+            
+            player.Pos = nextPos;
+            return gameDto;
         }
     }
 }
