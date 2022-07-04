@@ -8,7 +8,7 @@ namespace thegame.Services
     {
         public Game MakeMove(Game game, UserInput userInput)
         {
-            var currentPos = game.Player.Pos;
+            var currentPos = game.Player;
             var nextPos = userInput.Move switch
             {
                 Move.Up => currentPos + new Position(0, -1),
@@ -18,7 +18,7 @@ namespace thegame.Services
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            game.Player.Pos = nextPos;
+            game.Player = nextPos;
             return game;
         }
     }
