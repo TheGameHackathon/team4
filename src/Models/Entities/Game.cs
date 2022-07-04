@@ -6,6 +6,7 @@ namespace thegame.Models.Entities
     public class Game
     {
         public Game(
+            Player player,
             Cell[] cells,
             int width,
             int height,
@@ -28,5 +29,6 @@ namespace thegame.Models.Entities
         public Guid Id { get; set; }
         public bool IsFinished { get; set; }
         public int Score { get; set; }
+        public Player Player { get; set; }
     }
 }
