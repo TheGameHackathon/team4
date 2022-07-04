@@ -1,13 +1,9 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using thegame.Models;
-using thegame.Models.DTO;
-using thegame.Models.Entities;
 using thegame.Services;
 
 namespace thegame.Controllers
 {
-    [Route("api/games")]
+    [Route("api/games/levels/{levelIndex}")]
     public class GamesController : Controller
     {
         private readonly IGamesRepository gameRepository;
@@ -20,9 +16,9 @@ namespace thegame.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index()
+        public IActionResult Index(int levelIndex)
         {
-            var gameDto = TestData.FirstLevel();
+            var gameDto = levelIndex == 1 ? TestData.FirstLevel() : TestData.SecondLevel();
             gameRepository.Insert(gameDto);
             mapRepository.Insert(gameDto);
             return Ok(gameDto);

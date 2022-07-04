@@ -22,6 +22,11 @@ namespace thegame.Services
             return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0,
                 movingObjectPosition.Y);
         }
+
+        public static GameDto SecondLevel()
+        { 
+            throw new NotImplementedException();
+        }
         
         public static GameDto FirstLevel()
         {
@@ -57,9 +62,10 @@ namespace thegame.Services
             {
                 cells.Add(new CellDto($"target_{x}_{y}", new VectorDto(){X = x, Y = y}, "target", "", 0));
             }
+            
+            var id = 0;
             foreach (var (x, y) in boxes)
             {
-                var id = 0;
                 cells.Add(new CellDto($"box_{id}", new VectorDto(){X = x, Y = y}, "box", "", 10));
                 id++;
             }
