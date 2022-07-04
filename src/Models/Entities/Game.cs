@@ -5,7 +5,7 @@ namespace thegame.Models.Entities
 {
     public class Game
     {
-        public Game(CellDto[] cells, int width, int height, Guid id, bool isFinished, int score)
+        public Game(Cell[] cells, int width, int height, Guid id, bool isFinished, int score)
         {
             Cells = cells;
             Width = width;
@@ -15,7 +15,7 @@ namespace thegame.Models.Entities
             Score = score;
         }
 
-        public CellDto[] Cells { get; set; }
+        public Cell[] Cells { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public Guid Id { get; set; }
