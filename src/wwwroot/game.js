@@ -124,7 +124,7 @@ function addKeyboardListener() {
         e => {
             if (game && game.monitorKeyboard) {
                 makeMove({ keyPressed: e.keyCode });
-                if (e.keyCode >= 37 && e.keyCode <= 40)
+                if (e.keyCode >= 37 && e.keyCode <= 40 || e.keyCode === 73)
                     e.preventDefault();
             }
         });

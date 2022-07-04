@@ -22,10 +22,51 @@ namespace thegame.Services
                 Move.Down => new VectorDto(0, 1),
                 Move.Left => new VectorDto(-1, 0),
                 Move.Right => new VectorDto(1, 0),
+                Move.AI => GetRandomVector(game.Cells, cell),
                 _ => currentPos
             };
-
             return MoveNext(game, cell, currentPos, nextPos);
+        }
+
+        private VectorDto GetRandomVector(CellDto[] cells, CellDto player)
+        {
+            var random = new Random();// 0 - up, 1 - down, 2 - left, 3 - right
+            while (true)
+            {
+                var rInt = random.Next(4);
+                if (rInt == 0)
+                {
+                    var v = new VectorDto(0, -1);
+                    var newPlayerPos = player.Pos + v;
+                    if (cells.Any(x => x.Pos == newPlayerPos && x.Type is "wall" or "box" or "boxONTarget"))
+                        continue;
+                    return v;
+                }
+                if (rInt == 1)
+                {
+                    var v = new VectorDto(0, 1);
+                    var newPlayerPos = player.Pos + v;
+                    if (cells.Any(x => x.Pos == newPlayerPos && x.Type is "wall" or "box" or "boxONTarget"))
+                        continue;
+                    return v;
+                }
+                if (rInt == 2)
+                {
+                    var v = new VectorDto(-1, 0);
+                    var newPlayerPos = player.Pos + v;
+                    if (cells.Any(x => x.Pos == newPlayerPos && x.Type is "wall" or "box" or "boxONTarget"))
+                        continue;
+                    return v;
+                }
+                if (rInt == 3)
+                {
+                    var v = new VectorDto(1, 0);
+                    var newPlayerPos = player.Pos + v;
+                    if (cells.Any(x => x.Pos == newPlayerPos && x.Type is "wall" or "box" or "boxONTarget"))
+                        continue;
+                    return v;
+                }
+            }
         }
 
         private GameDto MoveNext(GameDto gameDto, CellDto player, VectorDto currentPos, VectorDto nextPos)

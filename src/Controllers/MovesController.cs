@@ -38,6 +38,7 @@ namespace thegame.Controllers
                 38 => Move.Up, //up;
                 39 => Move.Right, //right
                 40 => Move.Down, //down
+                73 => Move.AI, //AI
                 _ => Move.Empty
             });
 
