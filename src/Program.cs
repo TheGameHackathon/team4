@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddMvc();
+// builder.Services.AddControllers(options => options.InputFormatters.Add);
 
 var app = builder.Build();
 

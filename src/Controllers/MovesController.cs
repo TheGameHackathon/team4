@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.EventSource;
 using thegame.Models;
 using thegame.Services;
 
@@ -12,9 +13,26 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody] UserInputDto userInput)
         {
-            var game = TestData.AGameDto(userInput.ClickedPos ?? new VectorDto {X = 1, Y = 1});
-            if (userInput.ClickedPos != null)
-                game.Cells.First(c => c.Type == "color4").Pos = userInput.ClickedPos;
+            if (userInput is null)
+                return BadRequest();
+
+            var game = 
+            
+            if (userInput.ClickedPos is null)
+                return Ok();
+
+            switch (userInput.KeyPressed)
+            {
+                case 37: //left
+                    break;
+                case 38: //up
+                    break;
+                case 39: //right
+                    break;
+                case 40: //down
+                    break;
+            }
+            Console.Write(Convert.ToChar(userInput.KeyPressed));
             return Ok(game);
         }
     }
