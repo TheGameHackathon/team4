@@ -13,13 +13,11 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
-        private IMapper _mapper;
         private IGamesRepository _gamesRepository;
         private readonly IGameService gameService;
 
-        public MovesController(IMapper mapper, IGamesRepository gamesRepository, IGameService gameService)
+        public MovesController(IGamesRepository gamesRepository, IGameService gameService)
         {
-            _mapper = mapper;
             _gamesRepository = gamesRepository;
             this.gameService = gameService;
         }
