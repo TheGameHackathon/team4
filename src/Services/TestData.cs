@@ -27,27 +27,44 @@ namespace thegame.Services
         {
             var width = 8;
             var height = 9;
+            var walls = new bool[9, 8]
+            {
+                {false, false, true, true, true, true, true, false},
+                {true, true, true, false, false, false, true, false},
+                {true, false, false, false, false, false, true, false},
+                {true, true, true, false, false, false, true, false},
+                {true, false, true, true, false, false, true, false},
+                {true, false, true, false, false, false, true, true},
+                {true, false, false, false, false, false, false, true},
+                {true, false, false, false, false, false, false, true},
+                {true, true, true, true, true, true, true, true}
+            };
             var cells = new List<CellDto>();
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < 9; i++)
             {
-                cells.Add(
-                    new CellDto($"td_{i}_0", new VectorDto {X = i, Y = 0}, "wall", "", 0)
-                );
-                cells.Add(
-                    new CellDto($"td_{i}_{height - 1}", new VectorDto {X = i, Y = height - 1}, "wall", "", 0)
-                );
+                for (int j = 0; j < 8; j++)
+                {
+                    if (walls[i, j])
+                    {
+                        cells.Add(new CellDto($"wall_{j}_{i}", new VectorDto(){X = j, Y = i}, "wall", "", 10));
+                    }
+                }
+            }
+            
+            var boxes = new [] {(3, 2), (4, 3), (4, 4), (1, 6), (3, 6), (4, 6), (5, 6)};
+            var targets = new[] {(1, 2), (5, 3), (1, 4), (3, 6), (4, 5), (4, 7), (6, 6)};
+            foreach (var (x, y) in targets)
+            {
+                cells.Add(new CellDto($"target_{x}_{y}", new VectorDto(){X = x, Y = y}, "target", "", 0));
+            }
+            foreach (var (x, y) in boxes)
+            {
+                var id = 0;
+                cells.Add(new CellDto($"box_{id}", new VectorDto(){X = x, Y = y}, "box", "", 10));
+                id++;
             }
 
-            for (int i = 0; i < height; i++)
-            {
-                cells.Add(
-                    new CellDto($"td_0_{i}", new VectorDto {X = 0, Y = i}, "wall", "", 0)
-                );
-                cells.Add(
-                    new CellDto($"td_{width - 1}_{i}", new VectorDto {X = width - 1, Y = i}, "wall", "", 0)
-                );
-            }
-
+            cells.Add(new CellDto($"player", new VectorDto() {X = 2, Y = 2}, "player", "", 10));
             return new GameDto(cells.ToArray(), true, false, width, height, Guid.Empty, false, 0);
         }
     }
