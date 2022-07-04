@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.EventSource;
 using thegame.Models;
 using thegame.Models.DTO;
+using thegame.Models.Entities;
 using thegame.Services;
 
 namespace thegame.Controllers
@@ -14,11 +15,13 @@ namespace thegame.Controllers
     {
         private IMapper _mapper;
         private IGamesRepository _gamesRepository;
+        private readonly IGameService gameService;
 
-        public MovesController(IMapper mapper, IGamesRepository gamesRepository)
+        public MovesController(IMapper mapper, IGamesRepository gamesRepository, IGameService gameService)
         {
             _mapper = mapper;
             _gamesRepository = gamesRepository;
+            this.gameService = gameService;
         }
 
         [HttpPost]
@@ -27,22 +30,28 @@ namespace thegame.Controllers
             if (userInput is null)
                 return BadRequest();
 
-            var game = 
-            
             if (userInput.ClickedPos is null)
                 return Ok();
+            
+            var game = _gamesRepository.FindById(gameId);
 
-            switch (userInput.KeyPressed)
+            if (game is null)
+                return NotFound();
+
+            var playerMove = userInput.KeyPressed switch
             {
-                case 37: //left
-                    break;
-                case 38: //up
-                    break;
-                case 39: //right
-                    break;
-                case 40: //down
-                    break;
-            }
+                37 => //left
+                    Move.Left,
+                38 => //up
+                    Move.Up,
+                39 => //right
+                    Move.Right,
+                40 => //down
+                    Move.Down,
+                _ => Move.Up
+            };
+
+            gameService.MakeMove(game, );
             Console.Write(Convert.ToChar(userInput.KeyPressed));
             return Ok(game);
         }
