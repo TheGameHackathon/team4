@@ -38,18 +38,15 @@ namespace thegame.Controllers
                 38 => Move.Up, //up;
                 39 => Move.Right, //right
                 40 => Move.Down, //down
+                73 => Move.AI, //AI
                 _ => Move.Empty
             });
-
-            // foreach (var p in game.Cells)
-            // {
-                // if (game.targets.Contains(p.Pos))
-                    // p.Type = "boxOnTarget";
-            // }
+            if (userInputMove.Move == Move.Empty)
+                return Ok(game);
 
             var nextGameState = gameService.MakeMove(game, userInputMove);
             Console.Write(Convert.ToChar(userInput.KeyPressed));
-            
+
             var map = _mapRepository.GetMapByGameId(gameId);
             var targets = map.Targets.Select(p => (p.X, p.Y)).ToHashSet();
             var boxesOnTargets = game.Cells

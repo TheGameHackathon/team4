@@ -6,6 +6,7 @@ namespace thegame.Models.Entities
         Down,
         Left,
         Right,
+        AI,
         Empty
     }
 
