@@ -11,21 +11,14 @@ namespace thegame.Controllers
     public class GamesController : Controller
     {
         private readonly IGamesRepository gameRepository;
-        private readonly IMapper mapper;
 
-        public GamesController(IGamesRepository gameRepository, IMapper mapper)
-        {
-            this.gameRepository = gameRepository;
-            this.mapper = mapper;
-        }
+        public GamesController(IGamesRepository gameRepository) => this.gameRepository = gameRepository;
 
         [HttpPost]
         public IActionResult Index()
         {
             var gameDto = TestData.FirstLevel();
-            // var game = mapper.Map<Game>(gameDto);
-            // gameRepository.Insert(game);
-            
+            gameRepository.Insert(gameDto);
             return Ok(gameDto);
         }
     }

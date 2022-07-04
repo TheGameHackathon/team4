@@ -1,29 +1,28 @@
 using System;
 using System.Collections.Generic;
+using thegame.Models.DTO;
 using thegame.Models.Entities;
 
 namespace thegame.Services
 {
     public class GamesRepository : IGamesRepository
     {
-        private readonly Dictionary<Guid, Game> _entities = new Dictionary<Guid, Game>();
+        private readonly Dictionary<Guid, GameDto> _entities = new Dictionary<Guid, GameDto>();
 
-        public Game Insert(Game game)
+        public GameDto Insert(GameDto game)
         {
-            if (game.Id != Guid.Empty)
-                throw new InvalidOperationException();
-
             var id = Guid.NewGuid();
-            _entities[id] = game;
+            _entities.Add(id, game);
+            game.Id = id;
             return game;
         }
 
-        public Game FindById(Guid id)
+        public GameDto FindById(Guid id)
         {
             return _entities.TryGetValue(id, out var entity) ? entity : null;
         }
 
-        public void Update(Game game)
+        public void Update(GameDto game)
         {
             if (!_entities.ContainsKey(game.Id))
                 return;
@@ -31,7 +30,7 @@ namespace thegame.Services
             _entities[game.Id] = game;
         }
 
-        public void UpdateOrInsert(Game game, out bool isInserted)
+        public void UpdateOrInsert(GameDto game, out bool isInserted)
         {
             if (game.Id == Guid.Empty)
                 throw new InvalidOperationException();
