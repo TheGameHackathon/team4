@@ -30,30 +30,20 @@ namespace thegame.Controllers
             if (userInput is null)
                 return BadRequest();
 
-            if (userInput.ClickedPos is null)
-                return Ok();
-            
             var game = _gamesRepository.FindById(gameId);
 
-            if (game is null)
-                return NotFound();
-
-            var playerMove = userInput.KeyPressed switch
+            var userInputMove = new UserInput((userInput.KeyPressed) switch
             {
-                37 => //left
-                    Move.Left,
-                38 => //up
-                    Move.Up,
-                39 => //right
-                    Move.Right,
-                40 => //down
-                    Move.Down,
-                _ => Move.Up
-            };
+                37 => Move.Left, //left;
+                38 => Move.Up, //up;
+                39 => Move.Right, //right
+                40 => Move.Down, //down
+                _ => throw new ArgumentOutOfRangeException()
+            });
 
-            gameService.MakeMove(game, );
+            var nextGameState = gameService.MakeMove(game, userInputMove);
             Console.Write(Convert.ToChar(userInput.KeyPressed));
-            return Ok(game);
+            return Ok(nextGameState);
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace thegame.Services
 {
-    interface IGameService
+    public interface IGameService
     {
-        Game MakeMove(Game game, Player player, UserInput userInput);
+        Game MakeMove(Game game, UserInput userInput);
     }
 }
