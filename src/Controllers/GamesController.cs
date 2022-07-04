@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
+using thegame.Models.DTO;
 using thegame.Services;
 
 namespace thegame.Controllers
