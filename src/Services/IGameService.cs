@@ -1,8 +1,9 @@
 ﻿using thegame.Models.Entities;
 
-namespace thegame.Services;
-
-interface IGameService
+namespace thegame.Services
 {
-    Game MakeMove(Game game, UserInput userInput);
+    interface IGameService
+    {
+        Game MakeMove(Game game, UserInput userInput);
+    }
 }
