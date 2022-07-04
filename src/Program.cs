@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using thegame.Mapping;
 
 var builder = WebApplication.CreateBuilder();
-
+builder.Services.AddAutoMapper(typeof(GameProfile));
 builder.Services.AddMvc();
 
 var app = builder.Build();
@@ -17,5 +18,4 @@ app.Use((context, next) =>
     return next();
 });
 app.UseStaticFiles();
-
 app.Run();

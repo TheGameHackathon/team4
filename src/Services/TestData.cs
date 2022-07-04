@@ -1,5 +1,6 @@
 ﻿using System;
 using thegame.Models;
+using thegame.Models.DTO;
 
 namespace thegame.Services
 {

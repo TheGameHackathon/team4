@@ -1,11 +1,11 @@
 using System;
+using thegame.Models.DTO;
 
-namespace thegame.Models
+namespace thegame.Models.Entities
 {
-    public class GameDto
+    public class Game
     {
-        public GameDto(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id,
-            bool isFinished, int score)
+        public Game(CellDto[] cells, bool monitorKeyboard, bool monitorMouseClicks, int width, int height, Guid id, bool isFinished, int score)
         {
             Cells = cells;
             MonitorKeyboard = monitorKeyboard;
@@ -27,3 +27,4 @@ namespace thegame.Models
         public int Score { get; set; }
     }
 }
+
