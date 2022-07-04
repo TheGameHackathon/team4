@@ -23,11 +23,6 @@ namespace thegame.Services
                 movingObjectPosition.Y);
         }
 
-        public static GameDto SecondLevel()
-        { 
-            throw new NotImplementedException();
-        }
-        
         public static GameDto FirstLevel()
         {
             var width = 8;
