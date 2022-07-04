@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using thegame.Mapping;
+using thegame.Services;
 
 var builder = WebApplication.CreateBuilder();
 builder.Services.AddAutoMapper(typeof(GameProfile));
+builder.Services.AddSingleton<IGamesRepository, GamesRepository>();
 builder.Services.AddMvc();
 
 var app = builder.Build();

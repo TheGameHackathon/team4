@@ -1,33 +1,57 @@
 using System;
+using System.Collections.Generic;
 using thegame.Models.Entities;
 
 namespace thegame.Services
 {
     public class GamesRepository : IGamesRepository
     {
-        public Game Insert(Game user)
+        private readonly Dictionary<Guid, Game> _entities = new Dictionary<Guid, Game>();
+
+        public Game Insert(Game game)
         {
-            throw new NotImplementedException();
+            if (game.Id != Guid.Empty)
+                throw new InvalidOperationException();
+
+            var id = Guid.NewGuid();
+            _entities[id] = game;
+            return game;
         }
 
         public Game FindById(Guid id)
         {
-            throw new NotImplementedException();
+            return _entities.TryGetValue(id, out var entity) ? entity : null;
         }
 
-        public void Update(Game user)
+        public void Update(Game game)
         {
-            throw new NotImplementedException();
+            if (!_entities.ContainsKey(game.Id))
+                return;
+
+            _entities[game.Id] = game;
         }
 
-        public void UpdateOrInsert(Game user, out bool isInserted)
+        public void UpdateOrInsert(Game game, out bool isInserted)
         {
-            throw new NotImplementedException();
+            if (game.Id == Guid.Empty)
+                throw new InvalidOperationException();
+
+            var id = game.Id;
+            if (_entities.ContainsKey(id))
+            {
+                _entities[id] = game;
+                isInserted = false;
+                return;
+            }
+
+            var entity = game;
+            _entities[id] = entity;
+            isInserted = true;
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _entities.Remove(id);
         }
     }
 }
