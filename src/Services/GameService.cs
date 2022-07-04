@@ -18,7 +18,7 @@ namespace thegame.Services
                 Move.Down => currentPos + new VectorDto(0, 1),
                 Move.Left => currentPos + new VectorDto(-1, 0),
                 Move.Right => currentPos + new VectorDto(1, 0),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => currentPos
             };
 
             cell.Pos = nextPos;

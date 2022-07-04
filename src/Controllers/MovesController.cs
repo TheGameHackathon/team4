@@ -36,7 +36,7 @@ namespace thegame.Controllers
                 38 => Move.Up, //up;
                 39 => Move.Right, //right
                 40 => Move.Down, //down
-                _ => throw new ArgumentOutOfRangeException()
+                _ => Move.Empty
             });
 
             var nextGameState = gameService.MakeMove(game, userInputMove);
