@@ -51,7 +51,7 @@ namespace thegame.Services
                 }
             }
             
-            var boxes = new [] {(3, 2), (4, 3), (4, 4), (1, 6), (3, 6), (4, 6), (5, 6)};
+            var boxes = new [] {(3, 2), (4, 3), (4, 4), (1, 6), (4, 6), (5, 6)};
             var targets = new[] {(1, 2), (5, 3), (1, 4), (4, 5), (4, 7), (6, 6)};
             foreach (var (x, y) in targets)
             {
