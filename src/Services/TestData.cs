@@ -60,7 +60,12 @@ namespace thegame.Services
             for (int i = 0; i < boxes.Length; i++)
             {
                 var (x, y) = boxes[i];
-                cells.Add(new CellDto($"box_{i}", new VectorDto(){X = x, Y = y}, "box", "", 11));
+                var type = "box";
+                if (x == 3 && y == 6)
+                {
+                    type = "boxOnTarget";
+                }
+                cells.Add(new CellDto($"box_{i}", new VectorDto(){X = x, Y = y}, type, "", 11));
             }
 
             cells.Add(new CellDto($"player", new VectorDto() {X = 2, Y = 2}, "player", "", 10));
