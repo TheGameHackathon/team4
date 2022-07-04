@@ -18,10 +18,10 @@ namespace thegame.Services
             var currentPos = cell.Pos;
             var nextPos = userInput.Move switch
             {
-                Move.Up =>  new VectorDto(0, -1),
-                Move.Down =>  new VectorDto(0, 1),
+                Move.Up => new VectorDto(0, -1),
+                Move.Down => new VectorDto(0, 1),
                 Move.Left => new VectorDto(-1, 0),
-                Move.Right =>  new VectorDto(1, 0),
+                Move.Right => new VectorDto(1, 0),
                 _ => currentPos
             };
 
@@ -32,32 +32,28 @@ namespace thegame.Services
         {
             var map = mapRepository.GetMapByGameId(gameDto.Id);
             var next = currentPos + nextPos;
-            if (map.Table[next.X][next.Y] == "wall")
-                return gameDto;
-            var nextNext = next + nextPos;
-            if (map.Table[next.X][next.Y] == "box")
+            var nextCell = map.Table[next.X][next.Y];
+            if (nextCell is not null)
             {
-                if (map.Table[nextNext.X][nextNext.Y] == null)
+                var nextType = nextCell.Type;
+                if (nextType == "wall")
+                    return gameDto;
+                var nextNext = next + nextPos;
+                if (nextType is "box" or "boxOnTarget")
                 {
+                    if (map.Table[nextNext.X][nextNext.Y] is not null)
+                        return gameDto;
+                    var box = map.Table[next.X][next.Y];
+                    map.Table[nextNext.X][nextNext.Y] = box;
+                    map.Table[next.X][next.Y] = null;
+                    box.Pos.X += nextPos.X;
+                    box.Pos.Y += nextPos.Y;
+                }
+            }
 
-                }
-                // return 
-            }
-            
-            var boxesIntersection = map.Boxes.Intersect(map.Targets).ToHashSet();
-            foreach (var b in gameDto.Cells)
-            {
-                if (boxesIntersection.Contains(b.Pos))
-                {
-                    b.Type = "boxOnTarget";
-                    continue;
-                }
-                b.Type = "box";
-            }
-            
+            gameDto.Score += 1;
             player.Pos = currentPos + nextPos;
             return gameDto;
         }
-        
     }
 }
