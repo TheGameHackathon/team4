@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
 
-namespace thegame.Models.Entities;
-
-public class Player
+namespace thegame.Models.Entities
 {
-    public Player()
+    public class Player
     {
-        
+        public Player()
+        {
+
+        }
+
+        public Position Pos { get; set; }
     }
-    
-    public Position Pos { get; set; }
 }
