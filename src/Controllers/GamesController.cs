@@ -23,8 +23,9 @@ namespace thegame.Controllers
         public IActionResult Index()
         {
             var gameDto = TestData.FirstLevel();
-            var game = mapper.Map<Game>(gameDto);
-            gameRepository.Insert(game);
+            // var game = mapper.Map<Game>(gameDto);
+            // gameRepository.Insert(game);
+            
             return Ok(gameDto);
         }
     }
