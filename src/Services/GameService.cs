@@ -39,10 +39,20 @@ namespace thegame.Services
             {
                 if (map.Table[nextNext.X][nextNext.Y] == null)
                 {
-                    
+
                 }
-                    
-                    // return 
+                // return 
+            }
+            
+            var boxesIntersection = map.Boxes.Intersect(map.Targets).ToHashSet();
+            foreach (var b in gameDto.Cells)
+            {
+                if (boxesIntersection.Contains(b.Pos))
+                {
+                    b.Type = "boxOnTarget";
+                    continue;
+                }
+                b.Type = "box";
             }
             
             player.Pos = currentPos + nextPos;
