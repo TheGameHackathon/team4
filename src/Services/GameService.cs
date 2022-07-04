@@ -6,9 +6,9 @@ namespace thegame.Services
 {
     public class GameService : IGameService
     {
-        public Game MakeMove(Game game, Player player, UserInput userInput)
+        public Game MakeMove(Game game, UserInput userInput)
         {
-            var currentPos = player.Pos;
+            var currentPos = game.Player.Pos;
             var nextPos = userInput.Move switch
             {
                 Move.Up => currentPos + new Position(0, -1),
@@ -18,13 +18,8 @@ namespace thegame.Services
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            player.Pos = nextPos;
+            game.Player.Pos = nextPos;
             return game;
-        }
-
-        public Game MakeMove(Game game, UserInput userInput)
-        {
-            throw new NotImplementedException();
         }
     }
 }

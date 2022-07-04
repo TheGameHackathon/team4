@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.EventSource;
 using thegame.Models;
 using thegame.Models.DTO;
+using thegame.Models.Entities;
 using thegame.Services;
 
 namespace thegame.Controllers
@@ -14,11 +15,13 @@ namespace thegame.Controllers
     {
         private IMapper _mapper;
         private IGamesRepository _gamesRepository;
+        private readonly IGameService gameService;
 
-        public MovesController(IMapper mapper, IGamesRepository gamesRepository)
+        public MovesController(IMapper mapper, IGamesRepository gamesRepository, IGameService gameService)
         {
             _mapper = mapper;
             _gamesRepository = gamesRepository;
+            this.gameService = gameService;
         }
 
         [HttpPost]
@@ -27,24 +30,20 @@ namespace thegame.Controllers
             if (userInput is null)
                 return BadRequest();
 
-            var game = 
-            
-            if (userInput.ClickedPos is null)
-                return Ok();
+            var game = _gamesRepository.FindById(gameId);
 
-            switch (userInput.KeyPressed)
+            var userInputMove = new UserInput((userInput.KeyPressed) switch
             {
-                case 37: //left
-                    break;
-                case 38: //up
-                    break;
-                case 39: //right
-                    break;
-                case 40: //down
-                    break;
-            }
+                37 => Move.Left, //left;
+                38 => Move.Up, //up;
+                39 => Move.Right, //right
+                40 => Move.Down, //down
+                _ => throw new ArgumentOutOfRangeException()
+            });
+
+            var nextGameState = gameService.MakeMove(game, userInputMove);
             Console.Write(Convert.ToChar(userInput.KeyPressed));
-            return Ok(game);
+            return Ok(nextGameState);
         }
     }
 }
