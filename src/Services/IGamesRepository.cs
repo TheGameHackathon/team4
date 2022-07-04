@@ -3,12 +3,15 @@ using thegame.Models.Entities;
 
 namespace thegame.Services
 {
+
+
+
     public interface IGamesRepository
     {
-        Game Insert(Game user);
+        Game Insert(Game game);
         Game FindById(Guid id);
-        void Update(Game user);
-        void UpdateOrInsert(Game user, out bool isInserted);
+        void Update(Game game);
+        void UpdateOrInsert(Game game, out bool isInserted);
         void Delete(Guid id);
     }
 }

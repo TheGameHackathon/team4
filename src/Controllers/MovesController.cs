@@ -11,11 +11,13 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
-        private IMapper mapper;
+        private IMapper _mapper;
+        private IGamesRepository _gamesRepository;
 
-        public MovesController(IMapper mapper)
+        public MovesController(IMapper mapper, IGamesRepository gamesRepository)
         {
-            this.mapper = mapper;
+            _mapper = mapper;
+            _gamesRepository = gamesRepository;
         }
 
         [HttpPost]
