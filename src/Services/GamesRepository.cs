@@ -3,7 +3,6 @@ using thegame.Models.Entities;
 
 namespace thegame.Services
 {
-
     public class GamesRepository : IGamesRepository
     {
         public Game Insert(Game user)
