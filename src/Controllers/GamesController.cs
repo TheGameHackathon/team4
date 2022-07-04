@@ -18,7 +18,6 @@ namespace thegame.Controllers
         public IActionResult Index()
         {
             var gameDto = TestData.FirstLevel();
-            gameDto.Cells[6].Type = "player";
             gameRepository.Insert(gameDto);
             return Ok(gameDto);
         }
