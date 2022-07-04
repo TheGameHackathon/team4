@@ -51,9 +51,17 @@ namespace thegame.Services
                 }
             }
 
+            if (IsWin(map))
+                gameDto.IsFinished = true;
             gameDto.Score += 1;
             player.Pos = currentPos + nextPos;
             return gameDto;
+        }
+
+        public bool IsWin(Map map)
+        {
+            var targets = map.Targets.Select(target => (target.X, target.Y)).ToHashSet();
+            return map.Boxes.All(box => targets.Contains((box.X, box.Y)));
         }
     }
 }

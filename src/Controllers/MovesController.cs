@@ -15,11 +15,13 @@ namespace thegame.Controllers
     {
         private IGamesRepository _gamesRepository;
         private readonly IGameService gameService;
+        private readonly MapRepository _mapRepository;
 
-        public MovesController(IGamesRepository gamesRepository, IGameService gameService)
+        public MovesController(IGamesRepository gamesRepository, IGameService gameService, MapRepository mapRepository)
         {
             _gamesRepository = gamesRepository;
             this.gameService = gameService;
+            _mapRepository = mapRepository;
         }
 
         [HttpPost]
@@ -39,8 +41,25 @@ namespace thegame.Controllers
                 _ => Move.Empty
             });
 
+            // foreach (var p in game.Cells)
+            // {
+                // if (game.targets.Contains(p.Pos))
+                    // p.Type = "boxOnTarget";
+            // }
+
             var nextGameState = gameService.MakeMove(game, userInputMove);
             Console.Write(Convert.ToChar(userInput.KeyPressed));
+            
+            var map = _mapRepository.GetMapByGameId(gameId);
+            var targets = map.Targets.Select(p => (p.X, p.Y)).ToHashSet();
+            var boxesOnTargets = game.Cells
+                .Where(p => targets.Contains((p.Pos.X, p.Pos.Y)) && p.Type == "box");
+            foreach (var boxOnTarget in boxesOnTargets)
+                boxOnTarget.Type = "boxOnTarget";
+            var boxesUntarget = game.Cells
+                .Where(p => !targets.Contains((p.Pos.X, p.Pos.Y)) && p.Type == "boxOnTarget");
+            foreach (var b in boxesUntarget)
+                b.Type = "box";
             return Ok(nextGameState);
         }
     }
