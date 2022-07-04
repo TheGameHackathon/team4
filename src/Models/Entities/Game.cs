@@ -5,7 +5,14 @@ namespace thegame.Models.Entities
 {
     public class Game
     {
-        public Game(Cell[] cells, int width, int height, Guid id, bool isFinished, int score)
+        public Game(
+            Cell[] cells,
+            int width,
+            int height,
+            Guid id,
+            bool isFinished,
+            int score
+        )
         {
             Cells = cells;
             Width = width;

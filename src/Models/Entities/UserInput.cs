@@ -1,6 +1,12 @@
 namespace thegame.Models.Entities
 {
-    public class UserInput
+    public enum Move
     {
+        Up,
+        Down,
+        Left,
+        Right
     }
+
+    public record UserInput(Move Move);
 }
